@@ -62,7 +62,6 @@ graph TB
     end
     LOCAL -.->|lee normas/investigación compartida ↑ (MCP sabio-shared)| GLOBAL
     LD -.->|/aprender → /promover sube lo genérico ↑| GD
-```
 
 > Un proyecto **jamás** lee la carpeta de otro proyecto. Solo puede *consultar* el plano global
 > (vía el MCP `sabio-shared`, de solo lectura). Eso es el **aislamiento**.
