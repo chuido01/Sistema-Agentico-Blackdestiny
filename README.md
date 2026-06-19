@@ -1,3 +1,5 @@
+<img width="1086" height="587" alt="image" src="https://github.com/user-attachments/assets/4d71e6a0-453a-4136-88f4-d6928ec897ab" />
+
 # SABIO Blackdestiny
 
 > **La memoria a largo plazo para trabajar con IA — sin base de datos vectorial, sin RAG.**
@@ -46,8 +48,8 @@ El conocimiento se federa en **4 Salas** (cada dato vive en UNA sola; las demás
 
 Y en **2 planos**, unidos por una sola flecha **hacia arriba y de solo lectura**:
 
-```mermaid
 graph TB
+
     subgraph GLOBAL["🏛  Centro de Mando Sabio — plano global (solo lectura)"]
         SPINE["★ índice de índices<br/>qué ID vive en qué Sala"]
         GC["Sala C · Referencia 🌐"]
