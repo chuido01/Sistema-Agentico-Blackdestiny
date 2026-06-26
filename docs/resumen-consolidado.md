@@ -69,11 +69,11 @@ Cada dato es de un tipo, y por eso vive en una Sala concreta (como cuatro estant
 |---|---|---|
 | **A · Investigación** | Lo que estudias: notas cortas (una idea por nota) enlazadas entre sí. Es la bóveda. La del Centro es **multi-dominio** (un dominio nuevo = etiqueta + mapa, no una bóveda aparte). | `investigacion:<tema>` |
 | **B · Catálogo** | Tus herramientas y activos: fichas de qué tienes, para qué sirve, qué cuesta. | `activo:<cosa>` |
-| **C · Referencia** | Normas y estándares externos (NIST, ISO, PCI). Iguales para todos → viven en el plano global. | `norma:<marco>:<código>` |
+| **C · Referencia** | Normas y estándares externos, en el plano global. **Segmentada por ámbito**: `universal` (NIST/ISO/PCI, para todos), `jurisdiccion:` (la ley de un país), `sector:` (un rubro). Sube lo que **necesita más de un proyecto**, no "lo internacional". | `norma:<marco>:<código>` |
 | **D · Aprendizaje** | Lecciones de lo que pasó, para no repetir errores. | `aprendizaje:<id>` |
 
 **Dos perfiles de la Sala D**, según el proyecto:
-- **Base** — captura sencilla, a mano, con el comando `/aprender`.
+- **Base** — captura sencilla, a mano, con el comando `/sabio-aprender`.
 - **Agéntico** — añade un validador automático y mide la confianza con números. Para proyectos con
   flotas de agentes. Es la **misma** Sala D; solo cambia cuánta maquinaria carga.
 
@@ -130,12 +130,14 @@ Sin esto, los proyectos serían islas que repiten trabajo. El volante hace que l
 
 - **Agentes** — ayudantes especializados disponibles en todos los proyectos (revisor de código,
   escritor de commits, de documentación, curador de investigación, curador de SABIO, reflector de auto-mejora, de seguridad).
-- **`/promover`** — sube una lección genérica al plano global (una sola copia) para que todos la usen.
+- **`/sabio-promover`** — sube una lección genérica al plano global (una sola copia) para que todos la usen.
+- **`/sabio-promover-buzon`** — (solo en el Centro) descubre y materializa los paquetes que la flota dejó
+  listos en su buzón: automatiza el *transporte* del volante, sin copia-pega. Tú eliges qué sube.
 - **`/memory-lint`** — vigila que no haya conocimiento duplicado ni desactualizado. Por defecto solo
   reporta, no toca nada.
-- **`/aprender`** — captura una lección en la Sala D local (la puerta de entrada).
+- **`/sabio-aprender`** — captura una lección en la Sala D local (la puerta de entrada).
 - **`/sabio-reflector`** — reflexiona sobre un trabajo cerrado con feedback externo e infiere la lección
-  antes de guardarla (la captura inteligente; hermana de `/aprender`).
+  antes de guardarla (la captura inteligente; hermana de `/sabio-aprender`).
 - **`/disenar`** — ante una duda de diseño, da una recomendación equilibrando simplicidad y estructura.
 
 ---

@@ -37,7 +37,7 @@ modifica una ficha (Sala B) sin pasar el triage de su bucle de promoción; el co
 sale **solo de fuente oficial citada**. (Nomenclatura: *Capa 1/2* = arquitectura; *Sala A–D* = conocimiento.)
 
 **Perfil Sala D:** `<PerfilSalaD>` — *cuánta maquinaria usa el aprendizaje operativo:* `base`
-(default; captura con `/aprender`) o `agentico` (añade el runtime de agentes, confianza numérica y el
+(default; captura con `/sabio-aprender`) o `agentico` (añade el runtime de agentes, confianza numérica y el
 validador). Súbelo a `agentico` si este proyecto ejecuta agentes/skills/plugins en bucle. Detalle en
 `04-Recursos/04-Aprendizaje/LEEME - Esquema Sala D.md`.
 
@@ -50,6 +50,17 @@ validador). Súbelo a `agentico` si este proyecto ejecuta agentes/skills/plugins
 ## Plano global (solo-lectura) — MCP `sabio-shared`
 - Además de su conocimiento local, este proyecto puede **leer** (nunca escribir) la referencia canónica transversal del **Centro de Mando Sabio** (normas `norma:…` e investigación compartida) vía el MCP **`sabio-shared`**, declarado en el `.mcp.json` del proyecto.
 - Es la **única** excepción al aislamiento (Capa 1): se **lee** el plano global; **jamás** se accede a otro proyecto. El servidor vive en tu Centro de Mando Sabio y se referencia por **ruta absoluta** (la registra el instalador) — no se copia nada dentro del proyecto.
+
+### Perfil de aplicabilidad normativa (qué resuelve este proyecto de la Sala C global)
+La Sala C global se **segmenta por ámbito**: `universal` (NIST/ISO/PCI, todo proyecto), `jurisdiccion:` (legislación de aplicación general de un país) y `sector:` (regulación de un rubro). Declara aquí qué le aplica a este proyecto; vía `sabio-shared` hereda lo `universal` + lo que matchee:
+```yaml
+jurisdiccion: [<ISO-3166, p. ej. CL>]       # país(es) donde opera el proyecto
+sector: [<slug, p. ej. datos-personales>]    # rubro(s) regulatorio(s); vacío si no aplica
+```
+Cambiar de país o rubro = editar este perfil; las normas de otras jurisdicciones siguen en el global, intactas, y este proyecto simplemente no las resuelve.
+
+### Promover al plano global (el volante)
+Cuando una lección o norma de este proyecto sea **transversal**, `/sabio-promover` deja el paquete (ya project-neutral) en el **buzón** `04-Recursos/04-Aprendizaje/promociones/` con `estado: pendiente`. El **Centro de Mando lo descubre y materializa solo** con `/sabio-promover-buzon` (lee únicamente ese buzón, **nunca tu bóveda**). Tú decides **qué** se promueve; el **transporte** es automático.
 
 ## Mapas visuales (Understand-Anything) — opcional
 - Este proyecto puede generar un **mapa visual interactivo** de su estructura/código con `/understand` (o de una bóveda-wiki tipo Karpathy con `/understand-knowledge`), si tienes ese plugin instalado a nivel global; no se copia dentro del proyecto.

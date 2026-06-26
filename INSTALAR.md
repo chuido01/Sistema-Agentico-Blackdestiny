@@ -48,7 +48,7 @@ Claude hará los **4 pasos** de abajo. Es seguro re-ejecutarlo: nunca sobrescrib
 Copia, desde [`entorno-claude/`](entorno-claude/) hacia la carpeta de configuración de usuario de
 Claude Code (`~/.claude/` en macOS/Linux, `%USERPROFILE%\.claude\` en Windows):
 
-- `commands/` → los skills `/aprender`, `/sabio-reflector`, `/promover`, `/memory-lint`, `/disenar`, y `/sabio-welcome`
+- `commands/` → los skills `/sabio-aprender`, `/sabio-reflector`, `/sabio-promover`, `/memory-lint`, `/disenar`, y `/sabio-welcome`
   (despliegue end-to-end de un proyecto; se ejecuta desde tu Centro de Mando Sabio).
 - `agents/` → los 7 agentes (curador SABIO, reflector de auto-mejora, curador de investigación, revisor de código,
   commit-writer, doc-writer, seguridad).
@@ -99,7 +99,7 @@ Usa el Kit ([`kit/`](kit/)) para crear un proyecto completo (Capa 1 + Capa 2):
 > **Atajo:** el comando `/sabio-welcome <ruta>` hace este Paso 4 + el test + la adopción en el panel,
 > en un solo paso. Úsalo desde tu Centro de Mando Sabio una vez instalado el entorno (Paso 1).
 
-> **Perfil del proyecto:** `base` (por defecto, captura sencilla con `/aprender`) o `agentico`
+> **Perfil del proyecto:** `base` (por defecto, captura sencilla con `/sabio-aprender`) o `agentico`
 > (añade validador y confianza numérica). Sube a `agentico` solo si el proyecto ejecuta agentes/skills
 > en bucle.
 

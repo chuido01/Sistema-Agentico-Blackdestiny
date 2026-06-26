@@ -10,7 +10,7 @@
 ## Dos productores (quién escribe)
 
 1. **Mientras construimos** (`origen: construccion`) — Claude o el humano dejan el *gotcha*, el error
-   resuelto o el mejor camino para una prueba, vía `/aprender`. Baja frecuencia, intencional.
+   resuelto o el mejor camino para una prueba, vía `/sabio-aprender`. Baja frecuencia, intencional.
 2. **Operación agéntica** (`origen: operacion-agentica`) — un agente-software registra qué funcionó y
    qué no al ejecutar. Alta frecuencia, automática. **Solo en proyectos con el perfil agéntico** (abajo).
 
@@ -28,9 +28,9 @@ así que **la federación no se fragmenta**.
 
 | Aspecto | **base** (default) | **agentico** |
 |---|---|---|
-| Productores | ① `/aprender` | ① `/aprender` **+** ② runtime de agentes |
+| Productores | ① `/sabio-aprender` | ① `/sabio-aprender` **+** ② runtime de agentes |
 | Confianza | cualitativa (`baja/media/alta`) | numérica `0.0–1.0` + umbral (0.8) |
-| Promoción | manual (`/promover`) | gobernada por umbral (ver `ESQUEMA.md`) |
+| Promoción | manual (`/sabio-promover`) | gobernada por umbral (ver `ESQUEMA.md`) |
 | Validación | — | `tools/validar-aprendizaje.py` (integridad forzada) |
 | Índice | — (se filtra por `estado:`) | `_index.json` regenerado por el validador |
 | Para | docs, apps, proyectos sin agentes | proyectos con agentes/skills/plugins en bucle |
@@ -83,7 +83,7 @@ pendiente ──triage──▶ revisado ──aprobación──▶ promovido
 ## El bucle de promoción (lo que separa "logs" de "auto-aprendizaje")
 
 1. **Captura:** automática si la produce un agente (`operacion-agentica`), asistida/manual al construir
-   (`construccion`, vía `/aprender`). Nace como hipótesis (`verificado: false`, `estado: pendiente`).
+   (`construccion`, vía `/sabio-aprender`). Nace como hipótesis (`verificado: false`, `estado: pendiente`).
 2. **Triage:** un humano o un agente de mayor confianza deduplica y aplica la **puerta anti-alucinación**
    → `revisado` o `descartado` (con motivo). En el perfil agéntico el validador + el umbral lo gobiernan.
 3. **Promoción:** un registro validado se gradúa a UNA de: mejora de ficha B (v+1 con procedencia) ·

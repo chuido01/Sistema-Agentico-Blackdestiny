@@ -27,6 +27,9 @@ un reglamento). Hasta entonces, puede quedar vacía: ya está reservada y con es
 ```yaml
 ---
 id: norma:<marco>:<codigo>   # ej. norma:iso27001:A.5.1 — estable, no se renombra
+ambito: universal            # universal | jurisdiccion | sector  (al promover, determina quién lo resuelve)
+jurisdiccion: ""             # ISO 3166-1 (CL, ES…) — solo si ambito=jurisdiccion
+sector: ""                   # slug del rubro (finanzas, salud…) — solo si ambito=sector
 marco: ""                    # nombre del estándar/framework
 titulo: ""
 fuente_oficial: ""           # URL oficial o ruta dentro de fuentes/
@@ -47,3 +50,10 @@ la interpretación va en la Sala A (investigación) referenciando este ID.
    Sala A que referencia `norma:<marco>:<codigo>`.
 4. **Amoldar sin perder el sentido:** el prefijo puede ser `regla:`, `estandar:`, lo que tu dominio
    pida; lo que define a esta sala es: **externo, oficial, inmutable, ingerido — nunca redactado**.
+5. **Local vs global (cuándo promover) — criterio NO geográfico:** lo **propio de este proyecto** (un
+   corpus computado/derivado, una norma que solo este proyecto usa) se queda **local**; lo **oficial,
+   público, inmutable y no confidencial** que toque a **más de un proyecto** se promueve al **plano
+   global** vía `/sabio-promover`. La legislación de **aplicación general** de tu jurisdicción es
+   transversal, no "local por nacional". Al promover, etiqueta el **`ambito:`** (`universal` ·
+   `jurisdiccion` · `sector`); cada proyecto resuelve lo `universal` + lo que matchea su **perfil de
+   aplicabilidad**. Una sola Sala C global por etiqueta, **nunca una por país**.

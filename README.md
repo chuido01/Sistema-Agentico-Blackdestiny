@@ -45,7 +45,7 @@ El conocimiento se federa en **4 Salas** (cada dato vive en UNA sola; las demás
 
 - **Sala A · Investigación** — la bóveda de notas atómicas enlazadas (`investigacion:<tema>`). En el Centro de Mando es **multi-dominio**: un dominio nuevo se añade como una etiqueta + un mapa, **nunca** como una bóveda aparte.
 - **Sala B · Catálogo** — fichas de tus herramientas y activos (`activo:<cosa>`).
-- **Sala C · Referencia** — normas y estándares externos (`norma:<marco>:<código>`).
+- **Sala C · Referencia** — normas y estándares externos (`norma:<marco>:<código>`). Se **segmenta por ámbito** con una etiqueta: `universal` (marcos internacionales — NIST/ISO/PCI — para todos), `jurisdiccion:` (la legislación de aplicación general de un país) y `sector:` (la regulación de un rubro). Lo que sube al plano global es lo que **necesita más de un proyecto**, no "lo internacional"; cada proyecto declara su *perfil de aplicabilidad* y resuelve lo `universal` + lo suyo.
 - **Sala D · Aprendizaje** — lecciones para no repetir errores (`aprendizaje:<id>`).
 
 Y en **2 planos**, unidos por una sola flecha **hacia arriba y de solo lectura**:
@@ -58,7 +58,7 @@ PLANO GLOBAL · Centro de Mando Sabio   (solo lectura)
                  │
 PLANO LOCAL · Proyecto   (aislado)
   Sala A (Investigación) · Sala B (Catálogo) · Sala D (captura local)
-  /aprender → /promover  sube lo genérico ↑ al plano global
+  /sabio-aprender → /sabio-promover  sube lo genérico ↑ al plano global
 ```
 
 > Un proyecto **jamás** lee la carpeta de otro proyecto. Solo puede *consultar* el plano global
@@ -77,7 +77,8 @@ Todo lo que es SABIO hoy, en versión genérica y reutilizable:
 | 🏛 **Centro de Mando Sabio** | El molde del *hub* / plano global que sirve a todos tus proyectos. |
 | 🔌 **MCP `sabio-shared`** | El puente de solo-lectura para que un proyecto consulte el plano global. |
 | 🤖 **Autoaprendizaje** | El patrón **Reflector** (agente `sabio-reflector`): reflexiona con feedback externo e infiere la lección antes de guardarla. Más el perfil agéntico de la Sala D: captura + validador. |
-| ⌨️ **Skills / comandos** | `/aprender`, `/sabio-reflector`, `/promover`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
+| ⌨️ **Skills / comandos** | `/sabio-aprender`, `/sabio-reflector`, `/sabio-promover`, `/sabio-promover-buzon`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
+| 📮 **Buzón de promoción** | `/sabio-promover-buzon` (desde el Centro): descubre **automáticamente** los paquetes que los proyectos dejan listos en su buzón y materializa el que elijas — automatiza el *transporte* del volante, sin copia-pega. Tú decides qué sube (el *gate*); el escaneo solo lo trae. Lee solo el buzón de cada proyecto, nunca su bóveda. |
 | 🧠 **Agentes** | Curador de SABIO, reflector de auto-mejora, curador de investigación, revisor de código, escritor de commits, de documentación y de seguridad. |
 | 📊 **Dashboard de flota** | Panel **offline** (Python + HTML) que muestra la salud de tus proyectos (git, SABIO, backups, seguridad) y qué atender primero ([`dashboard/`](dashboard/)). |
 | 📚 **Guías** | Documentación visual "en cristiano" de cada componente ([`docs/`](docs/)). |
@@ -131,7 +132,7 @@ sabio-blackdestiny/
 │   └── home-claude/                  #   el contenido que va a ~/.claude:
 │       ├── CLAUDE.md                 #     preferencias transversales (plantilla genérica)
 │       ├── settings.json             #     ajustes + hooks de sesión
-│       ├── commands/                 #     skills: aprender · sabio-reflector · promover · memory-lint · disenar · sabio-welcome
+│       ├── commands/                 #     skills: sabio-aprender · sabio-reflector · sabio-promover · sabio-promover-buzon · memory-lint · disenar · sabio-welcome
 │       ├── agents/                   #     7 agentes: sabio-curator · sabio-reflector · research-curator · code-reviewer · commit-writer · doc-writer · security-engineer
 │       └── scripts/                  #     hooks: recordatorio al iniciar sesión · captura al compactar
 │

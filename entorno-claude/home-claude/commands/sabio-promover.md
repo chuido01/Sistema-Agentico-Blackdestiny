@@ -21,6 +21,7 @@ Que decida, leyendo primero el índice de índices del proyecto y (si está el M
 - ¿Ya existe algo equivalente (local o global)? → fusionar en vez de duplicar.
 - Antes del veredicto, **lee el `log.md` de la Sala destino** (la bitácora de decisiones), no solo su índice: verifica si este `aprendizaje:<id>` ya fue triado y respeta —o revierte **conscientemente**— una decisión previa (queda-local / fusión / descarte); no la pises en silencio.
 - ¿Qué **Sala** es la dueña? (`norma:` C · `investigacion:` A · `activo:` B · `aprendizaje:` D)
+- **Si la dueña es la Sala C (`norma:`), aplica el criterio jurisdicción-agnóstico (NO geográfico):** sube al global lo **oficial, público, inmutable, no confidencial** cuyo alcance toque a **más de un proyecto**; se queda local solo lo **propio de un proyecto** (corpus computado/derivado) o confidencial. La legislación de **aplicación general** de tu jurisdicción es transversal (no "local por nacional"). **Etiqueta el ámbito** en el frontmatter: `ambito: universal` (NIST/ISO/PCI) · `ambito: jurisdiccion` + `jurisdiccion: <ISO-3166>` · `ambito: sector` + `sector: <slug>`. Una sola Sala C global segmentada por etiqueta, **nunca una carpeta por país** (igual que `dominio:` en la Sala A).
 - Prepara el **candidato project-neutral** (sin datos confidenciales del proyecto) con **ID propuesto** + procedencia.
 - **Veredicto:** promover · fusionar con existente · quedarse local · descartar.
 
@@ -32,8 +33,7 @@ Determina si el proyecto actual es el **Centro de Mando Sabio** (dueño del plan
   actualiza el índice de esa Sala, y reporta. Aquí también se **materializan** los paquetes traídos de otros proyectos.
   **Si el paquete es investigación de un dominio sin hogar en la Sala A**, materialízalo en la **bóveda global existente** con la clave `dominio:<slug>` + una nota-índice (MOC) — **nunca una bóveda nueva** (`sabio-shared` expone una sola); promueve la síntesis autocontenida, sin copiar wikilinks de la bóveda local de origen.
 - **En otro proyecto** → el plano global es **read-only** desde aquí (vía `sabio-shared`). **No escribas** el global.
-  Produce un **paquete de promoción** (candidato + Sala destino + ID propuesto + procedencia) como salida, deja el
-  registro en la **Sala D local**, e indica: *"para consumar, ejecuta `/promover` en el Centro de Mando con este paquete"*.
+  Produce un **paquete de promoción** (candidato + Sala destino + ID propuesto + procedencia + fuente oficial, ya **project-neutral**) y déjalo en el **buzón** `04-Recursos/04-Aprendizaje/promociones/<id>.md` con `estado: pendiente`. Para consumar, en el **Centro de Mando** corre **`/sabio-promover-buzon`** — lo descubre y materializa **solo**, sin copia-pega ni rutas a mano *(alternativa: `/sabio-promover` con la ruta del archivo)*. Después, avanza el registro a `estado: promovido` con el ID estable que devuelva el Centro.
   Nunca escribas en otro proyecto ni en el plano global automáticamente (aislamiento).
 
 ## 5. Federar de vuelta

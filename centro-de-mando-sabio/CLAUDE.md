@@ -19,7 +19,7 @@
 - Este es el **único** sitio con **escritura** sobre el plano global (la Sala A transversal
   multi-dominio + las Salas C y D transversales). Desde los proyectos, el plano global es **solo-lectura** (vía el MCP
   `sabio-shared`).
-- `/promover` **materializa aquí** los candidatos genéricos triados y traídos desde los proyectos.
+- `/sabio-promover` **materializa aquí** los candidatos genéricos triados y traídos desde los proyectos.
 
 ## Sede de despliegue (poderes y límites)
 - Puede **desplegar el Kit** (`Crear-Proyecto.ps1` / `Actualizar-Proyecto.ps1`) hacia el destino que el

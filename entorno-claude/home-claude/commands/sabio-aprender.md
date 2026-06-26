@@ -1,11 +1,11 @@
 ---
-description: Captura un aprendizaje en la Sala D local (puerta de ENTRADA, ligera). Complementa a /promover (la salida) — /aprender solo registra; /promover tria y gradúa. Escribe append-only con origen:construccion, estado:pendiente. Mecánico.
+description: Captura un aprendizaje en la Sala D local (puerta de ENTRADA, ligera). Complementa a /sabio-promover (la salida) — /sabio-aprender solo registra; /sabio-promover tria y gradúa. Escribe append-only con origen:construccion, estado:pendiente. Mecánico.
 argument-hint: [aprendizaje en texto libre | --sesion (destila lo aprendido en esta sesión)]
 model: haiku
 ---
 
 Suelta un aprendizaje al **buzón local** (Sala D) sin disparar el triaje. Es la **puerta de entrada**
-del volante de aprendizaje; la de salida es `/promover`. **Captura ≠ triaje:** aquí solo se registra
+del volante de aprendizaje; la de salida es `/sabio-promover`. **Captura ≠ triaje:** aquí solo se registra
 como hipótesis, nace sin confianza, y el ascenso lo decide después el triaje.
 
 ## 1. Identificar el aprendizaje ("$ARGUMENTS")
@@ -18,7 +18,7 @@ como hipótesis, nace sin confianza, y el ascenso lo decide después el triaje.
 
 ## 2. Localizar la Sala D del proyecto ACTIVO (captura siempre local)
 Escribe en `04-Recursos/04-Aprendizaje/registros/` del **proyecto en curso**. **Nunca** en otro
-proyecto ni en el plano global (eso es trabajo de `/promover` desde el Centro de Mando). Respeta el
+proyecto ni en el plano global (eso es trabajo de `/sabio-promover` desde el Centro de Mando). Respeta el
 aislamiento (Capa 1).
 
 ## 3. Escribir UN registro (append-only)
@@ -55,7 +55,7 @@ promovido_a: ""
 
 ## 4. Reportar (no triar)
 Devuelve el `aprendizaje:<id>` creado y recuerda: queda **`pendiente`**; para graduarlo, más tarde
-`/promover --recientes`. **No** modifiques fichas, **no** promuevas nada y **no** verifiques aquí.
+`/sabio-promover --recientes`. **No** modifiques fichas, **no** promuevas nada y **no** verifiques aquí.
 
 ## Reglas (no negociables)
 - **Append-only:** no edites ni borres registros; solo creas uno nuevo.

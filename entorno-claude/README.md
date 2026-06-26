@@ -8,7 +8,7 @@
 - `CLAUDE.md` — preferencias transversales (plantilla: ajústala a tu idioma y tu forma de trabajar).
 - `settings.json` — permisos y **hooks** de sesión (sin secretos; las rutas usan el marcador `<TU_CARPETA_HOME>`).
 - `agents/` — 7 agentes nivel-usuario: `commit-writer`, `code-reviewer`, `doc-writer`, `research-curator`, `sabio-curator`, `sabio-reflector`, `security-engineer`.
-- `commands/` — slash commands: `/aprender`, `/sabio-reflector`, `/promover`, `/memory-lint`, `/disenar`.
+- `commands/` — slash commands: `/sabio-aprender`, `/sabio-reflector`, `/sabio-promover`, `/memory-lint`, `/disenar`.
 - `scripts/` — hooks: `hook-session-start.ps1`, `hook-pre-compact.ps1`.
 
 ## Aplicar el entorno en una máquina nueva

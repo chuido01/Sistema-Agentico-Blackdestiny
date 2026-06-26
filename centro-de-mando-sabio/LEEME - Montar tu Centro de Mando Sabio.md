@@ -37,7 +37,7 @@ Monta mi Centro de Mando Sabio en la ruta <RUTA>. Haz esto:
 - Al crear un proyecto con el Kit, pásale `-CentroDeMando "<RUTA>"`: el `.mcp.json` del proyecto
   quedará apuntando a `<RUTA>/mcp/server.py` con `SABIO_GLOBAL_ROOT=<RUTA>`.
 - Desde un proyecto, el plano global es **solo-lectura** (las 4 herramientas `sabio_*`). La **escritura**
-  del plano global ocurre **solo aquí**, en el Centro de Mando, normalmente vía `/promover`.
+  del plano global ocurre **solo aquí**, en el Centro de Mando, normalmente vía `/sabio-promover`.
 
 ## Reglas que NO se rompen
 - El Centro de Mando **escribe hacia fuera solo para desplegar el Kit**; nunca lee ni importa el

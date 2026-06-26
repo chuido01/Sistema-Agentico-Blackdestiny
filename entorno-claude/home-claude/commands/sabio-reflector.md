@@ -1,14 +1,14 @@
 ---
-description: Reflexiona sobre un trabajo recién cerrado y deja el aprendizaje en la Sala D — el hermano "inteligente" de /aprender. Delega en el agente sabio-reflector (Opus): exige feedback externo, infiere la CAUSA, chequea novedad y escribe UN candidato verificado:false. Captura local; la salida sigue siendo /promover.
+description: Reflexiona sobre un trabajo recién cerrado y deja el aprendizaje en la Sala D — el hermano "inteligente" de /sabio-aprender. Delega en el agente sabio-reflector (Opus): exige feedback externo, infiere la CAUSA, chequea novedad y escribe UN candidato verificado:false. Captura local; la salida sigue siendo /sabio-promover.
 argument-hint: [contexto del trabajo cerrado | --sesion (reflexiona sobre esta sesión)]
 model: opus
 ---
 
 Dispara el patrón **Reflector** de SABIO sobre un trabajo **ya cerrado**. Es el hermano *inteligente* de
-`/aprender`: aquél captura mecánicamente lo que tú dictas; **`/sabio-reflector`** mira atrás con el
+`/sabio-aprender`: aquél captura mecánicamente lo que tú dictas; **`/sabio-reflector`** mira atrás con el
 **feedback externo** en la mano, **infiere la causa** (no el síntoma) y destila el aprendizaje antes de
 guardarlo. **Captura ≠ triaje:** deja una hipótesis (`verificado:false`); el ascenso lo decide después
-`/promover`.
+`/sabio-promover`.
 
 ## 1. Identificar sobre qué reflexionar ("$ARGUMENTS")
 - **Texto libre** → ese es el contexto del trabajo cerrado a reflexionar.
@@ -28,10 +28,10 @@ ejecución/error, verificación adversarial, tu reacción, el artefacto real). Q
 
 ## 3. Reportar (no triar)
 Devuelve el `aprendizaje:<id>` creado (o "sin aprendizaje real, no escribí nada"), qué **feedback
-externo** lo respalda, y recuerda: queda **`pendiente`**; para graduarlo, `/promover`.
+externo** lo respalda, y recuerda: queda **`pendiente`**; para graduarlo, `/sabio-promover`.
 
 ## Reglas (no negociables)
 - **Local:** captura en la Sala D del proyecto activo; **nunca** cruza a otro proyecto ni al plano global.
-- **Nunca auto-promueve** ni modifica fichas (B) ni notas (A): el ascenso es del triaje (`/promover`).
+- **Nunca auto-promueve** ni modifica fichas (B) ni notas (A): el ascenso es del triaje (`/sabio-promover`).
 - **Sin feedback externo no hay afirmación de corrección** — la confianza auto-reportada no es verificación.
 - **Sin ruido:** si no hay aprendizaje real, no escribas nada (la Sala D no es bitácora).

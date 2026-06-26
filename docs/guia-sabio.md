@@ -61,15 +61,16 @@ etiquetas distintas.
   una **etiqueta** + un mapa, **nunca** como una bóveda aparte. Etiqueta: `investigacion:<tema>`.
 - **Sala B · Catálogo** — Tus herramientas y activos. Fichas de lo que tienes: qué es, para qué sirve,
   qué cuesta. Etiqueta: `activo:<cosa>`.
-- **Sala C · Referencia (global)** — Normas y estándares externos (NIST, ISO, PCI). Son iguales para
-  todos, así que viven una sola vez en el plano global y todos los consultan. Etiqueta:
-  `norma:<marco>:<código>`.
+- **Sala C · Referencia (global)** — Normas y estándares externos, en el plano global. Se **segmenta por
+  ámbito**: `universal` (NIST/ISO/PCI — para todos), `jurisdiccion:` (la ley de aplicación general de un
+  país) y `sector:` (la regulación de un rubro). Sube lo que **necesita más de un proyecto**, no "lo
+  internacional"; cada proyecto declara su *perfil de aplicabilidad*. Etiqueta: `norma:<marco>:<código>`.
 - **Sala D · Aprendizaje** — Lecciones de lo que pasó, para no repetir errores: "la próxima vez, hazlo
-  así". Se llena de **dos formas**: al **construir** —con `/aprender` (rápido) o **`/sabio-reflector`** (reflexiona con feedback externo e infiere la causa)— y, en
+  así". Se llena de **dos formas**: al **construir** —con `/sabio-aprender` (rápido) o **`/sabio-reflector`** (reflexiona con feedback externo e infiere la causa)— y, en
   proyectos con agentes, **automáticamente** cuando un agente ejecuta. Etiqueta: `aprendizaje:<id>`.
 
 > **Dos perfiles, según el proyecto.** Un proyecto de documentación usa el perfil **base** (captura
-> sencilla con `/aprender`). Un proyecto con agentes usa el perfil **agéntico**, que añade un validador
+> sencilla con `/sabio-aprender`). Un proyecto con agentes usa el perfil **agéntico**, que añade un validador
 > automático y mide la confianza con números. Es la **misma** Sala D; solo cambia **cuánta maquinaria**
 > carga, según lo que el proyecto necesite.
 
@@ -163,8 +164,10 @@ SABIO puesto: las 5 carpetas, git, su regla de aislamiento, la bóveda y las 4 S
 y repetible.
 
 **El volante — el conocimiento se contagia.** Cuando aprendes algo que sirve a todos, el comando
-`/promover` lo sube al plano global (una sola copia) y los demás lo consultan por referencia. El
-comando `/memory-lint` vigila que nada se duplique entre capas.
+`/sabio-promover` lo sube al plano global (una sola copia) y los demás lo consultan por referencia. Desde
+el Centro, **`/sabio-promover-buzon`** descubre y materializa **solo** los paquetes que la flota dejó
+listos en su buzón, sin copia-pega (tú decides qué sube; el transporte es automático). El comando
+`/memory-lint` vigila que nada se duplique entre capas.
 
 ---
 
