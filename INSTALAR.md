@@ -48,7 +48,8 @@ Claude hará los **4 pasos** de abajo. Es seguro re-ejecutarlo: nunca sobrescrib
 Copia, desde [`entorno-claude/`](entorno-claude/) hacia la carpeta de configuración de usuario de
 Claude Code (`~/.claude/` en macOS/Linux, `%USERPROFILE%\.claude\` en Windows):
 
-- `commands/` → los skills `/sabio-aprender`, `/sabio-reflector`, `/sabio-promover`, `/memory-lint`, `/disenar`, y `/sabio-welcome`
+- `commands/` → los skills `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`,
+  `/sabio-converger`, `/memory-lint`, `/disenar`, y `/sabio-welcome`
   (despliegue end-to-end de un proyecto; se ejecuta desde tu Centro de Mando Sabio).
 - `agents/` → los 7 agentes (curador SABIO, reflector de auto-mejora, curador de investigación, revisor de código,
   commit-writer, doc-writer, seguridad).

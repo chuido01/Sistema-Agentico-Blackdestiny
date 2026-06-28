@@ -130,9 +130,11 @@ Sin esto, los proyectos serían islas que repiten trabajo. El volante hace que l
   listos en su buzón: automatiza el *transporte* del volante, sin copia-pega. Tú eliges qué sube.
 - **`/memory-lint`** — vigila que no haya conocimiento duplicado ni desactualizado. Por defecto solo
   reporta, no toca nada.
-- **`/sabio-aprender`** — captura una lección en la Sala D local (la puerta de entrada).
-- **`/sabio-reflector`** — reflexiona sobre un trabajo cerrado con feedback externo e infiere la lección
-  antes de guardarla (la captura inteligente; hermana de `/sabio-aprender`).
+- **`/sabio-aprender`** — captura una lección en la Sala D local (la puerta de entrada). Su modo
+  **`--reflexivo`** reflexiona sobre un trabajo cerrado con feedback externo e infiere la lección antes
+  de guardarla (la captura inteligente). *(`/sabio-reflector` se conserva como alias deprecado.)*
+- **`/sabio-converger`** — (solo en el Centro) converge la flota al molde canónico del Kit: detecta el
+  *drift* generacional de cada proyecto y, con tu OK, re-proyecta lo atrasado sin tocar su contenido.
 - **`/disenar`** — ante una duda de diseño, da una recomendación equilibrando simplicidad y estructura.
 
 ---

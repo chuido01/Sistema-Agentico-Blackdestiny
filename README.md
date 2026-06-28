@@ -76,7 +76,7 @@ Todo lo que es SABIO hoy, en versión genérica y reutilizable:
 | 🏛 **Centro de Mando Sabio** | El molde del *hub* / plano global que sirve a todos tus proyectos. |
 | 🔌 **MCP `sabio-shared`** | El puente de solo-lectura para que un proyecto consulte el plano global. |
 | 🤖 **Autoaprendizaje** | El patrón **Reflector** (agente `sabio-reflector`): reflexiona con feedback externo e infiere la lección antes de guardarla. Más el perfil agéntico de la Sala D: captura + validador. |
-| ⌨️ **Skills / comandos** | `/sabio-aprender`, `/sabio-reflector`, `/sabio-promover`, `/sabio-promover-buzon`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
+| ⌨️ **Skills / comandos** | `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
 | 📮 **Buzón de promoción** | `/sabio-promover-buzon` (desde el Centro): descubre **automáticamente** los paquetes que los proyectos dejan listos en su buzón y materializa el que elijas — automatiza el *transporte* del volante, sin copia-pega. Tú decides qué sube (el *gate*); el escaneo solo lo trae. Lee solo el buzón de cada proyecto, nunca su bóveda. |
 | 🧠 **Agentes** | Curador de SABIO, reflector de auto-mejora, curador de investigación, revisor de código, escritor de commits, de documentación y de seguridad. |
 | 📊 **Dashboard de flota** | Panel **offline** (Python + HTML) que muestra la salud de tus proyectos (git, SABIO, backups, seguridad) y qué atender primero ([`dashboard/`](dashboard/)). |
@@ -130,7 +130,7 @@ sabio-blackdestiny/
 │   └── home-claude/                  #   el contenido que va a ~/.claude:
 │       ├── CLAUDE.md                 #     preferencias transversales (plantilla genérica)
 │       ├── settings.json             #     ajustes + hooks de sesión
-│       ├── commands/                 #     skills: sabio-aprender · sabio-reflector · sabio-promover · sabio-promover-buzon · memory-lint · disenar · sabio-welcome
+│       ├── commands/                 #     skills: sabio-aprender (modo --reflexivo) · sabio-promover · sabio-promover-buzon · sabio-converger · memory-lint · disenar · sabio-welcome (+ alias sabio-reflector)
 │       ├── agents/                   #     7 agentes: sabio-curator · sabio-reflector · research-curator · code-reviewer · commit-writer · doc-writer · security-engineer
 │       └── scripts/                  #     hooks: recordatorio al iniciar sesión · captura al compactar
 │
