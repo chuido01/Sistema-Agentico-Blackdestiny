@@ -50,9 +50,11 @@ Claude Code (`~/.claude/` en macOS/Linux, `%USERPROFILE%\.claude\` en Windows):
 
 - `commands/` → los skills `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`,
   `/sabio-converger`, `/memory-lint`, `/disenar`, y `/sabio-welcome`
-  (despliegue end-to-end de un proyecto; se ejecuta desde tu Centro de Mando Sabio).
-- `agents/` → los 7 agentes (curador SABIO, reflector de auto-mejora, curador de investigación, revisor de código,
-  commit-writer, doc-writer, seguridad).
+  (despliegue end-to-end de un proyecto; se ejecuta desde tu Centro de Mando Sabio) — más los de la
+  fábrica GREMIO: `/gremio-iniciar`, `/gremio-continuar`, `/gremio-analizar`, `/gremio-converger` y `/council`.
+- `agents/` → los 40 agentes: 7 transversales (curador SABIO, reflector de auto-mejora, curador de investigación,
+  revisor de código, commit-writer, doc-writer, seguridad) + los 33 de GREMIO (en subcarpetas `<División> Gremio/`;
+  ver [`gremio/README.md`](gremio/README.md)).
 - `scripts/` → los hooks de sesión (recordatorio de reglas al iniciar, captura al compactar).
 - `CLAUDE.md` → preferencias transversales (plantilla genérica; el usuario la edita).
 
@@ -124,8 +126,9 @@ Verifica la instalación de SABIO: lista los comandos y agentes en ~/.claude, co
 el MCP sabio-shared responde, y muéstrame el árbol del proyecto que creaste.
 ```
 
-Deberías ver: los 6 comandos, los 7 agentes, el MCP `sabio-shared` conectado y un proyecto con sus
-5 carpetas + las 4 Salas.
+Deberías ver: los 12 comandos (7 SABIO + 4 `gremio-*` + `council`), los 40 agentes (7 transversales
++ 33 GREMIO), el MCP `sabio-shared` conectado y un proyecto con sus 5 carpetas + las Salas
+(A/B/C/D — la Sala E la crea GREMIO al operar en un proyecto).
 
 ---
 

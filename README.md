@@ -40,12 +40,13 @@ Es el patrón "LLM Wiki" de Andrej Karpathy.
 
 ## Cómo está organizado: 4 Salas y 2 planos
 
-El conocimiento se federa en **4 Salas** (cada dato vive en UNA sola; las demás lo señalan por su ID):
+El conocimiento se federa en **5 Salas** (cada dato vive en UNA sola; las demás lo señalan por su ID):
 
 - **Sala A · Investigación** — la bóveda de notas atómicas enlazadas (`investigacion:<tema>`). En el Centro de Mando es **multi-dominio**: un dominio nuevo se añade como una etiqueta + un mapa, **nunca** como una bóveda aparte.
 - **Sala B · Catálogo** — fichas de tus herramientas y activos (`activo:<cosa>`).
 - **Sala C · Referencia** — normas y estándares externos (`norma:<marco>:<código>`). Se **segmenta por ámbito** con una etiqueta: `universal` (marcos internacionales — NIST/ISO/PCI — para todos), `jurisdiccion:` (la legislación de aplicación general de un país) y `sector:` (la regulación de un rubro). Lo que sube al plano global es lo que **necesita más de un proyecto**, no "lo internacional"; cada proyecto declara su *perfil de aplicabilidad* y resuelve lo `universal` + lo suyo.
 - **Sala D · Aprendizaje** — lecciones para no repetir errores (`aprendizaje:<id>`).
+- **Sala E · Decisiones (Gremio)** — la bitácora de **Decision Records** (`dr:<dominio>-<n>`) que alimenta la fábrica GREMIO (abajo). **Local por proyecto y nunca se federa**: una decisión es del producto que la tomó.
 
 Y en **2 planos**, unidos por una sola flecha **hacia arriba y de solo lectura**:
 
@@ -56,8 +57,8 @@ PLANO GLOBAL · Centro de Mando Sabio   (solo lectura)
                  │  el proyecto LEE el plano global (solo lectura, vía sabio-shared)
                  │
 PLANO LOCAL · Proyecto   (aislado)
-  Sala A (Investigación) · Sala B (Catálogo) · Sala D (captura local)
-  /sabio-aprender → /sabio-promover  sube lo genérico ↑ al plano global
+  Sala A (Investigación) · Sala B (Catálogo) · Sala D (captura local) · Sala E (Decisiones · DRs)
+  /sabio-aprender → /sabio-promover  sube lo genérico ↑ al plano global (los DR jamás suben)
 ```
 
 > Un proyecto **jamás** lee la carpeta de otro proyecto. Solo puede *consultar* el plano global
@@ -79,6 +80,7 @@ Todo lo que es SABIO hoy, en versión genérica y reutilizable:
 | ⌨️ **Skills / comandos** | `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
 | 📮 **Buzón de promoción** | `/sabio-promover-buzon` (desde el Centro): descubre **automáticamente** los paquetes que los proyectos dejan listos en su buzón y materializa el que elijas — automatiza el *transporte* del volante, sin copia-pega. Tú decides qué sube (el *gate*); el escaneo solo lo trae. Lee solo el buzón de cada proyecto, nunca su bóveda. |
 | 🧠 **Agentes** | Curador de SABIO, reflector de auto-mejora, curador de investigación, revisor de código, escritor de commits, de documentación y de seguridad. |
+| 🏭 **GREMIO — fábrica agéntica** | La agencia de software de IA que construye **sobre** SABIO: 1 Factory Management + 8 Líderes + 24 Especialistas (33 agentes) colaborando sobre Decision Records (Sala E) con compuertas de verificación y **firma humana**. Protocolo completo en [`gremio/`](gremio/). *SABIO sabe; GREMIO construye.* |
 | 📊 **Dashboard de flota** | Panel **offline** (Python + HTML) que muestra la salud de tus proyectos (git, SABIO, backups, seguridad) y qué atender primero ([`dashboard/`](dashboard/)). |
 | 📚 **Guías** | Documentación visual "en cristiano" de cada componente ([`docs/`](docs/)). |
 
@@ -130,9 +132,18 @@ sabio-blackdestiny/
 │   └── home-claude/                  #   el contenido que va a ~/.claude:
 │       ├── CLAUDE.md                 #     preferencias transversales (plantilla genérica)
 │       ├── settings.json             #     ajustes + hooks de sesión
-│       ├── commands/                 #     skills: sabio-aprender (modo --reflexivo) · sabio-promover · sabio-promover-buzon · sabio-converger · memory-lint · disenar · sabio-welcome (+ alias sabio-reflector)
-│       ├── agents/                   #     7 agentes: sabio-curator · sabio-reflector · research-curator · code-reviewer · commit-writer · doc-writer · security-engineer
+│       ├── commands/                 #     skills: sabio-aprender (modo --reflexivo) · sabio-promover · sabio-promover-buzon · sabio-converger · memory-lint · disenar · sabio-welcome (+ alias sabio-reflector) · council · gremio-iniciar · gremio-continuar · gremio-analizar · gremio-converger
+│       ├── agents/                   #     40 agentes: 7 transversales (sabio-curator · sabio-reflector · research-curator · code-reviewer · commit-writer · doc-writer · security-engineer) + 33 GREMIO (en subcarpetas <División> Gremio/)
 │       └── scripts/                  #     hooks: recordatorio al iniciar sesión · captura al compactar
+│
+├── gremio/                           # 🏭 GREMIO — la fábrica agéntica (protocolo completo)
+│   ├── Protocolo GREMIO.md           #   doc rector: ciclo de vida, compuertas, contratos por dominio
+│   ├── ROSTER.md                     #   catálogo de los 33 agentes (derivado de sus frontmatter)
+│   ├── README.md                     #   qué es, estado honesto y cómo se instala
+│   ├── comandos/                     #   fuente de /gremio-iniciar y /gremio-continuar
+│   ├── compuertas/                   #   fuente de /gremio-analizar y /gremio-converger
+│   ├── plantillas/                   #   DR.md · plan.md · agente.md · runbook.md (las canónicas)
+│   └── simulacros/                   #   suite de regresión de las compuertas (3 defectos sembrados)
 │
 └── docs/                             # 📚 guías "en cristiano"
     ├── guia-sabio.md                 #   qué es SABIO y cómo se usa, sin jerga
@@ -154,6 +165,30 @@ es Claude quien ejecuta los pasos adaptándose a tu sistema.
 ```
 
 👉 Guía completa, paso a paso: **[`INSTALAR.md`](INSTALAR.md)**
+
+---
+
+## GREMIO — la fábrica agéntica (el alcance de esta versión)
+
+Desde 2026-07, este repo incorpora **GREMIO** (*Gobierno de Roles Especializados, Métodos,
+Implementación y Orquestación*): la capa agéntica que construye software **sobre** el conocimiento
+de SABIO. **SABIO sabe; GREMIO construye.**
+
+- **Qué es:** una fábrica de 3 niveles — 1 **Factory Management** (PM/PO, dueño del Plan) + 8 **Líderes**
+  (uno por dominio: Arquitectura, Datos, Seguridad, Desarrollo, Diseño, Calidad, Infraestructura,
+  Cambio/Soporte) que **deciden**, + 24 **Especialistas** que **ejecutan**. Colaboran sobre **Decision
+  Records** vivos (la Sala E), con **compuertas de verificación** (`/gremio-analizar`, `/gremio-converger`)
+  y **firma humana** antes de declarar nada "hecho".
+- **Dónde está:** protocolo, plantillas y compuertas en [`gremio/`](gremio/); los 33 agentes y los
+  comandos, en `entorno-claude/home-claude/` (se instalan a `~/.claude` con el resto del entorno).
+- **Estado, con honestidad:** GREMIO se probó en campo dos veces con resultado adverso (una corrida
+  fallida-y-corregida y un producto real clasificado **fracaso** con veredicto firmado). Esas lecciones
+  se convirtieron en **mecanismo** — invariantes, slice final de endurecimiento obligatorio, contratos
+  estándar por dominio (§9 del Protocolo), compuerta de auditoría (§10) y una suite de simulacros que
+  las compuertas pasan 4/4. **La versión reformada que publica este repo aún no tiene una corrida real
+  en verde**; publicamos el protocolo Y su historia porque el sistema está diseñado para que el fracaso
+  enseñe (la Sala D y el volante de aprendizaje son parte de SABIO). Si lo usas, la firma —y el riesgo—
+  son tuyos: las compuertas existen exactamente para eso.
 
 ---
 
