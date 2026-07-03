@@ -16,8 +16,6 @@
 > council that red-teams your decisions) — all driven by Claude Code. Everything below is in Spanish; the
 > install guide ([`INSTALAR.md`](INSTALAR.md)) is run by Claude Code itself.*
 
-**SABIO** = **S**istema de **A**rchivos, **B**óvedas e **Í**ndices **O**rganizados (el componente de conocimiento).
-
 ---
 
 ## Los tres componentes
@@ -181,30 +179,6 @@ tres componentes (SABIO + GREMIO + COUNCIL) en tu `~/.claude`.
 ```
 
 👉 Guía completa, paso a paso: **[`INSTALAR.md`](INSTALAR.md)**
-
----
-
-## GREMIO — la fábrica agéntica (el alcance de esta versión)
-
-Desde 2026-07, este repo incorpora **GREMIO** (*Gobierno de Roles Especializados, Métodos,
-Implementación y Orquestación*): la capa agéntica que construye software **sobre** el conocimiento
-de SABIO. **SABIO sabe · GREMIO construye · COUNCIL delibera.**
-
-- **Qué es:** una fábrica de 3 niveles — 1 **Factory Management** (PM/PO, dueño del Plan) + 8 **Líderes**
-  (uno por dominio: Arquitectura, Datos, Seguridad, Desarrollo, Diseño, Calidad, Infraestructura,
-  Cambio/Soporte) que **deciden**, + 24 **Especialistas** que **ejecutan**. Colaboran sobre **Decision
-  Records** vivos (la Sala E), con **compuertas de verificación** (`/gremio-analizar`, `/gremio-converger`)
-  y **firma humana** antes de declarar nada "hecho".
-- **Dónde está:** protocolo, plantillas y compuertas en [`gremio/`](gremio/); los 33 agentes y los
-  comandos, en `entorno-claude/home-claude/` (se instalan a `~/.claude` con el resto del entorno).
-- **Estado, con honestidad:** GREMIO se probó en campo dos veces con resultado adverso (una corrida
-  fallida-y-corregida y un producto real clasificado **fracaso** con veredicto firmado). Esas lecciones
-  se convirtieron en **mecanismo** — invariantes, slice final de endurecimiento obligatorio, contratos
-  estándar por dominio (§9 del Protocolo), compuerta de auditoría (§10) y una suite de simulacros que
-  las compuertas pasan 4/4. **La versión reformada que publica este repo aún no tiene una corrida real
-  en verde**; publicamos el protocolo Y su historia porque el sistema está diseñado para que el fracaso
-  enseñe (la Sala D y el volante de aprendizaje son parte de SABIO). Si lo usas, la firma —y el riesgo—
-  son tuyos: las compuertas existen exactamente para eso.
 
 ---
 
