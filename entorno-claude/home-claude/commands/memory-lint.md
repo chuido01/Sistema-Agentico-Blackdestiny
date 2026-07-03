@@ -18,6 +18,12 @@ Ejecuta un **lint de memoria/conocimiento** para el **proyecto actual**, haciend
    - Grafo del wiki: **`[[enlaces]]` rotos = 0**, notas **huérfanas**, índices al día (`index.md` de la bóveda + `04-Recursos/00-INDICE-DE-INDICES.md`).
    - **Plano global:** si el proyecto declara el MCP `sabio-shared`, comprueba que cada `norma:` (Sala C) sea un **puntero** al plano global, no una **copia** local.
 2. **Auto-memoria** (`~/.claude/projects/<proyecto>/memory/` + su `MEMORY.md`). **Invoca el skill `consolidate-memory`** (pase reflexivo: fusiona duplicados, corrige hechos obsoletos, poda el índice).
+   > **Presupuestos:** `MEMORY.md` de auto-memoria ≈ **60 líneas máx**; `index.md` de la
+   > bóveda y cada MOC declaran su presupuesto en cabecera (default ≈ **150 entradas**; los índices de la
+   > Sala A los mide el pase del punto 1). Al cruzar el **80 %** el informe marca **«consolidación requerida»**
+   > (prioridad alta); al **100 %**, regla *error-antes-que-truncar*: no se admite alta nueva sin consolidar
+   > antes (nunca recortar en silencio). *(Cifras = propuesta inicial; se calibran en la primera corrida y
+   > quedan escritas aquí.)*
 3. **Cruce entre capas (anti-duplicación):** el **mismo hecho** no debe vivir a la vez en `CLAUDE.md` ↔ una Sala ↔ auto-memoria. Para cada colisión, elige la **fuente canónica** y deja las demás como **referencia**:
    - Preferencia **transversal** (cómo trabajar, gustos) → `~/.claude/CLAUDE.md`.
    - Hecho **específico del proyecto** → el `CLAUDE.md` del proyecto o su Sala (según el tipo).
@@ -30,4 +36,4 @@ Ejecuta un **lint de memoria/conocimiento** para el **proyecto actual**, haciend
 - Respeta el `LEEME - Esquema` de cada Sala y el esquema del `CLAUDE.md` de la bóveda.
 
 ## Salida
-Un **informe** con: duplicados (con la fuente canónica propuesta), *drift*/hechos obsoletos, `[[enlaces]]` rotos, notas huérfanas, colisiones entre capas, copias que deberían ser punteros al plano global, y **drift del entorno IA versionado ↔ desplegado** (en el Centro). Si corriste con `--fix`, añade qué se aplicó y qué quedó pendiente de confirmación.
+Un **informe** con: duplicados (con la fuente canónica propuesta), *drift*/hechos obsoletos, `[[enlaces]]` rotos, notas huérfanas, colisiones entre capas, copias que deberían ser punteros al plano global, **presupuestos de índices** (ocupación real % por archivo — `MEMORY.md`, `index.md` de la bóveda, MOCs; ≥ 80 % ⇒ «consolidación requerida», 100 % ⇒ error-antes-que-truncar), y **drift del entorno IA versionado ↔ desplegado** (en el Centro). Si corriste con `--fix`, añade qué se aplicó y qué quedó pendiente de confirmación.

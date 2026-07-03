@@ -2,7 +2,7 @@
 
 > **GREMIO** = *Gobierno de Roles Especializados, Métodos, Implementación y Orquestación.*
 > La agencia de software de IA que construye **sobre** el conocimiento de SABIO.
-> **SABIO sabe; GREMIO construye con ese saber.**
+> **SABIO sabe · GREMIO construye · COUNCIL delibera.**
 
 ## Qué hay en esta carpeta
 

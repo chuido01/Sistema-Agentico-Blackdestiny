@@ -1,4 +1,4 @@
-# Dashboard de Flota — la salud de tus proyectos SABIO de un vistazo
+# Dashboard de Flota — la salud de los proyectos de tu flota de un vistazo
 
 Un panel HTML **modular, 100 % offline, sin servidor** que muestra el estado real de tus proyectos
 (git, conocimiento SABIO, stack, despliegue, MCP, backups, seguridad) y **qué atender primero**.

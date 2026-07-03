@@ -1,6 +1,8 @@
 # <NombreProyecto>
 Propósito: <una línea — RELLENAR>.
 
+> **El sistema completo en 2 minutos:** al iniciar sesión, lee `00-Documentacion/SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md` (el anclaje del **Sistema Agéntico Blackdestiny**: SABIO + GREMIO + COUNCIL y la convención `_CONTINUIDAD`).
+
 ## Hechos estables (NO inventar)
 - Marca / nombre: <RELLENAR>
 - Paleta / colores: <RELLENAR>

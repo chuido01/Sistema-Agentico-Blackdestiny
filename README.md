@@ -1,18 +1,32 @@
-# SABIO Blackdestiny
+# Sistema Agéntico Blackdestiny
 
 <img width="2752" height="1536" alt="SABIO__Cerebro_para_memoria_IA" src="https://github.com/user-attachments/assets/3d0b5db7-973b-412f-a5f4-b42d67b10a23" />
 
 
-> **La memoria a largo plazo para trabajar con IA — sin base de datos vectorial, sin RAG.**
-> Un sistema de archivos de texto, bóvedas-wiki e índices que tu asistente (Claude Code) lee
-> directamente. Ordenado, federado y aislado por proyecto.
+> **Una plataforma para trabajar con IA de principio a fin — sin base de datos vectorial, sin RAG.**
+> Reúne tres componentes: **SABIO** (la memoria a largo plazo, en archivos de texto que Claude Code lee
+> directamente), **GREMIO** (la fábrica agéntica que construye software sobre ese saber) y **COUNCIL**
+> (un consejo deliberativo que somete tus decisiones a debate). Ordenado, federado y aislado por proyecto.
 
-> 🌎 **English, in one line:** *SABIO is a no-RAG long-term memory system for working with AI
-> coding assistants — plain Markdown vaults, four federated "rooms" of knowledge, and a
-> Claude-Code-driven installer. Everything below is in Spanish; the install guide
-> ([`INSTALAR.md`](INSTALAR.md)) is run by Claude Code itself.*
+> **SABIO sabe · GREMIO construye · COUNCIL delibera.**
 
-**SABIO** = **S**istema de **A**rchivos, **B**óvedas e **Í**ndices **O**rganizados.
+> 🌎 **English, in one line:** *An end-to-end platform for working with AI coding assistants, no RAG:
+> **SABIO** (a no-RAG long-term memory of plain Markdown vaults, five federated "rooms" of knowledge),
+> **GREMIO** (an agentic software factory that builds on that knowledge) and **COUNCIL** (a deliberative
+> council that red-teams your decisions) — all driven by Claude Code. Everything below is in Spanish; the
+> install guide ([`INSTALAR.md`](INSTALAR.md)) is run by Claude Code itself.*
+
+**SABIO** = **S**istema de **A**rchivos, **B**óvedas e **Í**ndices **O**rganizados (el componente de conocimiento).
+
+---
+
+## Los tres componentes
+
+| Componente | Qué hace | Dónde vive |
+|---|---|---|
+| 🧠 **SABIO** — *sabe* | La **memoria a largo plazo**: la wiki de conocimiento sin RAG, federada en 5 Salas y aislada por proyecto. Es la base sobre la que se apoyan los otros dos. | Este README + [`docs/`](docs/) |
+| 🏭 **GREMIO** — *construye* | La **fábrica agéntica** que convierte una idea en software: 1 Factory Management + 8 Líderes + 24 Especialistas (33 agentes) que deciden con Decision Records (Sala E), con compuertas de verificación y **firma humana**. | [`gremio/`](gremio/) |
+| 🏛 **COUNCIL** — *delibera* | Un **consejo deliberativo** (`/council`): 5 personas + un *chairman* que someten una idea o decisión a debate y red-team. Aporta **ángulo y cobertura de puntos ciegos**, no exactitud factual (es homogéneo: son instancias del mismo modelo). | comando `/council` |
 
 ---
 
@@ -68,7 +82,7 @@ PLANO LOCAL · Proyecto   (aislado)
 
 ## Qué incluye este repo
 
-Todo lo que es SABIO hoy, en versión genérica y reutilizable:
+Todo el Sistema Agéntico Blackdestiny hoy (SABIO + GREMIO + COUNCIL), en versión genérica y reutilizable:
 
 | Componente | Qué es |
 |---|---|
@@ -80,7 +94,8 @@ Todo lo que es SABIO hoy, en versión genérica y reutilizable:
 | ⌨️ **Skills / comandos** | `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome`. |
 | 📮 **Buzón de promoción** | `/sabio-promover-buzon` (desde el Centro): descubre **automáticamente** los paquetes que los proyectos dejan listos en su buzón y materializa el que elijas — automatiza el *transporte* del volante, sin copia-pega. Tú decides qué sube (el *gate*); el escaneo solo lo trae. Lee solo el buzón de cada proyecto, nunca su bóveda. |
 | 🧠 **Agentes** | Curador de SABIO, reflector de auto-mejora, curador de investigación, revisor de código, escritor de commits, de documentación y de seguridad. |
-| 🏭 **GREMIO — fábrica agéntica** | La agencia de software de IA que construye **sobre** SABIO: 1 Factory Management + 8 Líderes + 24 Especialistas (33 agentes) colaborando sobre Decision Records (Sala E) con compuertas de verificación y **firma humana**. Protocolo completo en [`gremio/`](gremio/). *SABIO sabe; GREMIO construye.* |
+| 🏭 **GREMIO — fábrica agéntica** | La agencia de software de IA que construye **sobre** SABIO: 1 Factory Management + 8 Líderes + 24 Especialistas (33 agentes) colaborando sobre Decision Records (Sala E) con compuertas de verificación y **firma humana**. Protocolo completo en [`gremio/`](gremio/). *SABIO sabe · GREMIO construye · COUNCIL delibera.* |
+| 🏛 **COUNCIL — consejo deliberativo** | El comando `/council`: 5 personas + un *chairman* que someten una idea o decisión a debate y red-team. Aporta ángulo y cobertura de puntos ciegos —no exactitud factual— y es el modo de auditoría adversarial que GREMIO puede invocar antes de firmar un DR de alto riesgo. |
 | 📊 **Dashboard de flota** | Panel **offline** (Python + HTML) que muestra la salud de tus proyectos (git, SABIO, backups, seguridad) y qué atender primero ([`dashboard/`](dashboard/)). |
 | 📚 **Guías** | Documentación visual "en cristiano" de cada componente ([`docs/`](docs/)). |
 
@@ -92,8 +107,8 @@ Cada archivo, con su rol. Lo **generado** (entornos `.venv/`, `flota.config.json
 `panel/datos/`) no se versiona: se crea en tu máquina al instalar/escanear.
 
 ```text
-sabio-blackdestiny/
-├── README.md                         # este archivo: qué es SABIO y qué incluye
+sistema-agentico-blackdestiny/
+├── README.md                         # este archivo: qué es el Sistema Agéntico y qué incluye
 ├── INSTALAR.md                       # guía de instalación que Claude Code ejecuta (4 pasos)
 ├── LICENSE                           # licencia MIT
 ├── .gitignore                        # ignora venvs, config local y datos generados
@@ -155,13 +170,14 @@ sabio-blackdestiny/
 
 ## Instalación
 
-SABIO se instala **conduciendo a Claude Code** — funciona en **Windows, macOS y Linux** porque
-es Claude quien ejecuta los pasos adaptándose a tu sistema.
+El Sistema Agéntico Blackdestiny se instala **conduciendo a Claude Code** — funciona en **Windows, macOS
+y Linux** porque es Claude quien ejecuta los pasos adaptándose a tu sistema. Una sola instalación deja los
+tres componentes (SABIO + GREMIO + COUNCIL) en tu `~/.claude`.
 
 ```text
 1. Clona este repo.
 2. Abre Claude Code en la carpeta del repo.
-3. Dile:  «Instala SABIO siguiendo INSTALAR.md»
+3. Dile:  «Instala el Sistema Agéntico Blackdestiny siguiendo INSTALAR.md»
 ```
 
 👉 Guía completa, paso a paso: **[`INSTALAR.md`](INSTALAR.md)**
@@ -172,7 +188,7 @@ es Claude quien ejecuta los pasos adaptándose a tu sistema.
 
 Desde 2026-07, este repo incorpora **GREMIO** (*Gobierno de Roles Especializados, Métodos,
 Implementación y Orquestación*): la capa agéntica que construye software **sobre** el conocimiento
-de SABIO. **SABIO sabe; GREMIO construye.**
+de SABIO. **SABIO sabe · GREMIO construye · COUNCIL delibera.**
 
 - **Qué es:** una fábrica de 3 niveles — 1 **Factory Management** (PM/PO, dueño del Plan) + 8 **Líderes**
   (uno por dominio: Arquitectura, Datos, Seguridad, Desarrollo, Diseño, Calidad, Infraestructura,
@@ -204,5 +220,5 @@ de SABIO. **SABIO sabe; GREMIO construye.**
 
 ## Licencia y crédito
 
-**SABIO Blackdestiny** — creado por **Blackdestiny**. Publicado bajo licencia **MIT**
+**Sistema Agéntico Blackdestiny** — creado por **Blackdestiny**. Publicado bajo licencia **MIT**
 (ver [`LICENSE`](LICENSE)): úsalo, adáptalo y compártelo libremente, manteniendo la atribución.

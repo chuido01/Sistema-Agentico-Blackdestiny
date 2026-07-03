@@ -60,6 +60,9 @@ El test comprueba: **estructura efectiva**, **aislamiento preservado** (el `CLAU
 
 **Lee el `exit code`** (0 = todos los checks críticos en PASS). Si hay **FAIL**, reporta el estado como
 **parcial**, explica qué falló y propón el arreglo — no continúes como si todo estuviera bien.
+(Caso típico recuperable: si no hay `python`/venv disponible, re-corre el test con `-OmitirCanal`
+—en macOS/Linux, salta el chequeo del canal— para validar el resto, y marca el canal como
+**pendiente**, no como roto.)
 
 ## Fase 4 · Adoptar en el panel (si usas el dashboard)
 Re-escanea la flota para que el proyecto nuevo aparezca:

@@ -8,8 +8,12 @@ function setVista(v){
   VISTA=v;
   $('view-control').classList.toggle('hidden', v!=='control');
   $('view-grid').classList.toggle('hidden', v!=='grid');
+  const va=$('view-ajustes'); if(va) va.classList.toggle('hidden', v!=='ajustes');
+  // el resumen de la flota (KPIs/cola/novedades) no aplica en Ajustes: se oculta ahí
+  const rf=$('resumen-flota'); if(rf) rf.classList.toggle('hidden', v==='ajustes');
   document.querySelectorAll('.nav-btn[data-view]').forEach(b=>{ const on=b.dataset.view===v; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on); });
   if(v==='control') requestAnimationFrame(drawLinks);
+  if(v==='ajustes' && typeof renderAjustes==='function') renderAjustes();
 }
 document.querySelectorAll('.nav-btn[data-view]').forEach(b=>b.onclick=()=>setVista(b.dataset.view));
 document.addEventListener('click', ev=>{

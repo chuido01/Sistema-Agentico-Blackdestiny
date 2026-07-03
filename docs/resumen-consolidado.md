@@ -1,4 +1,10 @@
-# SABIO Blackdestiny
+# Sistema Agéntico Blackdestiny — resumen consolidado
+
+> El Sistema Agéntico Blackdestiny reúne **tres componentes**: **SABIO** (el conocimiento/memoria),
+> **GREMIO** (la fábrica agéntica que construye sobre ese saber) y **COUNCIL** (el consejo que somete
+> las decisiones a debate). **SABIO sabe · GREMIO construye · COUNCIL delibera.** Este documento cubre
+> SABIO a fondo (sección 1–11) y cierra con GREMIO (§12) y COUNCIL (§13); el detalle de GREMIO vive en
+> [`../gremio/`](../gremio/).
 
 ## 1. Qué es SABIO (la idea en una frase)
 
@@ -149,3 +155,46 @@ Sin esto, los proyectos serían islas que repiten trabajo. El volante hace que l
 - **Federar** = guardar un dato una vez y que los demás lo señalen por su etiqueta, en vez de copiarlo.
 - **raw vs wiki** = fuentes originales intocables vs. las notas que la IA escribe a partir de ellas.
 - **MCP `sabio-shared`** = el puente de solo-lectura por el que un proyecto consulta el plano global.
+
+---
+
+## 12. GREMIO — la fábrica agéntica (construye sobre SABIO)
+
+Si SABIO es el conocimiento, **GREMIO** es quien lo pone a construir software. Es una **fábrica de 3
+niveles** de agentes que convierte una idea en un producto **sin improvisar**:
+
+- **1 Factory Management** — el jefe de proyecto: recibe la idea, hace el interrogatorio y redacta el
+  **Plan** (qué se va a construir, en términos agnósticos de tecnología). No decide arquitectura.
+- **8 Líderes** (uno por dominio: Arquitectura, Datos, Seguridad, Desarrollo, Diseño, Calidad,
+  Infraestructura, Cambio/Soporte) — **deciden** su parte y la registran en un **Decision Record (DR)**,
+  citando el conocimiento de SABIO que consultaron.
+- **24 Especialistas** — **ejecutan** lo que su Líder decidió y firmaste, y pegan la evidencia real.
+
+El **tablero** son los DRs, que viven en la **Sala E** de cada proyecto (**local; nunca se federa** —
+al plano global solo sube un aprendizaje destilado, jamás el DR). Nada se declara "hecho" por buena
+letra: hay **compuertas de verificación** —`/gremio-analizar` (consistencia entre Plan, DRs y código,
+de solo lectura) y `/gremio-converger` (compara el código real contra lo firmado, y añade lo que
+falte)— y, al final, tu **firma humana** anclada al estado verificado.
+
+**El ciclo corto:** `/gremio-iniciar <idea>` arranca la fábrica (triaje «¿merece GREMIO o basta la vía
+simple?» → interrogatorio → Plan) y `/gremio-continuar` la opera (lee el tablero, detecta la fase y
+ejecuta el siguiente lote). El protocolo completo, las plantillas y las compuertas están en
+[`../gremio/`](../gremio/).
+
+> **Honestidad:** la versión publicada es la **reformada tras dos corridas adversas**; sus mecanismos
+> (invariantes, slice final de endurecimiento, contratos por dominio, compuertas) nacieron de esos
+> fracasos. Aún no tiene una corrida real en verde: las compuertas y tu firma existen exactamente para
+> que "hecho" no sea un acto de fe.
+
+---
+
+## 13. COUNCIL — el consejo deliberativo (`/council`)
+
+**COUNCIL** somete una idea o una decisión a **debate estructurado**: 5 **personas** + un *chairman*
+que la discuten, la atacan (red-team) y devuelven una síntesis. Sirve para **idear, auditar una
+decisión o buscarle los puntos ciegos** antes de comprometerte — y es el modo de **auditoría
+adversarial** que GREMIO puede invocar antes de firmar un DR de alto riesgo (arquitectura, seguridad).
+
+> **Límite honesto:** el consejo es **homogéneo** —son instancias del mismo modelo hablando entre sí—,
+> así que aporta **ángulo y cobertura de puntos ciegos, no exactitud factual**. Amplía la perspectiva;
+> no reemplaza la verificación empírica ni una fuente de verdad.

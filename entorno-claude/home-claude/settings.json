@@ -50,20 +50,20 @@
             "statusMessage": "Reinyectando reglas de aislamiento (SABIO)..."
           }
         ]
-      }
-    ],
-    "PreCompact": [
+      },
       {
+        "matcher": "compact",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"<TU_CARPETA_HOME>\\.claude\\scripts\\hook-pre-compact.ps1\"",
-            "timeout": 10,
-            "statusMessage": "Checkpoint de estado pre-compactacion..."
+            "shell": "bash",
+            "command": "cat ~/.claude/scripts/continuity-flush.json",
+            "timeout": 5
           }
         ]
       }
-    ]
+    ],
+    "PreCompact": []
   },
   "env": {},
   "outputStyle": "default",

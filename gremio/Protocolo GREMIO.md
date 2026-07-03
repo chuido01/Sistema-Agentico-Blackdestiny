@@ -4,7 +4,7 @@
 > Huella: todo artefacto GREMIO lleva `gremio: true`; convenciones `/gremio-*`, `gremio-<rol>`, `dr:<dominio>-<n>`, `plan:<proyecto>`.
 
 ## 1. Qué gobierna
-Convierte una idea en software profesional mediante una **disciplina de artefactos vivos + compuertas empíricas + firma humana**, no mediante personalidades. **SABIO sabe; GREMIO construye con ese saber.**
+Convierte una idea en software profesional mediante una **disciplina de artefactos vivos + compuertas empíricas + firma humana**, no mediante personalidades. **SABIO sabe · GREMIO construye · COUNCIL delibera.**
 
 ## 2. Los artículos del tablero
 | Artefacto | Dueño | Equivalente spec-kit | Vive en |

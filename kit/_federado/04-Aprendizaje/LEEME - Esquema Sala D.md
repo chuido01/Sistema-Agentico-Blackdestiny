@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 3 -->
+<!-- sabio-generacion: 4 -->
 # Sala D — Aprendizaje operativo (esquema)
 
 > **Para qué existe esta sala:** capturar lo que el sistema **aprende al construirse o al ejecutarse**
@@ -49,7 +49,7 @@ ejecutar agentes/skills/plugins en bucle.
 ├── ESQUEMA.md                    (formato extendido del registro; estándar en TODOS)
 ├── tools/validar-aprendizaje.py  (validador de integridad; inerte salvo flag agéntico)
 ├── promociones/                  (buzón de salida hacia el plano global)
-└── registros/                    (append-only: un .md por registro; solo avanza `estado:`)
+└── registros/                    (append-only: un .md por registro; solo mutan los campos vivos `estado:` y `aplicado:`)
 ```
 
 ## El núcleo (campos comunes a ambos perfiles)
@@ -66,11 +66,18 @@ relacionado: []               # IDs de otras Salas (se referencian, nunca se cop
 confianza: media              # base: baja|media|alta · agéntico: 0.0–1.0
 verificado: false             # SIEMPRE nace en false
 estado: pendiente             # pendiente | revisado | promovido | descartado
+aplicado: 0                   # veces re-usado con éxito — campo VIVO (muta como estado:; el resto del registro no se edita)
 promovido_a: ""               # ID destino si se gradúa
 ---
 
 Qué se intentó, qué pasó y por qué vale como aprendizaje. Hechos, no opiniones.
 ```
+
+> **Señal de uso `aplicado:` (la Regla de Tres con datos).** Al **re-usar con éxito** un
+> aprendizaje en trabajo real, incrementa `aplicado:` (con OK del humano). `aplicado: ≥ 3` = señal Regla de
+> Tres para promover. Si al aplicarlo **falla**: no retrocedas `estado:` — captura un **registro nuevo**
+> `tipo: error` con `relacionado: [<id que falló>]`; el triage decide si el original se descarta. *(Así el
+> anti-skill-rot es append-only: la deriva se detecta sin editar historia.)*
 
 > **Campos extendidos (flag agéntico):** `resultado`, `reclama_novedad`, campos de revisión/promoción,
 > `sintetico`, y confianza numérica. La especificación completa (con la gobernanza por umbral) vive en
@@ -105,7 +112,7 @@ pendiente ──triage──▶ revisado ──aprobación──▶ promovido
 
 1. **Un aprendizaje NUNCA modifica una ficha B automáticamente** sin pasar el triage (evita la
    auto-degradación por aprendizajes erróneos).
-2. **Append-only:** los registros no se editan ni borran (solo su `estado:` avanza). Git = reversible.
+2. **Append-only:** los registros no se editan ni borran (solo mutan sus campos vivos: `estado:` avanza y `aplicado:` incrementa). Git = reversible.
 3. **Federación por ID:** `relacionado:` referencia otras Salas; nunca copia. El validador del perfil
    agéntico lo **fuerza**: una referencia rota = registro inválido.
 4. **Cuándo empezar:** desde el primer día de construcción (`construccion`); el productor agéntico se

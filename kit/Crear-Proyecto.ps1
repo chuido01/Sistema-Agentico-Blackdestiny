@@ -19,6 +19,9 @@
     8. Si pasas -CentroDeMando, crea el .mcp.json con el MCP sabio-shared (solo-lectura del plano
        GLOBAL de tu Centro de Mando Sabio). Si el .mcp.json ya existe, ANADE sabio-shared sin pisar
        los otros MCP. Si NO pasas -CentroDeMando, el proyecto queda solo-local (sin plano global).
+    9. Siembra el anclaje del sistema (00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md)
+       y anade al CLAUDE.md la seccion "GREMIO - operacion local" (ADD-ONLY, fragmento de _federado).
+       (La Sala E NO se crea aqui: la crea GREMIO al operar por primera vez en el proyecto.)
   Es seguro re-ejecutarlo sobre un proyecto existente: NO sobrescribe nada que ya exista
   (solo crea lo que falte).
 
@@ -140,6 +143,17 @@ if (-not (Test-Path $leeme)) {
   $hechos.Add("00-Documentacion\00 - LEEME.md creado")
 } else { $saltos.Add("00 - LEEME.md ya existia") }
 
+# 6-bis) Anclaje del sistema (SABIO + GREMIO + COUNCIL) - sellado; lo mantiene al dia la
+#        convergencia de Actualizar-Proyecto.ps1
+$anclaSrc = Join-Path $PSScriptRoot "_proyecto\00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md"
+$anclaDst = Join-Path $ProyectoDestino "00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md"
+if ((Test-Path $anclaSrc) -and -not (Test-Path $anclaDst)) {
+  $txtAncla = [System.IO.File]::ReadAllText($anclaSrc, [System.Text.Encoding]::UTF8)
+  $txtAncla = $txtAncla.Replace("<NombreProyecto>", $NombreProyecto).Replace("<NombreBoveda>", $NombreBoveda).Replace("<fecha>", $fecha)
+  [System.IO.File]::WriteAllText($anclaDst, $txtAncla, $utf8)
+  $hechos.Add("00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md creado")
+} else { $saltos.Add("anclaje del sistema ya existia (o falta el molde)") }
+
 # 7) Boveda de Capa 2 en 04-Recursos\01-Boveda\<NombreBoveda>
 $padre  = Join-Path $ProyectoDestino "04-Recursos\01-Boveda"
 $boveda = Join-Path $padre $NombreBoveda
@@ -216,6 +230,18 @@ if ([string]::IsNullOrWhiteSpace($CentroDeMando)) {
       $saltos.Add("AVISO: .mcp.json existe pero no pude parsearlo; revisa a mano sabio-shared")
     }
   }
+}
+
+# 8d) CLAUDE.md: seccion GREMIO - operacion local (ADD-ONLY; fragmento canonico de _federado).
+#     La Sala E (04-Recursos\05-Decisiones) NO se crea aqui: la crea GREMIO al operar.
+$fragGremio = Join-Path $plantillaFederado "_fragmentos\gremio-operacion-local.md"
+if ((Test-Path $claudeMd) -and (Test-Path $fragGremio)) {
+  $txtCm = [System.IO.File]::ReadAllText($claudeMd, [System.Text.Encoding]::UTF8)
+  if ($txtCm -notmatch 'gremio:operacion-local') {
+    $frag = [System.IO.File]::ReadAllText($fragGremio, [System.Text.Encoding]::UTF8)
+    [System.IO.File]::AppendAllText($claudeMd, "`r`n" + $frag, $utf8)
+    $hechos.Add("CLAUDE.md: seccion GREMIO - operacion local anadida")
+  } else { $saltos.Add("CLAUDE.md ya tenia la seccion GREMIO") }
 }
 
 # 9) Resumen

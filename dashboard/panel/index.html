@@ -16,6 +16,7 @@
     </div>
     <button class="nav-btn active" data-view="control" aria-label="Vista control (árbol)" aria-pressed="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 6h4a2 2 0 0 1 2 2v1"/><path d="M9 18h4a2 2 0 0 0 2-2v-1"/></svg><span class="tip">Control · árbol</span></button>
     <button class="nav-btn" data-view="grid" aria-label="Vista cuadrícula" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="tip">Cuadrícula</span></button>
+    <button class="nav-btn" data-view="ajustes" aria-label="Ajustes de umbrales" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg><span class="tip">Ajustes · umbrales</span></button>
     <div class="nav-sp"></div>
     <button class="nav-btn" id="reBtn" title="Cómo refrescar" aria-label="Cómo refrescar los datos"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg><span class="tip">Refrescar</span></button>
   </aside>
@@ -31,13 +32,16 @@
       <div class="genbox"><div id="stamp"></div></div>
     </header>
 
-    <div class="kpis" id="kpis"></div>
+    <!-- resumen de la flota (KPIs + cola + novedades): se oculta en la vista Ajustes -->
+    <div id="resumen-flota">
+      <div class="kpis" id="kpis"></div>
 
-    <!-- cola de acciones priorizada de la flota (Top 5) -->
-    <section class="cola" id="cola"></section>
+      <!-- cola de acciones priorizada de la flota (Top 5) -->
+      <section class="cola" id="cola"></section>
 
-    <!-- novedades desde el último escaneo (#19) -->
-    <section class="nov" id="novedades"></section>
+      <!-- novedades desde el último escaneo (#19) -->
+      <section class="nov" id="novedades"></section>
+    </div>
 
     <!-- vista control -->
     <section id="view-control">
@@ -72,6 +76,9 @@
       <div class="grid" id="grid"></div>
     </section>
 
+    <!-- vista ajustes (umbrales) — la rellena ajustes.js -->
+    <section id="view-ajustes" class="hidden"></section>
+
     <footer>
       Generado por <b>escanear-flota.py</b> (o <b>Escanear-Flota.ps1</b> en Windows) · sin servidor.
       Re-ejecuta el escáner (o doble-clic en <b>Abrir-Panel.cmd</b>) para refrescar.
@@ -90,9 +97,12 @@
 <script src="datos/estado-flota.js"></script>
 <script src="datos/historial.js"></script>
 <!-- ================= APP (lógica) ================= -->
+<!-- umbrales.js (config editable) antes de semaforo.js: este lo lee como window.FLEET_UMBRALES -->
+<script src="app/umbrales.js"></script>
 <script src="app/semaforo.js"></script>
 <script src="app/prompts.js"></script>
 <script src="app/vistas.js"></script>
+<script src="app/ajustes.js"></script>
 <script src="app/detalle.js"></script>
 <script src="app/main.js"></script>
 </body>

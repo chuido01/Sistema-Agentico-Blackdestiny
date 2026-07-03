@@ -7,6 +7,8 @@
   SIN pisar nada local. Propaga:
     - estructura de 5 carpetas (00-Documentacion / 01-Produccion / 02-Desarrollo / 03-Backups / 04-Recursos),
     - esquemas de las Salas federadas (00-INDICE-DE-INDICES.md + 02/03/04 de 04-Recursos),
+    - el anclaje del sistema (00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md;
+      ADD-ONLY si falta + convergencia generacional si esta atrasado),
     - plantilla de nota atomica de la boveda,
     - lineas estandar de .gitignore,
     - el .mcp.json con el MCP sabio-shared (solo-lectura del plano global; ADD-ONLY; si das -CentroDeMando),
@@ -187,6 +189,18 @@ foreach ($proy in $objetivos) {
     } else { $saltos++ }
   }
 
+  # c-ter) Anclaje del sistema (ADD-ONLY: se crea si falta; la convergencia 'h' lo mantiene al dia)
+  $anclaCanon = Join-Path $PSScriptRoot "_proyecto\00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md"
+  $anclaDest  = Join-Path $proy "00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md"
+  if ((Test-Path $anclaCanon) -and -not (Test-Path $anclaDest)) {
+    if ($Aplicar) {
+      $t = [System.IO.File]::ReadAllText($anclaCanon, [System.Text.Encoding]::UTF8)
+      $t = Convert-Marcadores $t $nombre $nombreBoveda $fecha
+      [System.IO.File]::WriteAllText($anclaDest, $t, $utf8)
+    }
+    $hechos.Add("+ 00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md")
+  } else { $saltos++ }
+
   # d) Plantilla de nota atomica en la boveda (si existe boveda)
   if ($nombreBoveda) {
     $tplDest = Join-Path $vaultPadre (Join-Path $nombreBoveda "templates\_plantilla-nota-atomica.md")
@@ -269,6 +283,7 @@ foreach ($proy in $objetivos) {
   foreach ($a in $artefactosFederado) {
     $convItems += @{ canon = (Join-Path $plantillaFederado $a.rel); dest = (Join-Path $recursos $a.rel); tipo = $a.tipo }
   }
+  $convItems += @{ canon = $anclaCanon; dest = $anclaDest; tipo = "puro" }
   if ($nombreBoveda) {
     $convItems += @{ canon = (Join-Path $plantillaBoveda "CLAUDE.md"); dest = (Join-Path $vaultPadre (Join-Path $nombreBoveda "CLAUDE.md")); tipo = "mixto" }
   }

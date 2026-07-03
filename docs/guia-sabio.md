@@ -3,6 +3,10 @@
 > La puerta de entrada humana a SABIO. Explica el sistema sin tecnicismos.
 > (Para todo el sistema en un solo documento, ver `resumen-consolidado.md`.)
 
+> **Nota.** SABIO es el **componente de conocimiento** del Sistema Agéntico Blackdestiny (SABIO + GREMIO +
+> COUNCIL); esta guía cubre **SABIO** — GREMIO (la fábrica agéntica) vive en [`../gremio/`](../gremio/) y
+> COUNCIL (el consejo deliberativo) en el comando `/council`.
+
 ## En una frase
 
 **SABIO es tu memoria a largo plazo trabajando con IA:** un sitio ordenado donde cada cosa que

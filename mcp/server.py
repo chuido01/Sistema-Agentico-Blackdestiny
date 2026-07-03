@@ -69,6 +69,11 @@ ALLOWED_SUBTREES = [
 # 05-Decisiones) es LOCAL del proyecto y NUNCA se federa: los Decision Records son del producto
 # que se construye; al global solo viaja un aprendizaje (Sala D) destilado. GREMIO la crea al
 # operar DENTRO del subárbol ya expuesto — sin este guard quedaría legible para toda la flota.
+#
+# REGLA DE MANTENIMIENTO (normativa): un scope decidido sobre el contenido de HOY caduca en
+# silencio. Al nacer una Sala/recurso nuevo bajo un subárbol ya expuesto en ALLOWED_SUBTREES,
+# RE-AUDITA este scope en el acto (¿debe exponerse o denegarse?) — no esperes a una auditoría
+# periódica. Esta lista se mantiene lista-para-usar aunque quede vacía.
 DENIED_SUBTREES = [
     "04-Recursos/05-Decisiones",   # Sala E · Decisiones (dr:) — local, no se expone
 ]

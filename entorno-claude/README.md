@@ -1,4 +1,4 @@
-# Entorno de Claude Code para SABIO (`home-claude/`)
+# Entorno de Claude Code para el Sistema Agéntico Blackdestiny (`home-claude/`)
 
 > Versiona la capa **`~/.claude/`** (la configuración de Claude Code a nivel **usuario**, transversal a
 > todos tus proyectos): preferencias, agentes, comandos y hooks. Aplícala en cualquier máquina para
@@ -9,7 +9,7 @@
 - `settings.json` — permisos y **hooks** de sesión (sin secretos; las rutas usan el marcador `<TU_CARPETA_HOME>`).
 - `agents/` — 7 agentes nivel-usuario: `commit-writer`, `code-reviewer`, `doc-writer`, `research-curator`, `sabio-curator`, `sabio-reflector`, `security-engineer`.
 - `commands/` — slash commands: `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome` (+ alias deprecado `/sabio-reflector`).
-- `scripts/` — hooks: `hook-session-start.ps1`, `hook-pre-compact.ps1`.
+- `scripts/` — hooks: `hook-session-start.ps1` y `continuity-flush.json` (flush de continuidad que se inyecta al reanudar tras una compactación, vía `SessionStart` con matcher `compact`).
 
 ## Aplicar el entorno en una máquina nueva
 - **Windows:**
@@ -28,7 +28,8 @@
 ## Notas
 - **Sin secretos.** Aquí no entran credenciales (`~/.claude/.credentials.json`), `settings.local.json`,
   caches ni sesiones.
-- **Hooks multiplataforma.** Los hooks son scripts PowerShell (`.ps1`). En macOS/Linux, Claude puede
-  traducirlos a su equivalente o puedes omitirlos: son una ayuda (recordatorio de reglas al iniciar y
-  checkpoint al compactar), no un requisito.
+- **Hooks multiplataforma.** El hook de inicio es PowerShell (`.ps1`); el flush de continuidad es un
+  JSON estático leído con `cat` (bash). En macOS/Linux, Claude puede traducir el `.ps1` a su equivalente
+  o puedes omitirlo: son una ayuda (recordatorio de reglas al iniciar y flush de continuidad tras
+  compactar), no un requisito.
 - **Idempotente y no destructivo:** `Aplicar` siempre respalda antes de pisar (`~/.claude/backups/`).

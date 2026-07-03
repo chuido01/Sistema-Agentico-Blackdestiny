@@ -33,13 +33,24 @@ const CRITICIDAD = {tradicional:3, control:2, agentico:2, simple:1};
    más grande (más instrucciones). NOTA (revisión Fase 2): agéntico comparte el backup
    ESTRICTO de tradicional (5/10) a propósito — así, si la heurística de nombre
    clasificara mal una web con datos como agéntica, NO le relaja la protección de backup
-   (lado seguro). La única diferencia agéntico↔tradicional es el tamaño de CLAUDE.md. */
-const UMBRALES = {
+   (lado seguro). La única diferencia agéntico↔tradicional es el tamaño de CLAUDE.md.
+
+   DEFAULT_UMBRALES = valores de FÁBRICA (los usa "Restablecer" en Ajustes y sirven
+   de respaldo). Los umbrales EFECTIVOS (UMBRALES) fusionan, sobre la fábrica, lo que
+   el usuario haya fijado en el panel y guardado en umbrales.js (window.FLEET_UMBRALES).
+   Así editar desde el panel nunca toca esta lógica: solo cambia el archivo de datos. */
+const DEFAULT_UMBRALES = {
   control:     {backupObligatorio:true,  backupAmbar:7,  backupRojo:14, claudeKB:16, huerfanas:12},
   agentico:    {backupObligatorio:true,  backupAmbar:5,  backupRojo:10, claudeKB:16, huerfanas:12},
   tradicional: {backupObligatorio:true,  backupAmbar:5,  backupRojo:10, claudeKB:12, huerfanas:12},
   simple:      {backupObligatorio:false, backupAmbar:null, backupRojo:null, claudeKB:12, huerfanas:20},
 };
+const UMBRALES = (function(){
+  const ov = (typeof window!=='undefined' && window.FLEET_UMBRALES) || {};
+  const out = {};
+  for(const k in DEFAULT_UMBRALES){ out[k] = Object.assign({}, DEFAULT_UMBRALES[k], ov[k]||{}); }
+  return out;
+})();
 
 function arquetipoDe(p){
   if(p.tipo==='control') return 'control';

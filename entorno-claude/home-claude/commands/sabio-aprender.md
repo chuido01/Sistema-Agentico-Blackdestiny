@@ -46,6 +46,7 @@ relacionado: [<IDs de otras salas si aplica>]
 confianza: <baja | media | alta>   # auto-reportada, honesta
 verificado: false             # SIEMPRE nace en false
 estado: pendiente
+aplicado: 0                   # veces re-usado con éxito (campo vivo; ver LEEME Sala D)
 promovido_a: ""
 ---
 

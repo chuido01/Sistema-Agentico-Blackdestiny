@@ -1,8 +1,11 @@
-# Instalar SABIO con Claude Code
+# Instalar el Sistema Agéntico Blackdestiny con Claude Code
 
 > Esta guía está pensada para que **Claude Code la lea y la ejecute por ti**. No necesitas saber
 > PowerShell ni Bash: Claude detecta tu sistema operativo (Windows, macOS o Linux) y hace los pasos
 > equivalentes. También puedes seguirla a mano si lo prefieres.
+>
+> Una sola instalación deja los tres componentes del sistema —**SABIO** (memoria), **GREMIO** (fábrica
+> agéntica) y **COUNCIL** (consejo deliberativo)— listos en tu `~/.claude`.
 
 ---
 
@@ -10,7 +13,7 @@
 
 | Necesitas | Para qué | Cómo comprobar |
 |---|---|---|
-| **Claude Code** | Es quien instala y luego usa SABIO. | `claude --version` |
+| **Claude Code** | Es quien instala y luego usa el sistema (SABIO + GREMIO + COUNCIL). | `claude --version` |
 | **git** | Repos aislados por proyecto. | `git --version` |
 | **Python 3.10+** | Solo para el MCP `sabio-shared` (el puente al plano global). | `python --version` |
 
@@ -23,14 +26,14 @@
 
 1. **Clona el repo** y entra en la carpeta:
    ```bash
-   git clone https://github.com/<tu-usuario>/sabio-blackdestiny.git
-   cd sabio-blackdestiny
+   git clone https://github.com/<tu-usuario>/sistema-agentico-blackdestiny.git
+   cd sistema-agentico-blackdestiny
    ```
 2. **Abre Claude Code** en esa carpeta.
 3. **Pega esto** y deja que Claude trabaje:
    ```
-   Instala SABIO en esta máquina siguiendo INSTALAR.md. Detecta mi sistema operativo,
-   hazlo idempotente (no pises nada sin respaldar) y, al terminar, enséñame qué quedó instalado.
+   Instala el Sistema Agéntico Blackdestiny en esta máquina siguiendo INSTALAR.md. Detecta mi sistema
+   operativo, hazlo idempotente (no pises nada sin respaldar) y, al terminar, enséñame qué quedó instalado.
    ```
 
 Claude hará los **4 pasos** de abajo. Es seguro re-ejecutarlo: nunca sobrescribe sin respaldar.
@@ -122,8 +125,8 @@ Detalles en [`dashboard/README.md`](dashboard/README.md).
 Pídele a Claude:
 
 ```
-Verifica la instalación de SABIO: lista los comandos y agentes en ~/.claude, confirma que
-el MCP sabio-shared responde, y muéstrame el árbol del proyecto que creaste.
+Verifica la instalación del Sistema Agéntico Blackdestiny: lista los comandos y agentes en ~/.claude,
+confirma que el MCP sabio-shared responde, y muéstrame el árbol del proyecto que creaste.
 ```
 
 Deberías ver: los 12 comandos (7 SABIO + 4 `gremio-*` + `council`), los 40 agentes (7 transversales
