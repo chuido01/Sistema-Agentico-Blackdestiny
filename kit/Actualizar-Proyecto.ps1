@@ -208,7 +208,7 @@ foreach ($proy in $objetivos) {
       if ($Aplicar) {
         $nb = if ($nombreBoveda) { $nombreBoveda } else { "<NombreBoveda>" }
         $regla = "`r`n## Que es SABIO (la memoria de este proyecto)`r`n" +
-          "**SABIO** (*Sistema de Archivos, Bovedas e Indices Organizados*) es el sistema de memoria y conocimiento del proyecto: SIN RAG (gestion de contexto nativa + boveda-wiki estilo Karpathy), federado en 4 Salas (A.Investigacion = la boveda . B.Catalogo . C.Referencia . D.Aprendizaje) unidas por el indice de indices (``04-Recursos/00-INDICE-DE-INDICES.md``).`r`n" +
+          "**SABIO** (*Sistema de Archivos, Bovedas e Indices Organizados*) es el sistema de memoria y conocimiento del proyecto: SIN RAG (gestion de contexto nativa + boveda-wiki estilo Karpathy), federado en 5 Salas (A.Investigacion = la boveda . B.Catalogo . C.Referencia . D.Aprendizaje . E.Gremio = decisiones de construccion, LOCAL, no se federa — la crea GREMIO al operar) unidas por el indice de indices (``04-Recursos/00-INDICE-DE-INDICES.md``).`r`n" +
           "`r`n## Acceso a la bóveda`r`n" +
           "- La **unica** boveda que este proyecto puede usar es **$nb**, ubicada en ``04-Recursos/01-Boveda/$nb/`` (dentro de la carpeta del proyecto).`r`n" +
           "- El acceso es **nativo** (sin MCP). **No** accedas a bovedas, datos ni investigaciones de otros proyectos, ni mezcles su informacion con la de este.`r`n"

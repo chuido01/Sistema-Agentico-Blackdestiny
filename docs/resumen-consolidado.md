@@ -55,9 +55,9 @@ Eso es el aislamiento.
 
 ---
 
-## 6. Las 4 Salas del conocimiento
+## 6. Las 5 Salas: conocimiento + decisiones
 
-Cada dato es de un tipo, y por eso vive en una Sala concreta (como cuatro estanterías):
+Cada dato es de un tipo, y por eso vive en una Sala concreta (como estanterías):
 
 | Sala | Qué guarda | Etiqueta (ID) |
 |---|---|---|
@@ -65,6 +65,7 @@ Cada dato es de un tipo, y por eso vive en una Sala concreta (como cuatro estant
 | **B · Catálogo** | Tus herramientas y activos: fichas de qué tienes, para qué sirve, qué cuesta. | `activo:<cosa>` |
 | **C · Referencia** | Normas y estándares externos, en el plano global. **Segmentada por ámbito**: `universal` (NIST/ISO/PCI, para todos), `jurisdiccion:` (la ley de un país), `sector:` (un rubro). Sube lo que **necesita más de un proyecto**, no "lo internacional". | `norma:<marco>:<código>` |
 | **D · Aprendizaje** | Lecciones de lo que pasó, para no repetir errores. | `aprendizaje:<id>` |
+| **E · Decisiones (Gremio)** | Los **Decision Records** de la fábrica GREMIO. **Local por proyecto, jamás se federa** — al global solo sube un aprendizaje (D) destilado. La crea GREMIO al operar. | `dr:<dominio>-<n>` |
 
 **Dos perfiles de la Sala D** — **una sola forma física, un flag de comportamiento.** Todos los proyectos
 llevan la **misma** Sala D en disco (el superconjunto: `ESQUEMA.md` + un validador en **todos**). El perfil
@@ -142,7 +143,7 @@ Sin esto, los proyectos serían islas que repiten trabajo. El volante hace que l
 ## 11. Glosario express (las confusiones aclaradas)
 
 - **Capa 1 / Capa 2** = la **arquitectura** (aislamiento + no perderse / la bóveda que recuerda).
-- **Sala A–D** = los **tipos de conocimiento** (Investigación, Catálogo, Referencia, Aprendizaje).
+- **Sala A–D** = los **tipos de conocimiento** (Investigación, Catálogo, Referencia, Aprendizaje); la **Sala E** = las **decisiones de construcción** de GREMIO (local, nunca se federa).
 - **Plano local** = el conocimiento de un proyecto, que no sale de su caja.
 - **Plano global** = el conocimiento compartido por toda la plataforma, de solo lectura.
 - **Federar** = guardar un dato una vez y que los demás lo señalen por su etiqueta, en vez de copiarlo.

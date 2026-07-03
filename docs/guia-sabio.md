@@ -51,10 +51,10 @@ Ese es el aislamiento.
 
 ---
 
-## 3. Las 4 Salas — los cuatro tipos de conocimiento
+## 3. Las 5 Salas — los tipos de conocimiento y las decisiones
 
-Cada dato es de un tipo, y por eso vive en una Sala concreta. Son como cuatro estanterías con
-etiquetas distintas.
+Cada dato es de un tipo, y por eso vive en una Sala concreta. Son como estanterías con
+etiquetas distintas: cuatro guardan conocimiento (A–D) y la quinta guarda decisiones (E).
 
 - **Sala A · Investigación** — Lo que estudias e investigas. Es la bóveda: notas cortas (una
   idea por nota) enlazadas entre sí. La del Centro es **multi-dominio**: un dominio nuevo se añade como
@@ -68,6 +68,10 @@ etiquetas distintas.
 - **Sala D · Aprendizaje** — Lecciones de lo que pasó, para no repetir errores: "la próxima vez, hazlo
   así". Se llena de **dos formas**: al **construir** —con `/sabio-aprender` (rápido) o `/sabio-aprender --reflexivo` (reflexiona con feedback externo e infiere la causa)— y, en
   proyectos con agentes, **automáticamente** cuando un agente ejecuta. Etiqueta: `aprendizaje:<id>`.
+- **Sala E · Decisiones (Gremio)** — Los **Decision Records** que la fábrica GREMIO toma al construir
+  un producto. **Local por proyecto y nunca se federa** (una decisión es del producto que la tomó); al
+  plano global solo puede subir un aprendizaje (Sala D) destilado de una decisión. La crea GREMIO al
+  operar (`05-Decisiones/`). Etiqueta: `dr:<dominio>-<n>`.
 
 > **Una sola forma física, un flag de comportamiento.** Todos los proyectos llevan la **misma** Sala D
 > en disco (el superconjunto: `ESQUEMA.md` + un validador en **todos**). El perfil ya no es otra
@@ -161,8 +165,8 @@ tu verdad verificable.
 ## 7. Cómo nace un proyecto, y cómo mejora el conjunto
 
 **El Kit — los proyectos nacen iguales.** Un proyecto nuevo se crea con un solo paso y ya viene con
-SABIO puesto: las 5 carpetas, git, su regla de aislamiento, la bóveda y las 4 Salas. Es no destructivo
-y repetible.
+SABIO puesto: las 5 carpetas, git, su regla de aislamiento, la bóveda y las Salas A–D (la Sala E la
+crea GREMIO al operar). Es no destructivo y repetible.
 
 **El volante — el conocimiento se contagia.** Cuando aprendes algo que sirve a todos, el comando
 `/sabio-promover` lo sube al plano global (una sola copia) y los demás lo consultan por referencia. Desde
@@ -177,7 +181,8 @@ listos en su buzón, sin copia-pega (tú decides qué sube; el transporte es aut
 - **Capa 1 y Capa 2 = la arquitectura (los cimientos).** Capa 1 = aislamiento + no perderse en el
   chat. Capa 2 = la bóveda que recuerda a largo plazo.
 - **Sala A–D = los tipos de conocimiento (las estanterías).** Investigación, Catálogo, Referencia,
-  Aprendizaje. No confundir con las Capas.
+  Aprendizaje. La quinta estantería —**Sala E · Decisiones (Gremio)**— guarda los DRs de GREMIO y es
+  **local: nunca se federa**. No confundir con las Capas.
 - **Plano local** = el conocimiento de un proyecto, que no sale de su caja (Salas A y B).
 - **Plano global** = el conocimiento compartido por toda la plataforma (la Sala A transversal multi-dominio + Salas C y D), de solo lectura.
 - **Federar** = guardar un dato una vez y que los demás lo señalen por su etiqueta, en vez de copiarlo.

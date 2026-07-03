@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 2 -->
+<!-- sabio-generacion: 3 -->
 # Sala D — Aprendizaje operativo (esquema)
 
 > **Para qué existe esta sala:** capturar lo que el sistema **aprende al construirse o al ejecutarse**
@@ -6,7 +6,7 @@
 > registro **nace sin confianza** (`verificado: false`) y solo se vuelve conocimiento si pasa el **bucle
 > de promoción**. NO va en la bóveda (Sala A): mezclaría registros crudos con investigación curada.
 >
-> *(Salas A–D = tipos de conocimiento; no confundir con Capa 1/2 = arquitectura del sistema.)*
+> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción —GREMIO—. No confundir con Capa 1/2 = arquitectura del sistema.)*
 
 ## Dos productores (quién escribe)
 

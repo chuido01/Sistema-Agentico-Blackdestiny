@@ -15,7 +15,8 @@
 ├── 01-Produccion/         Código y/o proyecto en producción.
 ├── 02-Desarrollo/         Código que se está modificando.
 ├── 03-Backups/            Respaldos fechados (DDMMAAAA).
-├── 04-Recursos/           El CEREBRO FEDERADO del proyecto (4 salas de conocimiento):
+├── 04-Recursos/           El CEREBRO FEDERADO del proyecto (4 salas de conocimiento;
+│   │                      la Sala E · Gremio la añade GREMIO al operar, como 05-Decisiones/):
 │   ├── 00-INDICE-DE-INDICES.md   ← el espinazo: qué prefijo de ID vive en qué sala
 │   ├── 01-Boveda/
 │   │   └── <NombreBoveda>/   ← Sala A · Investigación (el wiki de notas atómicas)
@@ -26,10 +27,12 @@
 └── .gitignore
 ```
 
-> **¿Por qué 4 salas?** «Conocimiento» no es una sola cosa: investigación curada, catálogo de
-> activos, normas externas y aprendizajes tienen volúmenes y ritmos distintos. Cada sala nace con su
-> **`LEEME - Esquema`** que explica para qué existe y su formato; se **federan por IDs** (no se copian
-> datos entre ellas). *(Nomenclatura: «Capa 1/2» = arquitectura; «Sala A–D» = tipos de conocimiento.)*
+> **¿Por qué salas separadas?** «Conocimiento» no es una sola cosa: investigación curada, catálogo de
+> activos, normas externas y aprendizajes tienen volúmenes y ritmos distintos (Salas A–D). Cada sala
+> nace con su **`LEEME - Esquema`** que explica para qué existe y su formato; se **federan por IDs**
+> (no se copian datos entre ellas). La quinta sala —**E · Gremio**, los Decision Records de la fábrica
+> GREMIO— la crea GREMIO al operar y es **local: jamás se federa**. *(Nomenclatura: «Capa 1/2» =
+> arquitectura; «Sala A–D» = tipos de conocimiento; «Sala E» = decisiones de construcción.)*
 
 ---
 

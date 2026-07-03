@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 1 -->
+<!-- sabio-generacion: 2 -->
 # Sala B — Catálogo operativo (esquema)
 
 > **Para qué existe esta sala:** guardar el "**qué hace / qué tiene** el sistema": sus capacidades,
@@ -6,7 +6,7 @@
 > versionado**, no narrativo — por eso NO va en la bóveda de investigación (Sala A): un catálogo
 > volcado como notas atómicas rompe la atomicidad del wiki.
 >
-> *(Salas A–D = tipos de conocimiento; no confundir con Capa 1/2 = arquitectura del sistema.)*
+> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción —GREMIO—. No confundir con Capa 1/2 = arquitectura del sistema.)*
 
 ## Cuándo empezar a usarla
 

@@ -38,7 +38,7 @@ Es el patrón "LLM Wiki" de Andrej Karpathy.
 
 ---
 
-## Cómo está organizado: 4 Salas y 2 planos
+## Cómo está organizado: 5 Salas y 2 planos
 
 El conocimiento se federa en **5 Salas** (cada dato vive en UNA sola; las demás lo señalan por su ID):
 
@@ -72,7 +72,7 @@ Todo lo que es SABIO hoy, en versión genérica y reutilizable:
 
 | Componente | Qué es |
 |---|---|
-| 🧰 **Kit de proyectos** | Crea un proyecto nuevo completo (carpetas, git aislado, bóveda y las 4 Salas), en perfil **básico** o **agéntico**. |
+| 🧰 **Kit de proyectos** | Crea un proyecto nuevo completo (carpetas, git aislado, bóveda y las Salas A–D — la Sala E la crea GREMIO al operar), en perfil **básico** o **agéntico**. |
 | 🚀 **Despliegue end-to-end** | `/sabio-welcome <ruta>` crea el proyecto, lo **prueba** (estructura + canal del plano global, con un test determinista) y lo adopta en el dashboard — en un solo paso. Incluye el test `kit/Validar-Despliegue.ps1`. |
 | 🏛 **Centro de Mando Sabio** | El molde del *hub* / plano global que sirve a todos tus proyectos. |
 | 🔌 **MCP `sabio-shared`** | El puente de solo-lectura para que un proyecto consulte el plano global. |

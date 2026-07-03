@@ -12,17 +12,17 @@ Propósito: <una línea — RELLENAR>.
 - `01-Produccion/` — Código y/o proyecto en producción.
 - `02-Desarrollo/` — Código que se encuentra siendo modificado.
 - `03-Backups/` — Respaldo de versiones estables y de documentación; cada backup en una carpeta con la fecha de realización en formato DDMMAAAA (ejemplo: `31052026`).
-- `04-Recursos/` — El **cerebro federado** del proyecto (4 salas de conocimiento + información de interés). Ver la sección «Conocimiento federado» abajo.
+- `04-Recursos/` — El **cerebro federado** del proyecto (las salas de conocimiento y decisiones + información de interés). Ver la sección «Conocimiento federado» abajo.
 
 ## Reglas
 - Trabaja SOLO con el contexto de ESTE proyecto.
 - No asumas datos (paletas, marcas, stacks) de otros proyectos.
 
 ## ¿Qué es SABIO? (la memoria de este proyecto)
-**SABIO** (*Sistema de Archivos, Bóvedas e Índices Organizados*) es el sistema de **memoria y conocimiento** del proyecto: **sin RAG** — usa la gestión de contexto nativa de Claude Code + una **bóveda-wiki** (notas atómicas estilo Karpathy), con el conocimiento **federado en 4 Salas** (A·Investigación = la bóveda · B·Catálogo · C·Referencia · D·Aprendizaje) unidas por el *índice de índices* (`04-Recursos/00-INDICE-DE-INDICES.md`). El detalle operativo está justo abajo.
+**SABIO** (*Sistema de Archivos, Bóvedas e Índices Organizados*) es el sistema de **memoria y conocimiento** del proyecto: **sin RAG** — usa la gestión de contexto nativa de Claude Code + una **bóveda-wiki** (notas atómicas estilo Karpathy), con el conocimiento **federado en 5 Salas** (A·Investigación = la bóveda · B·Catálogo · C·Referencia · D·Aprendizaje · E·Gremio = decisiones de construcción, **local** — la crea GREMIO al operar) unidas por el *índice de índices* (`04-Recursos/00-INDICE-DE-INDICES.md`). El detalle operativo está justo abajo.
 
-## Conocimiento federado (Salas A–D)
-El conocimiento del proyecto vive en `04-Recursos/`, **federado en 4 salas por tipo** (no confundir
+## Conocimiento federado (Salas A–E)
+El conocimiento del proyecto vive en `04-Recursos/`, **federado en 5 salas por tipo** (no confundir
 con la Capa 1/Capa 2 de la *arquitectura*: aquéllas son el sistema; éstas, tipos de conocimiento):
 
 - `00-INDICE-DE-INDICES.md` — **léelo primero**: dice qué prefijo de ID vive en qué sala.
@@ -30,11 +30,12 @@ con la Capa 1/Capa 2 de la *arquitectura*: aquéllas son el sistema; éstas, tip
 - `02-Catalogo/` — **Sala B · Catálogo operativo** (fichas estructuradas de activos; `activo:<slug>`).
 - `03-Referencia/` — **Sala C · Referencia externa** (estándares oficiales ingeridos; `norma:<marco>:<codigo>`).
 - `04-Aprendizaje/` — **Sala D · Aprendizaje operativo** (lo aprendido al construir o al ejecutar; `aprendizaje:<id>`).
+- `05-Decisiones/` — **Sala E · Gremio** (Decision Records de la fábrica GREMIO; `dr:<dominio>-<n>`). 🔒 **Local del proyecto: NO se federa** — al global solo puede viajar un aprendizaje (Sala D) destilado de una decisión, jamás el DR. *(La crea GREMIO al operar; hasta entonces el prefijo `dr:` queda reservado.)*
 
 **Reglas:** un dato vive en UNA sola sala y las demás lo referencian **por ID** (nunca copiar);
 cada sala tiene su `LEEME - Esquema` con su formato — respétalo; un aprendizaje (Sala D) **jamás**
 modifica una ficha (Sala B) sin pasar el triage de su bucle de promoción; el contenido de la Sala C
-sale **solo de fuente oficial citada**. (Nomenclatura: *Capa 1/2* = arquitectura; *Sala A–D* = conocimiento.)
+sale **solo de fuente oficial citada**. (Nomenclatura: *Capa 1/2* = arquitectura; *Sala A–D* = conocimiento; *Sala E* = decisiones de construcción.)
 
 **Perfil Sala D:** `<PerfilSalaD>` — *cuánta maquinaria usa el aprendizaje operativo:* `base`
 (default; captura con `/sabio-aprender`) o `agentico` (añade el runtime de agentes, confianza numérica y el

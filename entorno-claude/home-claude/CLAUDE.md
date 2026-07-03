@@ -15,7 +15,7 @@
 - **Única excepción:** lectura del **plano global** vía el MCP `sabio-shared` (compartido por diseño) — nunca de otro proyecto.
 
 ## Sistema de conocimiento = SABIO
-- **Sin RAG:** gestión de contexto nativa de Claude Code + una bóveda-wiki estilo Karpathy, con el conocimiento **federado en 4 Salas** (A·Investigación · B·Catálogo · C·Referencia · D·Aprendizaje) unidas por el *índice de índices*.
+- **Sin RAG:** gestión de contexto nativa de Claude Code + una bóveda-wiki estilo Karpathy, con el conocimiento **federado en 5 Salas** (A·Investigación · B·Catálogo · C·Referencia · D·Aprendizaje · E·Decisiones/Gremio — **local, nunca se federa**; la crea GREMIO al operar) unidas por el *índice de índices*.
 - **2 planos:** conocimiento **local** por proyecto + un **plano global** (Centro de Mando Sabio) que guarda la referencia canónica transversal (`norma:…`) e investigación compartida, accesible **solo-lectura** vía `sabio-shared`.
 
 ## Captura de aprendizajes (Sala D)

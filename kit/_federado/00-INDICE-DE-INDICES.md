@@ -1,15 +1,16 @@
-<!-- sabio-generacion: 1 -->
+<!-- sabio-generacion: 2 -->
 <!-- sabio:canonico:inicio — NO edites entre estos marcadores: la convergencia del Kit re-proyecta esta región. Lo tuyo va DEBAJO del cierre. -->
 # Índice de índices — <NombreProyecto>
 
 > **SABIO** = *Sistema de Archivos, Bóvedas e Índices Organizados*: el sistema de **memoria y
-> conocimiento** del proyecto (**sin RAG** — bóveda-wiki estilo Karpathy + 4 Salas federadas).
+> conocimiento** del proyecto (**sin RAG** — bóveda-wiki estilo Karpathy + 5 Salas: A–D federadas
+> + E local de GREMIO).
 >
 > **Este archivo es el espinazo de SABIO.** Dice **qué prefijo de ID vive en qué sala**. Es lo que
-> convierte cuatro carpetas sueltas en *un* cerebro: cualquier agente (o humano) que encuentre un ID
+> convierte carpetas sueltas en *un* cerebro: cualquier agente (o humano) que encuentre un ID
 > sabe aquí dónde resolverlo. Creado: <fecha>.
 >
-> **Nomenclatura:** *Capa 1/2* = arquitectura del sistema · *Sala A/B/C/D* = tipos de conocimiento.
+> **Nomenclatura:** *Capa 1/2* = arquitectura del sistema · *Sala A/B/C/D* = tipos de conocimiento · *Sala E* = decisiones de construcción (GREMIO; local).
 
 ---
 
@@ -21,6 +22,7 @@
 | `activo:<slug>` | **Sala B · Catálogo** | Una ficha de capacidad/activo/producto | `02-Catalogo/fichas/` | `02-Catalogo/index.md` |
 | `norma:<marco>:<codigo>` | **Sala C · Referencia** | Una entrada de estándar/normativa externa | `03-Referencia/registros/` | `03-Referencia/index.md` |
 | `aprendizaje:<id>` | **Sala D · Aprendizaje** | Un aprendizaje operativo (al **construir** o al **ejecutar**) | `04-Aprendizaje/registros/` | *(perfil base: sin índice, se filtra por `estado:`; perfil agéntico: `_index.json`)* |
+| `dr:<dominio>-<n>` | **Sala E · Gremio** 🔒 *(local del proyecto)* | Un **Decision Record** de GREMIO (una decisión de construcción, propiedad de un **Líder**) | `05-Decisiones/` *(la crea GREMIO al operar; hasta entonces el prefijo queda reservado)* | el **Plan** (`plan:<proyecto>`, archivo `plan.md`) enlaza la familia de DRs |
 
 ---
 
@@ -32,6 +34,7 @@
    aprendizajes previos sobre ese activo (D) → investigación de fondo (A).
 4. Si una sala aún no se usa, **su prefijo ya está reservado** — no inventes otros formatos de ID.
 5. **Reparto local↔global (Sala C):** la referencia externa que solo usa este proyecto vive **local**; la **oficial/pública/inmutable/no-confidencial** que toque a más de un proyecto se promueve al **plano global** (Centro de Mando) vía `/sabio-promover`, etiquetada por **`ambito:`** — `universal` · `jurisdiccion: <ISO-3166>` · `sector: <slug>`. El criterio es **alcance-de-uso × naturaleza**, **no** internacional-vs-nacional. Este proyecto resuelve del global lo `universal` + lo que matchee su **perfil de aplicabilidad** (declarado en el `CLAUDE.md`).
+6. **Sala E (`dr:`) es LOCAL del proyecto y NO se federa.** A diferencia de A/B/C/D, las decisiones de construcción de **GREMIO** (los DR) son específicas del producto y nunca cruzan al plano global; solo un **aprendizaje** (Sala D) destilado de una decisión puede promoverse. La sala la **crea GREMIO al operar** en el proyecto (`05-Decisiones/`).
 
 ---
 
@@ -58,3 +61,4 @@
 | B · Catálogo | <RELLENAR> |
 | C · Referencia | <RELLENAR> |
 | D · Aprendizaje | <RELLENAR> |
+| E · Gremio 🔒 local | *(la crea GREMIO al operar)* |

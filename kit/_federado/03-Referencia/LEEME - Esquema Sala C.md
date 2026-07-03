@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 1 -->
+<!-- sabio-generacion: 2 -->
 <!-- sabio:canonico:inicio — NO edites entre estos marcadores: la convergencia del Kit re-proyecta el esquema. Tu perfil de aplicabilidad y notas locales van DEBAJO del cierre. -->
 # Sala C — Referencia externa (esquema)
 
@@ -7,7 +7,7 @@
 > escribes: lo ingieres de una fuente oficial**. NO va en la bóveda (Sala A) porque su volumen y su
 > naturaleza (texto ajeno, no curado por ti) romperían el wiki.
 >
-> *(Salas A–D = tipos de conocimiento; no confundir con Capa 1/2 = arquitectura del sistema.)*
+> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción —GREMIO—. No confundir con Capa 1/2 = arquitectura del sistema.)*
 
 ## Cuándo empezar a usarla
 

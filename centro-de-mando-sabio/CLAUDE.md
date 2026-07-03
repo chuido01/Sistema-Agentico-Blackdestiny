@@ -12,7 +12,8 @@
 - **Arquitectura:** 2 capas, **SIN RAG** (gestión de contexto nativa de Claude Code + una bóveda-wiki
   estilo Karpathy).
 - **Estructura:** las mismas 5 carpetas que cualquier proyecto. El **plano global** vive en
-  `04-Recursos/` (índice de índices + las 4 Salas).
+  `04-Recursos/` (índice de índices + las Salas A–D; la Sala E —si GREMIO opera en el hub— es
+  **local** y no forma parte del plano global).
 - **MCP:** `mcp/server.py` expone `04-Recursos/` en **solo-lectura** a los proyectos (`sabio-shared`).
 
 ## Dueño del plano global (escritura)
@@ -29,11 +30,12 @@
 - **NO** lee, copia ni mezcla conocimiento, bóvedas ni datos de otros proyectos. El acceso hacia fuera
   es **solo de escritura para el despliegue**.
 
-## Conocimiento federado (Salas A–D)
+## Conocimiento federado (Salas A–E)
 - Antes de buscar o guardar conocimiento, **lee `04-Recursos/00-INDICE-DE-INDICES.md`** (el espinazo:
   qué prefijo de ID vive en qué Sala).
 - **Sala A · Investigación** (bóveda; en el hub es **transversal y multi-dominio** 🌐) · **Sala B · Catálogo** · **Sala C · Referencia** 🌐 ·
-  **Sala D · Aprendizaje** 🌐.
+  **Sala D · Aprendizaje** 🌐 · **Sala E · Decisiones (Gremio)** 🔒 — local, **nunca se federa ni se
+  expone** (la crea GREMIO al operar; al global solo sube un aprendizaje destilado, jamás el DR).
 - **Sala A multi-dominio:** la bóveda del hub aloja investigación transversal de varios dominios; un dominio nuevo = clave `dominio:<slug>` + nota-índice (MOC) en la **única** bóveda, **nunca** una bóveda nueva por tema (`sabio-shared` expone una sola).
 - **Reglas:** un dato vive en UNA sola Sala; las demás lo referencian por ID (**nunca copiar**). Respeta
   el `LEEME - Esquema` de cada Sala. La Sala C solo se alimenta de fuente oficial citada.

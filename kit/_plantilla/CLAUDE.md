@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 2 -->
+<!-- sabio-generacion: 3 -->
 <!-- sabio:canonico:inicio — NO edites entre estos marcadores: la convergencia del Kit re-proyecta el esquema. Las convenciones que emerjan en TU bóveda van DEBAJO del cierre. -->
 # <NombreBoveda> — Esquema del Wiki LLM (Capa 2)
 
@@ -24,12 +24,12 @@ los dolores operativos del día a día; aquí se construye conocimiento navegabl
 > LLM. No hay embeddings ni chunking. (Si algún día superas ~2.000 págs, reevalúa esta decisión.)
 
 > **Rol en el conocimiento federado:** esta bóveda es la **Sala A (investigación curada)** del
-> proyecto. Catálogos de activos, referencia externa voluminosa y telemetría de agentes **no van
-> aquí**: pertenecen a las salas B/C/D de `04-Recursos/` (ver el `00-INDICE-DE-INDICES.md` del
-> proyecto). Si una nota necesita citarlos, referencia su **ID** (`activo:…`, `norma:…`,
-> `aprendizaje:…`) en vez de copiar su contenido. Una bóveda «poco poblada» no está enferma:
-> es una bóveda que no absorbe conocimiento que pertenece a otra sala.
-> *(Salas A–D = tipos de conocimiento; Capa 1/2 = arquitectura del sistema.)*
+> proyecto. Catálogos de activos, referencia externa voluminosa, telemetría de agentes y decisiones
+> de construcción (DRs) **no van aquí**: pertenecen a las salas B/C/D/E de `04-Recursos/` (ver el
+> `00-INDICE-DE-INDICES.md` del proyecto). Si una nota necesita citarlos, referencia su **ID**
+> (`activo:…`, `norma:…`, `aprendizaje:…`, `dr:…`) en vez de copiar su contenido. Una bóveda «poco
+> poblada» no está enferma: es una bóveda que no absorbe conocimiento que pertenece a otra sala.
+> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción; Capa 1/2 = arquitectura del sistema.)*
 
 ---
 

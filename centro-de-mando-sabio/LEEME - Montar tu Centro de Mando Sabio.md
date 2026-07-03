@@ -9,7 +9,7 @@
 Centro de Mando Sabio/
 ├── CLAUDE.md            ← el rol del hub (copia la plantilla de esta carpeta)
 ├── mcp/                 ← el servidor sabio-shared (copia la carpeta mcp/ del repo) + su .venv
-└── 04-Recursos/         ← el PLANO GLOBAL (las 4 Salas), creado con los moldes del Kit
+└── 04-Recursos/         ← el PLANO GLOBAL (las Salas A–D; la Sala E de GREMIO es local y queda fuera), creado con los moldes del Kit
     ├── 00-INDICE-DE-INDICES.md
     ├── 01-Boveda/<TuBovedaGlobal>/   ← Sala A · investigación compartida
     ├── 02-Catalogo/                          ← Sala B

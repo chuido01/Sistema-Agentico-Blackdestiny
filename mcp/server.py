@@ -7,6 +7,9 @@ Expone, en solo-lectura, la bóveda global de tu Centro de Mando Sabio:
 - Sala C · Referencia (marcos/estándares públicos canónicos: NIST, ISO, PCI…)
 - Sala D · Aprendizaje (registros)
 - El espinazo (índice de índices) que dice qué prefijo de ID vive dónde.
+- La Sala E · Decisiones/Gremio (05-Decisiones, Decision Records) NO se expone: es LOCAL del
+  proyecto y nunca se federa — denegada explícitamente aunque GREMIO la haya creado bajo el
+  subárbol permitido.
 
 Diseño (estándares mcp-builder):
 - Transporte **stdio** (local). Logging SOLO a stderr (nunca stdout).
@@ -57,9 +60,17 @@ _DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 GLOBAL_ROOT = Path(os.environ.get("SABIO_GLOBAL_ROOT", str(_DEFAULT_ROOT))).resolve()
 
 # Subárboles del plano global que SÍ se exponen (todo lo demás bajo la raíz queda fuera).
-# `04-Recursos` subsume las 4 Salas (A bajo 01-Boveda/ + B/C/D + índice de índices).
+# `04-Recursos` subsume las Salas A/B/C/D (A bajo 01-Boveda/ + B/C/D + índice de índices).
 ALLOWED_SUBTREES = [
     "04-Recursos",
+]
+
+# Subárboles DENEGADOS aunque caigan dentro de un permitido. La Sala E (Decisiones/Gremio,
+# 05-Decisiones) es LOCAL del proyecto y NUNCA se federa: los Decision Records son del producto
+# que se construye; al global solo viaja un aprendizaje (Sala D) destilado. GREMIO la crea al
+# operar DENTRO del subárbol ya expuesto — sin este guard quedaría legible para toda la flota.
+DENIED_SUBTREES = [
+    "04-Recursos/05-Decisiones",   # Sala E · Decisiones (dr:) — local, no se expone
 ]
 
 # Extensiones de texto cuyo CONTENIDO se puede devolver. Otros archivos → solo metadatos.
@@ -116,6 +127,13 @@ def _resolve_safe(rel_path: str) -> Path:
     # Debe seguir bajo la raíz global…
     if GLOBAL_ROOT not in candidate.parents and candidate != GLOBAL_ROOT:
         raise ValueError("Ruta fuera del plano global (scope denegado).")
+    # …fuera de los subárboles denegados (la denegación gana a la permisión)…
+    for sub in DENIED_SUBTREES:
+        base = (GLOBAL_ROOT / sub).resolve()
+        if candidate == base or base in candidate.parents:
+            raise ValueError(
+                "La Sala E (05-Decisiones) es local del proyecto y no se expone por sabio-shared."
+            )
     # …y dentro de algún subárbol permitido.
     for sub in ALLOWED_SUBTREES:
         base = (GLOBAL_ROOT / sub).resolve()
@@ -138,7 +156,8 @@ def _read_text(path: Path) -> str:
 
 
 def _iter_md_files():
-    """Itera los .md de todos los subárboles permitidos (para indexar IDs y buscar)."""
+    """Itera los .md de los subárboles permitidos (para indexar IDs y buscar), saltando los denegados."""
+    denied = [(GLOBAL_ROOT / d).resolve() for d in DENIED_SUBTREES]
     for sub in ALLOWED_SUBTREES:
         base = (GLOBAL_ROOT / sub).resolve()
         if not base.exists():
@@ -146,6 +165,9 @@ def _iter_md_files():
         for p in base.rglob("*.md"):
             # Excluir directorios ocultos (.git, .obsidian, etc.)
             if any(part.startswith(".") for part in p.relative_to(GLOBAL_ROOT).parts):
+                continue
+            # Excluir subárboles denegados (Sala E: local, no se federa).
+            if any(d == p or d in p.parents for d in denied):
                 continue
             yield p
 
