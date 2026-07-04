@@ -13,7 +13,7 @@ Propósito: <una línea — RELLENAR>.
 - `00-Documentacion/` — Documentación oficial, técnica, ejecutiva, tests, resultados, diagramas, memoria técnica, progreso, planes de implementación, entre otros.
 - `01-Produccion/` — Código y/o proyecto en producción.
 - `02-Desarrollo/` — Código que se encuentra siendo modificado.
-- `03-Backups/` — Respaldo de versiones estables y de documentación; cada backup en una carpeta con la fecha de realización en formato DDMMAAAA (ejemplo: `31052026`).
+- `03-Backups/` — Respaldo de versiones estables y de documentación; cada backup en `AAAA-MM-DD_vN/` con `MANIFEST.sha256` + `MOTIVO.md` (automatizado: `03-Backups/Respaldar.ps1`; política completa en su `LEEME - Politica de respaldos.md`). **Regla:** al **promover** una versión estable de `02-Desarrollo/` a `01-Produccion/`, se deja **antes** aquí un **backup completo** de lo que se reemplaza; también antes de retirar documentación del árbol.
 - `04-Recursos/` — El **cerebro federado** del proyecto (las salas de conocimiento y decisiones + información de interés). Ver la sección «Conocimiento federado» abajo.
 
 ## Reglas

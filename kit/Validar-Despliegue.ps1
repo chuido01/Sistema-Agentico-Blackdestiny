@@ -77,6 +77,10 @@ Check-Existe "repo git (.git\)"  (Join-Path $Proyecto ".git")
 Check-Existe ".gitignore"        (Join-Path $Proyecto ".gitignore")
 Check-Existe "CLAUDE.md"         (Join-Path $Proyecto "CLAUDE.md")
 Check-Existe "00 - LEEME.md"     (Join-Path $Proyecto "00-Documentacion\00 - LEEME.md")
+Check-Existe "respaldos: Respaldar.ps1"  (Join-Path $Proyecto "03-Backups\Respaldar.ps1")
+$leemePol = @((Join-Path $Proyecto "03-Backups\LEEME - Politica de respaldos.md"), (Join-Path $Proyecto "03-Backups\LEEME - Política de respaldos.md"))
+if ($leemePol | Where-Object { Test-Path -LiteralPath $_ }) { Add-Check "respaldos: LEEME politica" "PASS" }
+else { Add-Check "respaldos: LEEME politica" "FAIL" "falta: 03-Backups\LEEME - Politica de respaldos.md (o su variante con tilde)" }
 
 # --- Boveda Sala A: localizar la unica carpeta bajo 04-Recursos\01-Boveda\
 $vaultPadre = Join-Path $Proyecto "04-Recursos\01-Boveda"

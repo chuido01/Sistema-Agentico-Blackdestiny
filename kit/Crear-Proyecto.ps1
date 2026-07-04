@@ -96,6 +96,18 @@ foreach ($carpeta in @("00-Documentacion", "01-Produccion", "02-Desarrollo", "03
   } else { $saltos.Add("Carpeta $carpeta\ ya existia") }
 }
 
+# 2-bis) Estandar de respaldos: Respaldar.ps1 + LEEME de politica en 03-Backups (idempotente)
+$respSrcNew = Join-Path $PSScriptRoot "Respaldar.ps1"
+$respLeeNew = Join-Path $PSScriptRoot "_proyecto-Backups\LEEME - Politica de respaldos.md"
+$backupsNew = Join-Path $ProyectoDestino "03-Backups"
+foreach ($pieza in @(@{s=$respSrcNew; d=(Join-Path $backupsNew "Respaldar.ps1"); et="Respaldar.ps1"},
+                     @{s=$respLeeNew; d=(Join-Path $backupsNew "LEEME - Politica de respaldos.md"); et="LEEME - Politica de respaldos.md"})) {
+  if ((Test-Path $pieza.s) -and -not (Test-Path $pieza.d)) {
+    Copy-Item -Path $pieza.s -Destination $pieza.d
+    $hechos.Add("03-Backups\$($pieza.et) sembrado (estandar de respaldos)")
+  } elseif (Test-Path $pieza.d) { $saltos.Add("03-Backups\$($pieza.et) ya existia") }
+}
+
 # 3) Repositorio git aislado
 if (-not (Test-Path (Join-Path $ProyectoDestino ".git"))) {
   try {

@@ -201,6 +201,20 @@ foreach ($proy in $objetivos) {
     $hechos.Add("+ 00-Documentacion\SISTEMA - SABIO, GREMIO y COUNCIL (anclaje).md")
   } else { $saltos++ }
 
+  # c-quater) Estandar de respaldos (ADD-ONLY): siembra Respaldar.ps1 + LEEME de politica si faltan
+  $respSrc  = Join-Path $PSScriptRoot "Respaldar.ps1"
+  $respLee  = Join-Path $PSScriptRoot "_proyecto-Backups\LEEME - Politica de respaldos.md"
+  $backups  = Join-Path $proy "03-Backups"
+  if (Test-Path $backups) {
+    foreach ($pieza in @(@{s=$respSrc; d=(Join-Path $backups "Respaldar.ps1"); et="Respaldar.ps1"},
+                         @{s=$respLee; d=(Join-Path $backups "LEEME - Politica de respaldos.md"); et="LEEME - Politica de respaldos.md"})) {
+      if ((Test-Path $pieza.s) -and -not (Test-Path $pieza.d)) {
+        if ($Aplicar) { Copy-Item -Path $pieza.s -Destination $pieza.d }
+        $hechos.Add("+ 03-Backups\$($pieza.et) (estandar de respaldos)")
+      } else { $saltos++ }
+    }
+  }
+
   # d) Plantilla de nota atomica en la boveda (si existe boveda)
   if ($nombreBoveda) {
     $tplDest = Join-Path $vaultPadre (Join-Path $nombreBoveda "templates\_plantilla-nota-atomica.md")
