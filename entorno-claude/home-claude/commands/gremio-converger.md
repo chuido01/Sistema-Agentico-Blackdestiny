@@ -17,6 +17,9 @@ Eres la compuerta de convergencia de GREMIO. Cierras la brecha entre lo que los 
   verifica que el **primer test** tiene evidencia real y que el DoD del Contrato se cumplió **tal como
   el contrato lo define** (si el destino es cloud: smoke contra el destino real — jamás la señal proxy
   "tests verdes en el entorno que haya"; ref `investigacion:verde-local-no-cierra-slice-con-destino-cloud`).
+  Un smoke/E2E de **aislamiento o persistencia** NO cuenta como evidencia si su verde es un assert de
+  ausencia sin **control positivo pareado** ni confirmación en la **fuente de verdad** — exige la fila
+  real en la BD (ref `investigacion:assert-de-ausencia-exige-control-positivo-y-fuente-de-verdad`).
   **Un DR sin evidencia = missing/CRITICAL y el cierre queda BLOQUEADO.** "v1 completo" no existe sin
   esta pasada en limpio — la corrida 02 se declaró completa con 6/7 precisamente por saltarla.
 

@@ -16,6 +16,7 @@ Los **principios rectores GREMIO** (Carta §2) y las **normas `norma:` aplicable
 - **Plan** (Factory Management · `plan:<proyecto>`, archivo `plan.md` en la raíz de la Sala E): historias `P#`, `FR-###`, `SC-###`.
 - **DRs** de la Sala E (`04-Recursos/05-Decisiones/`): decisión, contrato, `estado`, `firma_humana`, `refs`, `fuentes_sabio`.
 - **Código** en las rutas que los contratos de los DR nombran (si ya existe).
+- **Reglas del proyecto** (el `CLAUDE.md` del proyecto): confidencialidad, salida de datos, servicios externos prohibidos.
 
 ## Pasos
 1. **Inventario:** cada `FR-/SC-`/historia, cada DR y su contrato, cada principio/norma aplicable.
@@ -29,6 +30,11 @@ Los **principios rectores GREMIO** (Carta §2) y las **normas `norma:` aplicable
    - **Ambigüedad** — adjetivos vagos (rápido, escalable, seguro) sin criterio medible; placeholders sin resolver.
    - **Subespecificación** — DR sin contrato ejecutable; historia sin test independiente.
    - **Conflicto** — dos DRs que se contradicen; un DR que viola un principio/norma.
+   - **Política del proyecto** — contrasta CADA DR contra las Reglas del `CLAUDE.md` del proyecto
+     (confidencialidad, «los datos no salen», servicios externos prohibidos). Un DR que despliega a un
+     servicio externo que el proyecto prohíbe es **CRITICAL** (bloqueante) — las Reglas son contexto,
+     no control: esta pasada es quien las hace cumplir.
+     (Ref: `investigacion:politicas-de-proyecto-no-se-autoimponen-en-la-fabrica-agentica`.)
    - **Cobertura** — `FR-/SC-` sin DR; DR sin `FR-/SC-` que lo motive; cadena de `refs` rota (referencia a un id inexistente).
    - **Ciclo de vida** — DR `aceptado` sin `firma_humana`; DR `superado` sin `superado_por`; supersesión incoherente.
    - **Cobertura NO-FUNCIONAL (MP-049/G-06) — filas explícitas SIEMPRE, aunque ningún FR las pida:**
