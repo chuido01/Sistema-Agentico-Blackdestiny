@@ -1,10 +1,10 @@
 # Sistema Agéntico Blackdestiny — resumen consolidado
 
 > El Sistema Agéntico Blackdestiny reúne **tres componentes**: **SABIO** (el conocimiento/memoria),
-> **GREMIO** (la fábrica agéntica que construye sobre ese saber) y **COUNCIL** (el consejo que somete
-> las decisiones a debate). **SABIO sabe · GREMIO construye · COUNCIL delibera.** Este documento cubre
-> SABIO a fondo (sección 1–11) y cierra con GREMIO (§12) y COUNCIL (§13); el detalle de GREMIO vive en
-> [`../gremio/`](../gremio/).
+> **GREMIO** (la plataforma de rigor que blinda lo que construyes sobre ese saber) y **COUNCIL** (el
+> consejo que somete las decisiones a debate). **SABIO sabe · el humano construye · GREMIO blinda ·
+> COUNCIL delibera.** Este documento cubre SABIO a fondo (sección 1–11) y cierra con GREMIO (§12) y
+> COUNCIL (§13); el detalle de GREMIO vive en [`../gremio/`](../gremio/).
 
 ## 1. Qué es SABIO (la idea en una frase)
 
@@ -71,7 +71,7 @@ Cada dato es de un tipo, y por eso vive en una Sala concreta (como estanterías)
 | **B · Catálogo** | Tus herramientas y activos: fichas de qué tienes, para qué sirve, qué cuesta. | `activo:<cosa>` |
 | **C · Referencia** | Normas y estándares externos, en el plano global. **Segmentada por ámbito**: `universal` (NIST/ISO/PCI, para todos), `jurisdiccion:` (la ley de un país), `sector:` (un rubro). Sube lo que **necesita más de un proyecto**, no "lo internacional". | `norma:<marco>:<código>` |
 | **D · Aprendizaje** | Lecciones de lo que pasó, para no repetir errores. | `aprendizaje:<id>` |
-| **E · Decisiones (Gremio)** | Los **Decision Records** de la fábrica GREMIO. **Local por proyecto, jamás se federa** — al global solo sube un aprendizaje (D) destilado. La crea GREMIO al operar. | `dr:<dominio>-<n>` |
+| **E · Decisiones (Gremio)** | El tablero de GREMIO: la **intención** (`intencion.md`) y los **Decision Records**. **Local por proyecto, jamás se federa** — al global solo sube un aprendizaje (D) destilado. La crea GREMIO al operar. | `dr:<dominio>-<n>` |
 
 **Dos perfiles de la Sala D** — **una sola forma física, un flag de comportamiento.** Todos los proyectos
 llevan la **misma** Sala D en disco (el superconjunto: `ESQUEMA.md` + un validador en **todos**). El perfil
@@ -158,33 +158,38 @@ Sin esto, los proyectos serían islas que repiten trabajo. El volante hace que l
 
 ---
 
-## 12. GREMIO — la fábrica agéntica (construye sobre SABIO)
+## 12. GREMIO — la plataforma de rigor (blinda lo que construyes sobre SABIO)
 
-Si SABIO es el conocimiento, **GREMIO** es quien lo pone a construir software. Es una **fábrica de 3
-niveles** de agentes que convierte una idea en un producto **sin improvisar**:
+Si SABIO es el conocimiento, **GREMIO 2.0** es el rigor. La doctrina: **el producto lo construyes tú,
+guiado por la IA** — la calidad de lo que un usuario percibe sigue tu atención, no la de una fábrica.
+GREMIO no compite con esa construcción; **la blinda** con 3 servicios:
 
-- **1 Factory Management** — el jefe de proyecto: recibe la idea, hace el interrogatorio y redacta el
-  **Plan** (qué se va a construir, en términos agnósticos de tecnología). No decide arquitectura.
-- **8 Líderes** (uno por dominio: Arquitectura, Datos, Seguridad, Desarrollo, Diseño, Calidad,
-  Infraestructura, Cambio/Soporte) — **deciden** su parte y la registran en un **Decision Record (DR)**,
-  citando el conocimiento de SABIO que consultaron.
-- **24 Especialistas** — **ejecutan** lo que su Líder decidió y firmaste, y pegan la evidencia real.
+- **Contratos a demanda** (`/gremio-contrato`) — un **Líder** de dominio (Datos, Seguridad,
+  Infraestructura o Arquitectura) registra UNA decisión en un **Decision Record (DR)** citando el
+  conocimiento de SABIO, y tú lo **firmas con disparo declarado**. Solo donde el criterio de éxito es
+  maquinal (un test, una consulta, una política verificable) — lo que se juzga con los ojos no se
+  contractualiza.
+- **Construcción de plataforma** (`/gremio-construir`) — los Especialistas construyen **solo lo que un
+  usuario final no percibe** (migraciones, CI/CD, esquema, hardening), contra un DR firmado. Si el
+  encargo toca una pantalla o un flujo visible, **se niega** y te lo devuelve al carril guiado.
+- **Verificación adversarial + cierre honesto** (`/gremio-verificar` y `/gremio-cerrar`) — el corazón:
+  un 2º par que **refuta** en vez de confirmar, pentest, CI desde cero, E2E confirmado en la fuente de
+  verdad, performance como gate y críticos de diseño; y un cierre de **4 condiciones** (evidencia de
+  cada DR · **tú recorres el producto contra tu intención** · verde en el destino real · release con
+  rollback ensayado). Sin las 4, la palabra «cerrado» está prohibida.
 
-El **tablero** son los DRs, que viven en la **Sala E** de cada proyecto (**local; nunca se federa** —
-al plano global solo sube un aprendizaje destilado, jamás el DR). Nada se declara "hecho" por buena
-letra: hay **compuertas de verificación** —`/gremio-analizar` (consistencia entre Plan, DRs y código,
-de solo lectura) y `/gremio-converger` (compara el código real contra lo firmado, y añade lo que
-falte)— y, al final, tu **firma humana** anclada al estado verificado.
-
-**El ciclo corto:** `/gremio-iniciar <idea>` arranca la fábrica (triaje «¿merece GREMIO o basta la vía
-simple?» → interrogatorio → Plan) y `/gremio-continuar` la opera (lee el tablero, detecta la fase y
-ejecuta el siguiente lote). El protocolo completo, las plantillas y las compuertas están en
+**La puerta de entrada:** `/gremio-intencion <idea>` — un interrogatorio de doble pasada convierte tu
+idea en `intencion.md`, **tu tablero** (validado contra tus palabras, con auditoría de traducción y
+matriz de paridad contra apps de referencia). El **tablero** (intención + DRs) vive en la **Sala E** de
+cada proyecto (**local; nunca se federa** — al plano global solo sube un aprendizaje destilado, jamás el
+DR). El protocolo completo, el roster (25 agentes activos + 8 congelados) y las plantillas están en
 [`../gremio/`](../gremio/).
 
-> **Honestidad:** la versión publicada es la **reformada tras dos corridas adversas**; sus mecanismos
-> (invariantes, slice final de endurecimiento, contratos por dominio, compuertas) nacieron de esos
-> fracasos. Aún no tiene una corrida real en verde: las compuertas y tu firma existen exactamente para
-> que "hecho" no sea un acto de fe.
+> **Honestidad:** la versión 2.0 nace de la **evidencia empírica de 3 corridas reales** — la tercera
+> cerró todas sus compuertas en verde con el producto sin convencer a su dueño, y la lección (*las
+> compuertas verifican contratos, no producto percibido*) es exactamente lo que esta versión convierte
+> en mecanismo. La 2.0 aún no tiene una corrida real en verde: las compuertas y tu firma existen
+> exactamente para que "hecho" no sea un acto de fe.
 
 ---
 

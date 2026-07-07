@@ -1,140 +1,249 @@
-# Protocolo GREMIO — cómo opera la agencia
+# Protocolo GREMIO v2.0 — la plataforma de rigor
 
-> Documento rector de **F2**. Define el ciclo de vida de una decisión, quién posee qué artefacto, las compuertas, la orquestación y el consumo de SABIO. Operativo y autocontenido; el *porqué* y la identidad están en la **Carta Fundacional GREMIO** (`00-Documentacion/Fundacion Gremio/Carta Fundacional GREMIO.md`, congelada).
-> Huella: todo artefacto GREMIO lleva `gremio: true`; convenciones `/gremio-*`, `gremio-<rol>`, `dr:<dominio>-<n>`, `plan:<proyecto>`.
+> **Versión 2.0 · 2026-07-06.** Reescrito conforme al **blueprint de reconversión firmado por el
+> propietario (2026-07-06)** tras la retrospectiva auditada de la corrida 03. Causa raíz de la
+> reconversión: `investigacion:compuertas-verifican-el-contrato-no-el-producto-percibido` (plano
+> global, Sala A). La identidad y la historia fundacional viven en la Carta Fundacional GREMIO
+> (documento interno de la instalación original; no se publica). El protocolo 1.x completo queda en
+> el **historial git de este repo**.
+> Huella: todo artefacto GREMIO lleva `gremio: true`; convenciones `/gremio-*`, `gremio-<rol>`, `dr:<dominio>-<n>`, `I-###`.
 
-## 1. Qué gobierna
-Convierte una idea en software profesional mediante una **disciplina de artefactos vivos + compuertas empíricas + firma humana**, no mediante personalidades. **SABIO sabe · GREMIO construye · COUNCIL delibera.**
+## 1. Qué es GREMIO 2.0
 
-## 2. Los artículos del tablero
-| Artefacto | Dueño | Equivalente spec-kit | Vive en |
-|---|---|---|---|
-| **Plan** ([`plantillas/plan.md`](plantillas/plan.md)) | Factory Management (PM/PO) | `spec.md` | raíz de la Sala E del proyecto (como `plan.md`) |
-| **DR** ([`plantillas/DR.md`](plantillas/DR.md)) | el **Líder** que decide (DECIDE) | `plan.md` (＋ ciclo de vida) | Sala E `04-Recursos/05-Decisiones/` |
-| **Contrato** (sección del DR) | el Líder lo define · el **Especialista** lo ejecuta | `tasks.md` | dentro del DR |
+GREMIO se reconvierte de **fábrica constructora** a **plataforma de rigor**. La premisa que cambió:
+**el producto lo construye el humano, guiado** — la calidad de lo que un usuario percibe sigue la
+atención del humano (evidencia empírica de las corridas, ver §10). GREMIO ya no compite con esa
+construcción; la **blinda**. Lo que GREMIO aporta es lo que el desarrollo guiado gana tarde y a golpe de
+incidente: **anticipar el rigor al día 1** — contratos verificables, verificación adversarial
+independiente y un cierre que no se puede inflar.
 
-Regla: un dato vive en un artefacto; los demás lo referencian por ID. El Plan enlaza la familia de DRs; los DR se cruzan por `refs`. **Nunca se copia.**
+**SABIO sabe; el humano construye; GREMIO blinda.**
 
-## 3. Ciclo de vida de una decisión
-0. **Triaje de peso (`/gremio-iniciar` paso 0 — MP-094):** ANTES de arrancar la fábrica se evalúa si el
-   pedido la **merece** (tamaño/riesgo/horizonte). La fábrica completa es la **excepción** (grande/
-   riesgoso/largo-plazo); lo acotado va por vía simple. El humano decide; su decisión queda registrada
-   en el Plan. También aquí: **límite de WIP** — una corrida activa por proyecto (MP-062).
-1. **Idea** → el Factory Management la recibe. **No fija nada todavía** (ni visión, ni `FR/SC`, ni arquitectura).
-2. **Interrogatorio (compuerta previa al Plan · doble pasada)** → el FM devuelve **≤10 preguntas de alto impacto** y se **detiene sin escribir el Plan**. Un subagente no puede pausar a preguntar: devuelve las preguntas, la sesión que lo invoca se las traslada al humano y lo **re-invoca con las respuestas**. **Recién con las respuestas** redacta el Plan (historias `P#`, `FR-###`, `SC-###`) en términos **agnósticos de tecnología**. El Plan **nunca** fija arquitectura/stack/cliente/normativa —eso es del Líder en su DR, o es pregunta de este paso. (Destilado de `/clarify`.) **La traza queda como artefacto** (MP-042): `/gremio-iniciar` escribe `interrogatorio.md` en la Sala E (idea + preguntas + respuestas verbatim + triaje de peso) — A0 auditable por diseño. El Plan lleva además el **índice de DRs con columna Disparo** (INVARIANTE 1: todo DR firmado tiene punto de disparo; sin disparo = HIGH en `/gremio-analizar`) y el **slice final obligatorio "Integración y Endurecimiento"** (MP-045: el último kilómetro con DR y dueño propios).
-3. **Propuesta** → el **Líder** del dominio crea un **DR** en `estado: propuesto`, citando lo que leyó de SABIO (`fuentes_sabio`), **seleccionando sus Especialistas** (`especialistas:` + «Ejecución por Especialista») y con el **Contrato** completo.
-4. **Compuerta `/gremio-analizar`** → consistencia cruzada read-only (Plan ↔ DRs ↔ código). CRITICAL/HIGH bloquean.
-5. **Firma** → el humano firma (`firma_humana`). **Solo entonces** el DR pasa a `aceptado`. Sin firma, sigue `propuesto`.
-6. **Implementación** → el **Factory Management** lanza a los **Especialistas** que el Líder planificó en el DR; cada uno ejecuta su cláusula del **Contrato** (esqueleto andante: el primer test en verde primero — y el esqueleto **se despliega al destino**, no solo se prueba). **INVARIANTE 2 — Pre-flight:** si el Contrato depende de algo externo (cloud/cuentas/APIs/CLIs/MCPs), ANTES de ejecutar se produce el **inventario verificado** de la sección Pre-flight del DR (probado con llamadas reales; lo que falta se PIDE al humano — jamás se afirma imposibilidad sin probar). **INVARIANTE 4 — Anti-improvisación:** ante bloqueo, las únicas salidas son ejecutar lo firmado o proponer **DR de supersesión** — nunca sustituir la decisión firmada por conveniencia de tooling.
-7. **Compuerta `/gremio-converger`** (modo slice) → evalúa código-vs-DR, **append-only**; lo que falta se añade como tareas trazables. Un slice con destino cloud cierra **verde en el destino** (MP-046), jamás con la señal proxy del verde local.
-8. **Evolución** → cuando el proyecto muta, **NO se edita** el DR aceptado: nace un **DR nuevo que lo supera** (`supersede`/`superado_por`). Historia preservada (cadena de supersesión + git). Si lo que cambia es un **supuesto de contexto** (p. ej. local→prod) y no la decisión, va como **Adenda de entorno** fechada y firmada en el propio DR (MP-047).
-9. **CIERRE de la corrida (INVARIANTE 3 — sin esto no existe "completo"):** `/gremio-converger --cierre` contra el **tablero entero** (mapa DR→evidencia de CADA DR; uno sin evidencia = CRITICAL, cierre bloqueado) → **retrospectiva obligatoria** (MP-065: ≥1 aprendizaje a la Sala D local o "sin lección" explícito con porqué) → **telemetría** consolidada en la bitácora de milestones (MP-058) → veredicto con los Criterios delante + firma humana.
+## 2. Los 3 servicios
 
-## 4. Compuertas (empíricas, con firma)
-- **`/gremio-analizar`** — coherencia y cobertura (incl. tablero con Disparo + filas no-funcionales), read-only, severidad. No escribe. (de `/analyze`.)
-- **`/gremio-converger`** — código-vs-contrato, append-only, nunca reescribe. **Dos modos:** slice (default) y **cierre** (`--cierre`, mapa DR→evidencia del tablero entero — obligatorio antes de declarar la corrida completa). Compara también **docs↔producto vivo** y **entorno vivo↔DR de infra/seguridad**. (de `/converge`.)
-- **Council adversarial (OPCIONAL — MP-044/G-05):** antes de firmar un **DR de alto riesgo** (arquitectura, seguridad, o lo que el humano juzgue), correr **`/council`** en modo auditoría adversarial sobre la decisión («atácala: por qué fallaría, qué omitió, qué la mejoraría»). Cubre lo que `/gremio-analizar` no mira: la **calidad** de la decisión, no su consistencia. Es el uso de mayor rendimiento medido en el PoC.
-- **Anti-auto-aprobación (MP-061/M12):** la evidencia que produce un Especialista la **re-corre otro agente** (Calidad u otro par) antes de marcarse en la Verificación del DR — nunca el mismo que la produjo. «Tu salida la verifica otro» vive en el prompt de todo Especialista.
-- **Gate de release (MP-051/G-08):** el DR de release exige **0 hallazgos CRITICAL/HIGH/MEDIUM abiertos** (presupuesto de hallazgos). Los 3 Medios de la corrida 02 habrían bloqueado su cierre.
-- **La firma humana** es la compuerta final e innegociable: «hecho» = test en verde + scan ejecutado + tu firma, **anclada al commit SHA** del estado firmado (MP-066). Un DR pulido sin verificación es **falsa autoridad**.
+| Servicio | Comando | Qué hace |
+|---|---|---|
+| **1 · Contratos a demanda** | `/gremio-contrato <dominio>` | Un Líder (datos · seguridad · infraestructura · arquitectura) → **un DR** → **firma humana con disparo declarado**. Solo donde el criterio de éxito es maquinal (test, consulta, política verificable). **Diseño ya NO tiene DR por defecto** (la dirección visual es del humano); **el líder de desarrollo es el humano**. A demanda — nunca 10 DRs de una vez. |
+| **2 · Construcción de plataforma** | `/gremio-construir` | Especialistas construyen **SOLO lo que un usuario final NO percibe** (migraciones, CI/CD, esquema, RLS, auth plumbing, scaffolding, hardening) contra un DR firmado. **Compuerta de jurisdicción dura:** superficie percibida → se niega y vuelve al carril guiado. Pre-flight con llamadas reales + anti-improvisación (adenda firmada). |
+| **3 · Verificación adversarial + cierre honesto** | `/gremio-verificar` y `/gremio-cerrar` | **Verificar** (el corazón): read-only sobre trabajo YA hecho — guiado o construido —; 2º par que REFUTA, pentest si tocó authz/RLS, CI desde cero si tocó migraciones, E2E con control positivo pareado + confirmación en fuente de verdad, performance p50/p95/p99 como gate, críticos de diseño contra el design system del humano + WCAG; hallazgos con severidad, veredicto append-only en la Sala E. **Cerrar**: las 4 condiciones innegociables (§6). |
 
-## 5. Orquestación — la fábrica de 3 niveles (sin Task-en-Task)
-> **La verdad operativa (MP-041, formalizada tras las 2 corridas):** en runtime, la **SESIÓN PRINCIPAL
-> es el EJECUTOR** (invoca agentes, corre compuertas, hace de puente con el humano) y
-> **`gremio-factory-management` es el DUEÑO del Plan** (lo redacta, prioriza y mantiene). El motor de la
-> ejecución es **`/gremio-continuar`**: lee el tablero, detecta la fase y ejecuta el siguiente lote con
-> los 4 invariantes integrados (cobertura DR↔disparo · pre-flight · convergencia de cierre ·
-> anti-improvisación) — la corrida no depende de la pericia del operador. **Modelo por nivel de decisión
-> (MP-043):** FM + 8 Líderes = `model: opus` (deciden); 24 Especialistas = `model: sonnet` (ejecutan).
-- **`gremio-factory-management` es el ÚNICO que define los lotes del fan-out** (qué agente, con qué encargo, en qué orden); la **sesión principal los materializa** (verdad operativa de arriba). **Nadie anida**: ni los Líderes ni los Especialistas invocan a otros.
-- **Nivel fábrica:** del Plan, el Factory Management lanza al **Líder** de cada dominio que la idea requiere.
-- **Nivel división:** cada **Líder DECIDE** su dominio y **planifica** (no ejecuta) en su DR qué **Especialistas** participan (`especialistas:` + «Ejecución por Especialista»). Tras la **firma**, el Factory Management lee ese DR y **lanza a los Especialistas** seleccionados, en el orden indicado.
-- Los agentes **no chatean entre sí**: colaboran por el **tablero** de DRs (*blackboard*), arrancando **en frío** (solo ven su prompt + lo que leen del disco: Plan, DRs, SABIO).
-- La «**micro-orquestación del dominio**» es el **plan que el Líder escribe en el DR**; el Factory Management la **materializa**.
+Puerta de entrada de todo: **`/gremio-intencion`** (§3, paso 1).
 
-## 6. Consumo de SABIO (read-only · on-demand · solo plano global)
-| Líder | Lee (Sala A · MOC del dominio) |
+## 3. El ciclo (intención → contrato → construcción dual → verificar → cerrar)
+
+1. **`/gremio-intencion [idea]`** — interrogatorio de **doble pasada** (el auditor devuelve ≤10 preguntas,
+   el humano responde, recién entonces se traduce) → **`intencion.md`**: ítems `I-###` con **carril**
+   (`producto` = lo percibe un usuario, se construye guiado | `plataforma` = criterio maquinal) y
+   **criterio de cierre** por ítem. Incluye la **auditoría de traducción** respuesta→ítem (nada se pierde
+   en silencio) y la **matriz de paridad** contra apps de referencia (cada descarte, firmado). Triaje de
+   **servicios** (qué piezas de GREMIO merece el pedido) — ya no existe «fábrica completa vs vía simple».
+   Traza en `interrogatorio.md`. Producto nuevo = **repo git propio y aislado** desde el día uno.
+2. **`/gremio-contrato <dominio>`** — para cada decisión de dominio que lo amerite: el Líder escribe el DR
+   (`propuesto`) con Contrato, Pre-flight y Especialistas; consistencia inline (ambigüedad,
+   subespecificación, conflicto contra normas `norma:` MUST, **política del proyecto** — un DR que
+   despliega a un servicio que el `CLAUDE.md` prohíbe es CRITICAL); **firma humana con disparo declarado**
+   (un DR sin disparo no se firma).
+3. **Construcción dual:**
+   - Carril **producto** → **construcción guiada por el humano** (fases cortas; él usa la app en cada
+     tanda). GREMIO no construye pantallas.
+   - Carril **plataforma** → **`/gremio-construir`** contra el DR firmado: compuerta de jurisdicción
+     (paso 0, innegociable; caso mixto se parte), pre-flight verificado con llamadas reales, lote de
+     Especialistas, evidencia rojo→verde + fuente de verdad + verde EN destino si el DoD es cloud.
+4. **`/gremio-verificar`** — después de cada tramo con riesgo, sobre lo guiado y lo construido por igual.
+   Read-only estricto; los fixes son del constructor. Veredicto `veredicto-verificacion-<AAAAMMDD>.md`
+   append-only en la Sala E.
+5. **`/gremio-cerrar`** — antes de hablar de release: las 4 condiciones (§6) + retrospectiva obligatoria
+   (≥1 `/sabio-aprender` o «sin lección» explícito con porqué).
+
+**Evolución de un DR firmado:** nunca se edita — **adenda firmada** (cambio de supuesto de entorno) o
+**DR de supersesión** (`supersede`/`superado_por`). Historia preservada (cadena + git).
+
+## 4. Los 5 comandos
+
+| Comando | Rol en 2.0 | Reemplaza a |
+|---|---|---|
+| `/gremio-intencion` | Puerta de entrada: idea → `intencion.md` auditado | `/gremio-iniciar` |
+| `/gremio-contrato` | Un Líder → un DR → firma con disparo | (nuevo; antes lo hacía el fan-out del Plan) |
+| `/gremio-construir` | Construcción de plataforma con jurisdicción dura | `/gremio-continuar` |
+| `/gremio-verificar` | Verificación adversarial read-only (compuerta) | `/gremio-analizar` (lo absorbe) |
+| `/gremio-cerrar` | Cierre honesto de 4 condiciones (compuerta final) | `/gremio-converger` |
+
+**Fuente en este repo:** `gremio/comandos/` (los 5). **Runtime:** `~/.claude/commands/` — se despliegan
+con el instalador del entorno (ver [`README.md`](README.md)); re-copiar tras editar la fuente. Las
+**compuertas** de 2.0 son `/gremio-verificar` y `/gremio-cerrar` (ver `compuertas/LEEME.md`; ya no hay
+archivos aparte — el comando ES la compuerta). Los 4 comandos 1.x quedan en el historial git de este repo.
+
+## 5. Invariantes 2.0 (los cinco; sin ellos no hay GREMIO)
+
+1. **Cobertura de intención con matriz de paridad.** Todo lo que el humano pidió (o dio por implícito y
+   se desglosó en el interrogatorio) tiene un ítem `I-###` que lo traduce, o un descarte firmado. La
+   auditoría de traducción es obligatoria; la matriz de paridad contra la app de referencia se cierra en
+   `/gremio-cerrar`. *Lo que no entra a la intención es invisible para todo lo de aguas abajo — esta es
+   la cura de la ceguera heredada de la corrida 03.*
+2. **Jurisdicción.** GREMIO construye SOLO carril plataforma (lo que un usuario final no percibe). La
+   superficie percibida es del humano guiado — la compuerta del paso 0 de `/gremio-construir` se niega y
+   devuelve, sin excepción «es solo un formulario chico».
+3. **Evidencia en fuente de verdad y en destino.** Un assert de ausencia exige control positivo pareado +
+   confirmación en la fuente de verdad (la fila en la BD, no el exit code). Un DoD con destino cloud
+   cierra verde EN el destino, jamás con la señal proxy del verde local. Migraciones se prueban
+   **desde cero** (reset + arranque limpio), no contra el dev vivo.
+4. **Producto percibido.** El verde de compuerta ⇏ producto usable: además de la convergencia
+   DR→evidencia, **el humano recorre el bucle central de punta a punta contra `intencion.md`** — cero
+   etiquetas demo, cero datos basura, matriz de paridad cerrada (condición 2 de `/gremio-cerrar`).
+5. **Anti-improvisación.** Ante bloqueo, las únicas salidas son ejecutar lo firmado o proponer **adenda /
+   DR de supersesión** para firma — jamás sustituir la decisión firmada por conveniencia de tooling.
+   El pre-flight verifica dependencias externas **con llamadas reales** antes de escribir código; lo que
+   falta se PIDE al humano, nunca se afirma imposibilidad sin probar.
+
+## 6. El vocabulario de «cerrado» (tiene dueño)
+
+La palabra **«cerrado»** la emite SOLO `/gremio-cerrar`, con las **4 condiciones** en verde y la firma
+humana delante:
+
+1. **Convergencia DR→evidencia de TODOS los DRs firmados** (append-only; un DR sin evidencia = CRITICAL,
+   cierre bloqueado; brechas `missing`/`partial`/`contradicts`/`unrequested` reportadas, jamás borradas;
+   docs espejo del producto vivo).
+2. **Producto percibido:** el humano recorrió el bucle central contra `intencion.md` — cero etiquetas
+   demo/placeholder, cero datos basura, matriz de paridad cerrada. Un ítem que no convence queda ESCRITO
+   (brecha de producto), nunca en silencio.
+3. **Verde EN destino** (smoke contra la URL real desplegada, si el DoD es cloud).
+4. **Release real:** tag versionado + changelog + **rollback ENSAYADO** (ejecutado contra un entorno de
+   prueba — un rollback descrito es una hipótesis) + runbook si el producto queda operando.
+
+Cualquier condición incompleta → el estado es **«en construcción»** o **«parcial»**, dicho tal cual, con
+los diferidos FIRMADOS (dueño + disparo). Estados intermedios: un slice construido queda **«pendiente de
+verificar»**; un verificado limpio queda **«verificado»**, no cerrado. La **inflación de vocabulario fue
+el patrón madre de las corridas 01–03**; este glosario la corta.
+
+## 7. Artefactos del tablero (Sala E del proyecto)
+
+| Artefacto | Dueño | Vive en |
+|---|---|---|
+| **`intencion.md`** (plantilla en [`plantillas/intencion.md`](plantillas/intencion.md)) | **el humano** (lo redacta y audita `gremio-auditor-intencion`) | raíz de la Sala E (`04-Recursos/05-Decisiones/`) |
+| **`interrogatorio.md`** (traza append-only) | la sesión que corre `/gremio-intencion` | Sala E |
+| **DR** ([`plantillas/DR.md`](plantillas/DR.md)) | el **Líder** que decide; firma humana con disparo | Sala E |
+| **Contrato / Pre-flight / Adendas** | secciones del DR | dentro del DR |
+| **Veredictos** (`veredicto-verificacion-*.md`, cierre) | `/gremio-verificar` y `/gremio-cerrar` (append-only) | Sala E |
+| **RUNBOOK** ([`plantillas/runbook.md`](plantillas/runbook.md)) | división Cambio y Soporte | junto al producto, en git |
+
+Regla de oro: un dato vive en un artefacto; los demás lo referencian por ID (`I-###`, `dr:<dominio>-<n>`).
+**Nunca se copia.** El Plan de fábrica 1.x (`plan.md`) ya no existe: su lugar lo ocupa `intencion.md`
+(el tablero del humano, en su lenguaje, validado contra lo que pidió).
+
+## 8. Roster y orquestación (sin Task-en-Task)
+
+- **La sesión principal es el único ejecutor**: invoca agentes, corre los comandos, hace de puente con el
+  humano. Nadie anida; los agentes colaboran por el tablero (blackboard), arrancando en frío.
+- **25 agentes activos** en `~/.claude/agents/Gremio/<División>/` (Arquitectura · Calidad · Cambio y
+  Soporte · Datos · Desarrollo · Diseno · Infraestructura · Seguridad · Intencion) + **8 congelados** en
+  `Gremio/_congelados/`. Catálogo completo con el rol 2.0 de cada uno: [`ROSTER.md`](ROSTER.md).
+- Disposición: **1 auditor de intención** (`gremio-auditor-intencion`, ex Factory Management — audita la
+  traducción, NO define lotes) · **4 Líderes de contrato** (arquitectura, datos, seguridad,
+  infraestructura) · **núcleo de verificación** (7 verificadores + `gremio-lider-calidad` como
+  orquestador de estrategia) · **3 críticos de diseño** (critican contra el design system del humano;
+  jamás deciden dirección) · **3 de cierre** (Cambio y Soporte) · **6 de construcción de plataforma
+  (reserva)**.
+- Modelo por nivel de decisión: quien decide/audita = `opus`; quien ejecuta/verifica = `sonnet`.
+- **Anti-auto-aprobación:** la evidencia que produce un constructor la re-corre OTRO agente (el
+  verificador) — nunca el mismo que la produjo. Por eso `/gremio-verificar` es read-only y separado.
+
+## 9. Consumo de SABIO (read-only · on-demand · solo plano global)
+
+| Quién | Lee (plano global vía `sabio-shared`) |
 |---|---|
-| Arquitectura | `investigacion:arquitectura-software-moc` (8 arq · matriz · Premium · migración) |
-| Base de Datos | `investigacion:bases-de-datos-moc` (familias · modelado · ACID/CAP · escalado · DBaaS) |
-| Seguridad | Sala C `norma:` (GDPR/HIPAA/CIS/NIST/ASVS · base Chile) + Sala A `investigacion:seguridad-moc` |
-| Desarrollo | `investigacion:desarrollo-moc` (roles · SDLC · metodologías · stacks · código elegante) |
-| Diseño y Experiencia | `investigacion:diseno-ux-ui-moc` (UX/UI/IxD · tokens · color · accesibilidad) |
-| Calidad y Pruebas | `investigacion:calidad-pruebas-moc` (tipos/niveles · estrategia · automatización · performance) |
-| Infraestructura | `investigacion:infra-devops-moc` (cloud · IaC · contenedores · observabilidad · FinOps) + cruza `investigacion:matriz-arquitectura-plataforma` |
-| Gestión del Cambio y Soporte | `investigacion:cambio-soporte-moc` (release · ITIL · soporte L0-L4 · SLA/OLA) |
-| Todos | `investigacion:decision-equilibrio-principios-diseno` + aprendizajes Sala D relevantes |
+| `gremio-auditor-intencion` | `investigacion:decision-equilibrio-principios-diseno` + Sala D relevante del proyecto |
+| Líder de Arquitectura | `investigacion:arquitectura-software-moc` |
+| Líder de Datos | `investigacion:bases-de-datos-moc` |
+| Líder de Seguridad | Sala C `norma:` (perfil de aplicabilidad del proyecto) + `investigacion:seguridad-moc` |
+| Líder de Infraestructura | `investigacion:infra-devops-moc` + `investigacion:matriz-arquitectura-plataforma` |
+| Verificadores (Calidad/Seguridad) | `investigacion:calidad-pruebas-moc` · `investigacion:seguridad-moc` |
+| Críticos de diseño | `investigacion:diseno-ux-ui-moc` + el design system del proyecto (Sala B `activo:biblioteca-patrones-visuales`) |
+| Cierre (Cambio y Soporte) | `investigacion:cambio-soporte-moc` |
 
-> **8/8 dominios poblados y cableados (2026-06-29):** los 33 agentes citan IDs SABIO concretos de su dominio (134 únicos, 0 rotos). El detalle por agente vive en cada `.md` de `~/.claude/agents/<División> Gremio/`.
+Nunca lee bóvedas/datos de **otros** proyectos (aislamiento Capa 1, sagrado). Alcance por producto
+intra-proyecto: los «Hechos estables» de OTRO producto del mismo proyecto son contexto a confirmar en el
+interrogatorio, no verdad a heredar. Escribe de vuelta: gotchas → Sala D local, promovibles por
+`/sabio-promover`.
 
-Nunca lee bóvedas/datos de **otros** proyectos (aislamiento Capa 1). Escribe de vuelta: gotchas → Sala D local (auto-aprendizaje), promovible por `/sabio-promover`.
+### Entregables estándar por dominio de contrato (heredados de 1.x §9 — siguen vigentes)
 
-## 7. Aislamiento (Capa 1 · sagrado)
-Cada agente corre **local** en el proyecto; lee el plano global **solo-lectura** vía `sabio-shared`; **nunca** mezcla contexto entre proyectos. El Plan y los DR nacen y mueren locales.
-> **Alcance por producto (intra-proyecto):** un proyecto puede tener **varios productos**. Los "Hechos estables" del `CLAUDE.md` y las notas Sala A de **otro** producto —su cliente, arquitectura, normativa— son **contexto a confirmar en el Interrogatorio, no verdad a heredar**. No mezclar **productos** dentro del mismo proyecto es tan obligatorio como no mezclar **proyectos**.
+Lo que el DR de cada dominio DEBE contener de serie; nacieron del fracaso de la corrida 02 y **sobreviven
+a la reconversión** porque son criterio maquinal (justo lo que un contrato contractualiza bien):
 
-## 8. Huella y convenciones
-- Comandos `/gremio-*` · agentes en `~/.claude/agents/<División> Gremio/` con nombres `gremio-factory-management` · `gremio-lider-<dominio>` · `gremio-<dominio>-<especialista>` (escaneo **recursivo** verificado; la identidad viene **solo** del campo `name:`, que debe ser **único global** — colisión = descarte silencioso) · DR `dr:<dominio>-<n>` · Plan `plan:<proyecto>`.
-- Los **comandos no se namespacean** por subcarpeta: el prefijo `/gremio-*` los distingue.
-- Las **compuertas** `/gremio-analizar` y `/gremio-converger` están **instaladas como comandos** en `~/.claude/commands/` (runtime), con **fuente** en `gremio/compuertas/` de este repo; **re-copiar tras editar la fuente**. Siguen siendo *plantillas de prompt, no software* (F1): el comando ES la plantilla invocable.
-- La **puerta de entrada** `/gremio-iniciar [idea]` es el arranque oficial de la fábrica (reemplaza el «invoca a `gremio-factory-management` para construir [idea]»): triaje de peso + WIP → **relevo de doble pasada** del Interrogatorio (sesión principal hace de puente humano↔FM) + **traza a `interrogatorio.md`** → **compuerta de visto bueno del Plan** → repo aislado S0. El **motor de continuación** es `/gremio-continuar` (tablero → fase → lote, con los invariantes). **Fuente** de ambos en `gremio/comandos/`; copia runtime en `~/.claude/commands/`; **re-copiar tras editar la fuente**.
-- El **catálogo del roster** (`gremio/ROSTER.md`) es la tabla generada de los `description:` de los 33 agentes — el menú que el Líder consulta para seleccionar Especialistas sin abrir 24 archivos. **Derivado, no fuente:** se regenera desde el frontmatter de los agentes tras cambiar cualquiera.
-- Las **plantillas de artefacto** `DR.md`/`plan.md`/`agente.md`/`runbook.md` tienen su **fuente única** en `gremio/plantillas/` de este repo; cada proyecto recibe su copia local de `DR.md`/`plan.md` en su Sala E (`05-Decisiones/_plantillas/`) — **re-copiar tras editar la fuente**.
+- **dr:seguridad** — hardening remoto versionado con verificación viva por curl · advisors del proveedor
+  = 0 ERROR como gate · CORS con allowlist · pentest re-ejecutado contra el entorno cloud · ciclo de vida
+  de credenciales (los 5 flujos: alta, cambio, recupero, revocación, expiración) · config de Auth de
+  producción versionada o snapshot fechado · superficie de producción limpia (0 artefactos de test en el
+  bundle) · edge functions con validación server-side y errores sin detalles internos · GRANT mínimo.
+- **dr:infra** — pipeline con tests como gate (unit + integration, backend efímero) · **el primer push
+  queda verde antes de cerrar el slice** · smoke de compatibilidad del toolchain (pin vs config) ·
+  credencial de smoke dedicada (`SMOKE_*`) · observabilidad mínima con dueño en el RUNBOOK · runbook de
+  operación (operar · monitorear · apagar · restaurar ensayado).
+- **dr:datos** — seed demo COMPLETO (ejercita todas las features; una feature no demostrable con el seed
+  es una feature no demostrada) · esquema con integridad referencial y migraciones **reproducibles desde
+  cero**.
+- **dr:arquitectura** — estilo de despliegue + patrón interno + plataforma con alternativas descartadas
+  (Complexity Tracking) y encaje con la política de hospedaje del proyecto.
+
+Los estándares 1.x de **calidad** (pasada verde archivada, matriz de navegadores, consistencia UI↔datos,
+gate del reporte exportado) viven ahora en los mandatos de `/gremio-verificar`; los de **cambio**
+(versionado 1.0.0 + CHANGELOG + tag) en la condición 4 de `/gremio-cerrar`; los de **diseño** (tokens
+ricos, WCAG, biblioteca de patrones) son criterios de los **críticos** contra el design system que el
+humano eligió — ya no un DR previo; el **DoD de frontend** (favicon, estados vacíos, consola 0 errores)
+es checklist del carril guiado que `/gremio-verificar` audita.
+
+## 10. Qué cambió respecto de 1.x y por qué (honesto)
+
+**Lo que cada corrida demostró:**
+
+- **Corrida 01 (demo):** FALLIDA-Y-CORREGIDA. El plan improvisó fuera del tablero. Demostró que
+  la disciplina de artefactos necesita invariantes ejecutables, no solo convenciones. → Tunings al
+  protocolo (invariantes, traza del interrogatorio).
+- **Corrida 02 (producto real B):** el producto se clasificó **FRACASO** (veredicto firmado).
+  Último kilómetro sin dueño, pipeline declarado ≠ demostrado, verde local como proxy,
+  estética sin contrato. Demostró que **los contratos incompletos se curan con más contrato** — y esa cura
+  funcionó: las decenas de mejoras que siguieron (contratos estándar §9, listón visual, slice final,
+  triaje) se volvieron mecanismo.
+- **Corrida 03 (producto real, fábrica YA reformada):** atravesó **7 cierres de slice firmados +
+  ambas compuertas en verde sin un solo hallazgo sobre el estado del producto** — y el dueño levantó 10
+  quejas concretas («producto básico, ni MVP»), 8 confirmadas contra código y BD en vivo. El bucle central
+  del producto **nunca cerró**. Lo decisivo: esas MISMAS compuertas SÍ atraparon todo lo contractualizado
+  (verde falso E2E, migraciones no reproducibles, un requisito caído, un hallazgo RLS del 2º par). **No
+  estaban rotas: verificaban el Contrato, no el producto percibido** — un ítem que nunca entró al Contrato
+  es invisible por diseño, y la ideación no auditaba su propia traducción intención→Plan. En paralelo, el
+  contraste autorizado con un **producto hermano construido guiado por prompt** mostró que el guiado
+  alcanzó un núcleo usable en producción pagando MÁS rigor — pero reactivamente, a golpe de incidente. El
+  diferencial real de GREMIO no es construir: es **anticipar el rigor**.
+
+**La conclusión (blueprint firmado 2026-07-06):** no se cura con «una cláusula más» — mientras la única
+señal de hecho sea el Contrato verificado, siempre habrá un producto-percibido más grande que el Contrato.
+Por eso: **la fábrica constructora se jubila** (el producto lo construye el humano guiado); GREMIO se
+queda con lo que demostró hacer bien y lo apunta donde duele — contratos donde el criterio es maquinal,
+construcción solo de plataforma, y una verificación adversarial + un cierre que miran **el producto y la
+intención, no solo el contrato**.
+
+**Qué se conserva de 1.x** (porque funcionó): los DR con Contrato/Pre-flight/firma humana · adendas
+firmadas y supersesión (historia inmutable) · evidencia en destino · honestidad radical del estado ·
+la doble pasada del interrogatorio · repo aislado del producto · toil humano mínimo (el humano solo hace
+lo que solo él puede) · compuertas read-only append-only con severidad · retrospectiva al volante SABIO.
+
+**Qué se jubila:** el Factory Management como orquestador-constructor (reconvertido en
+`gremio-auditor-intencion`) · el Plan de fábrica (`plan.md` → `intencion.md`) · el fan-out de Líderes
+por defecto (contratos a demanda) · el DR de diseño por defecto (dirección visual del humano; críticos en
+verificación) · el Líder de Desarrollo (el líder de desarrollo es el humano) · 8 agentes congelados
+(ver ROSTER).
+
+## 11. Huella y convenciones
+
+- Comandos `/gremio-*` (5) — fuente en `comandos/` de este repo, runtime en `~/.claude/commands/`;
+  re-copiar tras editar la fuente.
+- Agentes en `~/.claude/agents/Gremio/<División>/`; la identidad viene SOLO del campo `name:` (único
+  global; el escaneo es recursivo). Congelados en `Gremio/_congelados/` (fuera del ruteo activo por
+  convención de la casa: no se invocan sin descongelarlos con decisión firmada).
+- IDs: `dr:<dominio>-<n>` · ítems de intención `I-###` · veredictos `veredicto-verificacion-<AAAAMMDD>`.
+- Plantillas de artefacto en `plantillas/` (`intencion.md` · `DR.md` · `agente.md` · `runbook.md`);
+  cada proyecto recibe su copia local en su Sala E — re-copiar tras editar la fuente.
+- `simulacros/` es **histórico 1.x** (test de regresión de las compuertas analizar/converger, hoy
+  retiradas); ver su LEEME. Los simulacros 2.0 (sembrados para verificar/cerrar) están pendientes de
+  diseño.
 - Todo artefacto lleva `gremio: true` en su cabecera.
-
-## 9. Contratos estándar por dominio (las normas nacidas del fracaso de la corrida 02)
-
-> Lo que el DR de cada dominio DEBE contener de serie — el Líder los incorpora al redactar; `/gremio-analizar`
-> (filas no-funcionales) y `/gremio-converger` (entorno vivo) los verifican. El porqué vive en el veredicto
-> firmado de la corrida 02 (bitácora interna, no publicada) y en la investigación de la Sala A (cluster del fracaso).
-
-**dr:seguridad — entregables estándar:**
-- **Hardening remoto (MP-067):** cabeceras de protección **versionadas** (`_headers`/CSP/HSTS/X-Frame·frame-ancestors/nosniff/Permissions-Policy) con **verificación viva por curl** contra la URL real · **advisors del proveedor = 0 ERROR** como gate del release · **CORS con allowlist** de origins en prod (no `*`) · **pentest re-ejecutado contra el entorno cloud** como entry criterion del release (la RLS es portable; el gateway y las keys no).
-- **Ciclo de vida de credenciales (MP-068):** checklist de los **5 flujos** — alta · cambio de contraseña · recupero · revocación de sesiones · expiración de temporales. **Sin los 5, no hay v1 multi-usuario.** Ningún supuesto "local" sobrevive al deploy sin Adenda de entorno (MP-047).
-- **Config de Auth de producción versionada o declarada (MP-053/G-15):** HIBP/leaked-password, largo mínimo, confirmaciones — si el dashboard no es versionable, **snapshot documentado en el repo con fecha**.
-- **Superficie de producción limpia (G-13):** ningún artefacto de test en el bundle final (hooks `window.__*`, credenciales demo, flags) — verificable con grep sobre `dist/`.
-- **Estándar de edge functions (MP-052/G-14):** validación **server-side** de fortaleza de contraseñas · errores 500 **sin detalles internos** (`e.message` prohibido en la respuesta) · CORS allowlist.
-- **GRANT mínimo en helpers SQL (MP-054/G-16):** nada concedido a `anon` que sea de `authenticated`, aunque devuelva NULL.
-
-**dr:infra — entregables estándar (MP-069):**
-- **Pipeline con tests como gate:** el CI corre mínimo **unit + integration** (backend efímero en el runner o service container) antes de cualquier deploy — nunca "build + lint" a secas.
-- **"El primer push queda verde antes de cerrar el slice"** (G-17): conectar el CI/CD y demostrar UNA corrida end-to-end verde ES parte del entregable. Un pipeline declarado y nunca verde no es un pipeline (ref `investigacion:pipeline-declarado-no-es-pipeline-hasta-el-primer-verde-real`).
-- **Smoke de compatibilidad del toolchain** (G-19): la versión pineada del CLI parsea el config del repo (el drift pin↔config rompió el único run de la corrida 02).
-- **Credencial de smoke dedicada obligatoria** (G-22): usuario no-admin en org de prueba + secrets `SMOKE_*` — el smoke post-deploy con login real siempre corre.
-- **Observabilidad mínima de serie (MP-055/G-20):** error-tracking gratuito o, como piso, alerta sobre logs nativos **con dueño asignado en el RUNBOOK**. "Sin stack" solo vale firmado como adenda.
-- **Runbook de operación** según la plantilla (`plantillas/runbook.md` — MP-060): operar · monitorear · apagar (incl. teardown como contrato) · restaurar (restore ensayado).
-
-**dr:calidad — entregables estándar:**
-- **Una pasada VERDE de la suite completa, demostrada y archivada** antes del release (G-24): el reporte de ejecución es evidencia en el repo, no una inferencia.
-- **Matriz de navegadores adaptada al runner (MP-057/G-23):** si un navegador no corre en el entorno (spawn UNKNOWN), la matriz lo **sustituye o lo corre en CI Linux** — nunca "deseable que jamás corre".
-
-**dr:cambio — entregables estándar (MP-056/G-21):**
-- **Versionado y releases del producto:** v1 nace **`1.0.0`** con **CHANGELOG** y **tag** (rollback direccionable por tag, no solo por dashboard); los `0.0.x-sN` internos por slice **no llegan** al repo del producto.
-
-**dr:diseno — entregables estándar (MP-070/071/072 — decisión del propietario 2026-07-02):**
-- **Listón visual FIRMADO ANTES de construir (MP-070/G-29):** doble ancla — (1) el **piso de casa** (permanente): los 7 pilares del dominio `dashboards` de la Sala A global + estándar **bento/KPI** + **densidad mínima por dominio** (MP-072: un producto de tableros exige **≥6 visualizaciones con datos reales** — el nivel del benchmark de referencia del propietario; B entregó 1 y perdió); y (2) el **benchmark concreto de ESTA corrida** (screenshots/mockup aprobados) **firmado por el humano en el DR (nombre · fecha · SHA) antes del primer slice**. El especialista UI entrega **screenshots comparados contra piso+benchmark en CADA slice**. La estética que no es contrato queda a criterio de nadie (ref `investigacion:liston-visual-se-firma-antes-de-construir`).
-- **Design tokens ricos de serie (MP-071/G-30):** theming claro/oscuro, acentos semánticos, sistema de notificaciones (toasts/píldoras), densidad de KPIs — como base del design system del DR, **manteniendo el estándar WCAG** que la fábrica ya domina.
-- **Biblioteca de patrones como punto de partida (MP-073/G-32):** el DR de diseño consulta `activo:biblioteca-patrones-visuales` (Sala B) — ningún producto parte de cero estético.
-
-**dr:datos — entregable estándar (MP-075/G-26):**
-- **Seed demo COMPLETO:** los datos de demostración ejercitan **TODAS** las features del producto (una feature no demostrable con el seed es una feature no demostrada; la tendencia de B era invalidable con 1 evaluación).
-
-**dr:calidad — entregables estándar adicionales (MP-074/076):**
-- **Test de consistencia transversal UI↔datos (G-25):** los denominadores/cifras que muestra la UI salen del **catálogo completo**, no del row-set parcial de las vistas (el heatmap de B mostraba "0/0" en categorías sin evaluar).
-- **Gate de calidad del reporte exportado (G-27):** revisión visual del PDF/Excel generado contra una **muestra aprobada** — aspect ratio de charts FIJO, tipografías, márgenes.
-
-**dr:desarrollo — DoD del frontend (MP-077/G-28):**
-- **Checklist de pulido de superficie como criterio de CIERRE:** favicon · título/meta · estados vacíos con copy · **consola con 0 errores**. (A cerró con 0; B con 1 — y se nota.)
-
-**Normas documentales de fábrica (MP-087/G-33/G-34 — rigen TODO producto):**
-- **Los README describen el PRODUCTO; los DRs describen el PROCESO.** El README raíz del producto refleja el **estado final vivo** (URL real, stack, cómo correr TODO) — jamás la narrativa del slice en que se escribió (ref `investigacion:documentacion-espejo-del-producto-no-del-slice`).
-- **Consolidación documental al cierre con dueño único:** el slice final (MP-045) incluye la pasada del **doc-writer** que reescribe los README al estado real y elimina la narrativa por slice.
-- **Defectos con ciclo de vida sincronizado:** cerrar un `DEF-xxx` actualiza README/DR afectados **en la misma entrega** (un DEF "abierto" en el README con su test de cierre al lado = drift). Los gotchas resueltos van a la Sala D (`/sabio-aprender`) y se promueven si son transversales.
-- **Enforcement:** `/gremio-converger` evalúa docs↔producto-vivo SIEMPRE (doc desactualizada = brecha `partial`).
-
-## 10. Compuerta "Auditoría de Producto Terminado" (MP-078/G-02 — pre-v1)
-Antes de declarar **v1** de cualquier producto: el mini-protocolo de **4 pilares** (código · utilidad
-y visual · seguridad remota · profesionalismo/operación) se ejecuta con evidencia empírica —
-como **WF-2** (un agente por pilar + verificación adversarial) o a mano — usando la plantilla canónica
-`00-Documentacion/Auditorias/_plantilla.md` del CDM. **El humano firma el veredicto**
-(Promover / Parcial / Volver al taller). Cadencia además **trimestral** sobre los productos vivos (M25).

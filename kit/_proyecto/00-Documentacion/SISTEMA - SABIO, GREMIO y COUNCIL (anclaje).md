@@ -1,8 +1,8 @@
-<!-- sabio-generacion: 2 -->
+<!-- sabio-generacion: 3 -->
 # Sistema Agéntico Blackdestiny — SABIO + GREMIO + COUNCIL · anclaje de inicio
 
 > **Léeme al iniciar sesión** para entender el sistema en 2 minutos, desde ESTE proyecto.
-> *SABIO sabe; GREMIO construye con ese saber; COUNCIL delibera antes de firmar.*
+> *SABIO sabe; el humano construye; GREMIO blinda; COUNCIL delibera antes de firmar.*
 
 ---
 
@@ -25,12 +25,13 @@
 
 ---
 
-## GREMIO — la construcción (qué CONSTRUYO con ese saber)
-La **agencia de software de IA** del sistema, disponible en este proyecto si aplicaste el entorno del Kit (los 33 agentes y comandos viven a nivel usuario, `~/.claude/`; no se instala nada local). Una **fábrica de 3 niveles**: el **Factory Management** orquesta → **8 Líderes** deciden (escriben DRs) → **24 Especialistas** ejecutan. Colaboran por el **tablero** de DRs de la **Sala E local** (`04-Recursos/05-Decisiones/`), con compuertas empíricas y **tu firma** (anclada al commit SHA).
+## GREMIO — el rigor (qué BLINDA lo que construyo)
+La **plataforma de rigor** del sistema, disponible en este proyecto si aplicaste el entorno del Kit (los agentes y comandos viven a nivel usuario, `~/.claude/`; no se instala nada local). Doctrina 2.0: **el producto lo construyes tú, guiado; GREMIO lo blinda** con 3 servicios — **contratos a demanda** (un Líder de dominio → un DR → tu firma con disparo), **construcción de plataforma** (solo lo que un usuario final no percibe, contra DR firmado) y **verificación adversarial + cierre honesto**. Todo colabora por el **tablero** de la **Sala E local** (`04-Recursos/05-Decisiones/`: `intencion.md` + DRs + veredictos), con **tu firma** (anclada al commit SHA).
 
-- **Arrancar:** `/gremio-iniciar [idea]` — triaje (¿merece la fábrica completa o vía simple?) → interrogatorio ≤10 preguntas → Plan con tu visto bueno → el producto nace en su propio repo.
-- **Operar:** `/gremio-continuar` — lee el tablero, ejecuta UN lote y se detiene en tu siguiente compuerta. Compuertas: `/gremio-analizar` (consistencia; CRITICAL/HIGH bloquean) · `/gremio-converger` (código vs DR; `--cierre` exige el mapa DR→evidencia completo).
-- **Reglas de oro:** sin firma no está hecho · un DR firmado no se edita, se supera · SABIO es el cerebro (no se duplica) · una corrida activa por proyecto · nunca «no puedo» sin probarlo (pre-flight real) · verde local no cierra un slice con destino cloud.
+- **Arrancar:** `/gremio-intencion [idea]` — interrogatorio de doble pasada (≤10 preguntas, tú respondes) → `intencion.md`, tu tablero (ítems `I-###` con carril producto|plataforma, auditoría de traducción, matriz de paridad) con tu visto bueno → producto nuevo en su propio repo.
+- **Contratar y construir:** `/gremio-contrato <dominio>` (datos · seguridad · infraestructura · arquitectura; a demanda, nunca 10 DRs de una vez) · `/gremio-construir` (solo carril plataforma; si el slice toca superficie percibida, se niega y vuelve a tu carril guiado).
+- **Verificar y cerrar:** `/gremio-verificar` (read-only adversarial: 2º par que refuta, pentest, CI desde cero, E2E contra fuente de verdad, performance, críticos de diseño) · `/gremio-cerrar` (4 condiciones: convergencia DR→evidencia · tú recorres el bucle central contra `intencion.md` · verde EN destino · release real con rollback ensayado — sin las 4, «cerrado» está prohibido).
+- **Reglas de oro:** sin firma no está hecho · un DR firmado no se edita, se supera · la dirección visual es tuya (los críticos critican, no deciden) · SABIO es el cerebro (no se duplica) · nunca «no puedo» sin probarlo (pre-flight real) · verde local no cierra un slice con destino cloud.
 
 ---
 

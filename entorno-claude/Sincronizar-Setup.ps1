@@ -18,7 +18,15 @@ foreach ($d in @("$hc\agents", "$hc\commands", "$hc\scripts")) { New-Item -ItemT
 
 Copy-Item (Join-Path $Origen "CLAUDE.md")     (Join-Path $hc "CLAUDE.md")     -Force
 Copy-Item (Join-Path $Origen "settings.json") (Join-Path $hc "settings.json") -Force
-Copy-Item (Join-Path $Origen "agents\*.md")   (Join-Path $hc "agents\")       -Force
+# agents recursivo preservando subcarpetas (los agentes GREMIO viven en agents\Gremio\<Division>\)
+$agSrc = Join-Path $Origen "agents"
+Get-ChildItem -File -Recurse -Filter *.md $agSrc -ErrorAction SilentlyContinue | ForEach-Object {
+  $rel = $_.FullName.Substring($agSrc.Length).TrimStart('\')
+  $dest = Join-Path (Join-Path $hc "agents") $rel
+  $destDir = Split-Path $dest -Parent
+  if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Force -Path $destDir | Out-Null }
+  Copy-Item $_.FullName $dest -Force
+}
 Copy-Item (Join-Path $Origen "commands\*.md") (Join-Path $hc "commands\")     -Force
 Copy-Item (Join-Path $Origen "scripts\*.ps1") (Join-Path $hc "scripts\")      -Force
 

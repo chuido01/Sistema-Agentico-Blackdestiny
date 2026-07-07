@@ -4,7 +4,7 @@
 > (Para todo el sistema en un solo documento, ver `resumen-consolidado.md`.)
 
 > **Nota.** SABIO es el **componente de conocimiento** del Sistema Agéntico Blackdestiny (SABIO + GREMIO +
-> COUNCIL); esta guía cubre **SABIO** — GREMIO (la fábrica agéntica) vive en [`../gremio/`](../gremio/) y
+> COUNCIL); esta guía cubre **SABIO** — GREMIO (la plataforma de rigor) vive en [`../gremio/`](../gremio/) y
 > COUNCIL (el consejo deliberativo) en el comando `/council`.
 
 ## En una frase
@@ -72,8 +72,8 @@ etiquetas distintas: cuatro guardan conocimiento (A–D) y la quinta guarda deci
 - **Sala D · Aprendizaje** — Lecciones de lo que pasó, para no repetir errores: "la próxima vez, hazlo
   así". Se llena de **dos formas**: al **construir** —con `/sabio-aprender` (rápido) o `/sabio-aprender --reflexivo` (reflexiona con feedback externo e infiere la causa)— y, en
   proyectos con agentes, **automáticamente** cuando un agente ejecuta. Etiqueta: `aprendizaje:<id>`.
-- **Sala E · Decisiones (Gremio)** — Los **Decision Records** que la fábrica GREMIO toma al construir
-  un producto. **Local por proyecto y nunca se federa** (una decisión es del producto que la tomó); al
+- **Sala E · Decisiones (Gremio)** — El tablero de GREMIO: tu **intención** (`intencion.md`) y los
+  **Decision Records** que firmas al construir un producto. **Local por proyecto y nunca se federa** (una decisión es del producto que la tomó); al
   plano global solo puede subir un aprendizaje (Sala D) destilado de una decisión. La crea GREMIO al
   operar (`05-Decisiones/`). Etiqueta: `dr:<dominio>-<n>`.
 

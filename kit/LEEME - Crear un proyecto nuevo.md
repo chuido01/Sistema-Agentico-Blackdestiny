@@ -30,8 +30,8 @@
 > **¿Por qué salas separadas?** «Conocimiento» no es una sola cosa: investigación curada, catálogo de
 > activos, normas externas y aprendizajes tienen volúmenes y ritmos distintos (Salas A–D). Cada sala
 > nace con su **`LEEME - Esquema`** que explica para qué existe y su formato; se **federan por IDs**
-> (no se copian datos entre ellas). La quinta sala —**E · Gremio**, los Decision Records de la fábrica
-> GREMIO— la crea GREMIO al operar y es **local: jamás se federa**. *(Nomenclatura: «Capa 1/2» =
+> (no se copian datos entre ellas). La quinta sala —**E · Gremio**, el tablero de la plataforma de rigor
+> GREMIO (intención + Decision Records)— la crea GREMIO al operar y es **local: jamás se federa**. *(Nomenclatura: «Capa 1/2» =
 > arquitectura; «Sala A–D» = tipos de conocimiento; «Sala E» = decisiones de construcción.)*
 
 ---

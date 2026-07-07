@@ -1,75 +1,96 @@
-<!-- ARCHIVO DERIVADO - lo regenera .tools\Generar-Roster.ps1 tras cambiar cualquier agente. NO editar a mano. -->
-# ROSTER GREMIO - catalogo de capacidades (33 agentes)
+<!-- ROSTER 2.0 — reescrito a mano en la reconversión GREMIO 2.0 (2026-07-06, blueprint firmado).
+     Refleja los agentes de entorno-claude/home-claude/agents/Gremio/ (los que instala Aplicar-Setup.ps1). -->
+# ROSTER GREMIO 2.0 — catálogo de capacidades (25 activos + 8 congelados)
 
-> El menu que el Lider consulta para SELECCIONAR Especialistas sin abrir 33 archivos (M15).
-> Generado: 2026-07-03 00:12 desde los description: del runtime (~/.claude/agents).
+> El menú de la plataforma de rigor: quién hace qué en los 3 servicios (contratos · construcción de
+> plataforma · verificación + cierre). Estructura física: `~/.claude/agents/Gremio/<División>/`.
+> **El producto lo construye el humano guiado; el líder de desarrollo es el humano.**
 
-## Arquitectura Gremio (5)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-arquitectura` | decide | opus | Líder de Arquitectura de GREMIO. DECIDE estilo de despliegue + patrón interno + plataforma de un producto y lo registra en un DR. Consume la Sala A de arquitectura. Su decisión la construye Desarrollo (vía referencia de DR); planifica los Especialistas que correspondan. No implementa ni invoca agentes. |
-| `gremio-arquitectura-hexagonal-mvc` | implementa | sonnet | Especialista Hexagonal & MVC de la división Arquitectura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: aterriza los patrones internos hexagonal (ports & adapters) y MVC sobre el estilo de despliegue elegido. Lee SABIO de su dominio. No decide. |
-| `gremio-arquitectura-microservicios` | implementa | sonnet | Especialista Microservicios de la división Arquitectura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: aterriza el detalle de una arquitectura de microservicios (descomposición, comunicación, datos por servicio, resiliencia). Lee SABIO de su dominio. No decide. |
-| `gremio-arquitectura-monolitos` | implementa | sonnet | Especialista Monolítica & Modular de la división Arquitectura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: aterriza el detalle/scaffold de una arquitectura monolítica o monolito modular. Lee SABIO de su dominio. No decide. |
-| `gremio-arquitectura-paas-baas-faas` | implementa | sonnet | Especialista PaaS & BaaS & FaaS de la división Arquitectura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: aterriza arquitecturas serverless/gestionadas (FaaS, BaaS, PaaS) y su encaje por plataforma. Lee SABIO de su dominio. No decide. |
+## Disposición 2.0 (resumen)
 
-## Calidad Gremio (3)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-calidad` | decide | opus | Líder de Calidad de GREMIO. DECIDE la estrategia de verificación de un producto (qué probar, cobertura, criterios de aceptación) y SELECCIONA + planifica qué Especialistas de Calidad (QA, automation, performance) la ejecutan. No invoca agentes ni prueba él mismo. |
-| `gremio-calidad-performance` | verifica | sonnet | Especialista Performance Tester de la división Calidad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: define escenarios de carga, mide rendimiento y reporta contra los SLO. Lee SABIO de su dominio. No decide. |
-| `gremio-calidad-tester` | verifica | sonnet | Especialista Manual & Automation Tester de la división Calidad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: escribe y CORRE pruebas funcionales/E2E (manuales y automatizadas) y pega la evidencia real. Lee SABIO de su dominio. No decide. |
+| Bloque | Agentes | Servicio |
+|---|---|---|
+| **Intención** | `gremio-auditor-intencion` | `/gremio-intencion` |
+| **Líderes de contrato** (4) | arquitectura · datos · seguridad · infraestructura | `/gremio-contrato` |
+| **Núcleo de verificación** (8) | lider-calidad (orquesta la estrategia) + calidad-tester · calidad-performance · seguridad-codigo-seguro · seguridad-ethical-hacker · seguridad-modelado-amenazas · seguridad-arquitectura-segura · seguridad-datos | `/gremio-verificar` |
+| **Críticos de diseño** (3) | lider-diseno · diseno-ui · diseno-ux | `/gremio-verificar` (critican; jamás deciden dirección) |
+| **Cierre** (3) | lider-cambio · cambio-release · cambio-soporte | `/gremio-cerrar` |
+| **Construcción de plataforma — reserva** (6) | desarrollo-backend · desarrollo-frontend · datos-relacionales · infraestructura-devops · infraestructura-clouds · infraestructura-ops-paas-baas-faas | `/gremio-construir` (solo carril plataforma, bajo DR firmado) |
+| **Congelados** (8) | ver al final | — |
 
-## Cambio y Soporte Gremio (3)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-cambio` | decide | opus | Líder de Gestión del Cambio y Soporte de GREMIO. DECIDE la estrategia de release, gestión del cambio/formación y soporte de un producto y la registra en un DR. Selecciona + planifica qué Especialistas (release, change/training, soporte L1-L3) la operan. No implementa la feature ni invoca agentes. |
-| `gremio-cambio-release` | opera | sonnet | Especialista Gestor de Release de la división Cambio y Soporte de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: gestiona el release (versionado, ventanas, rollback, notas de versión) ejecutando el plan del DR. Lee SABIO de su dominio. No decide. |
-| `gremio-cambio-soporte` | opera | sonnet | Especialista Soporte Post Producción de la división Cambio y Soporte de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: da soporte post-producción (L1-L2-L3): runbook, manejo de incidentes y escalamiento. Lee SABIO de su dominio. No decide. |
+## Intencion (1)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-auditor-intencion` | **Audita** — ex Factory Management (reconvertido 2026-07-06): interrogatorio de doble pasada → `intencion.md` (ítems `I-###` con carril), audita su propia traducción respuesta→ítem y mantiene la matriz de paridad; NO define lotes ni redacta Planes de fábrica. | opus |
 
-## Datos Gremio (4)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-datos` | decide | opus | Líder de Base de Datos de GREMIO. DECIDE motor, esquema, relaciones y modelado de datos de un producto y lo registra en un DR de datos. Su decisión la construye Desarrollo (acceso a datos) o un Especialista de datos (ETL/pipelines). Planifica los Especialistas que correspondan. No implementa ni invoca agentes. |
-| `gremio-datos-no-relacionales` | implementa | sonnet | Especialista No Relacionales de la división Base de Datos de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: modela almacenes NoSQL (documental/clave-valor/columnar/grafo) según el patrón de acceso. Lee SABIO de su dominio. No decide. |
-| `gremio-datos-relacionales` | implementa | sonnet | Especialista Relacionales de la división Base de Datos de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: diseña/implementa el esquema relacional (normalización, índices, integridad referencial, migraciones). Lee SABIO de su dominio. No decide. |
-| `gremio-datos-vectoriales` | implementa | sonnet | Especialista Vectoriales de la división Base de Datos de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: diseña almacenes vectoriales (embeddings, índices ANN, búsqueda semántica) para casos IA/RAG. Lee SABIO de su dominio. No decide. |
+## Arquitectura (1)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-arquitectura` | **Decide (contrato)** — estilo de despliegue + patrón interno + plataforma en un DR firmable con criterio maquinal; consume la Sala A de arquitectura. | opus |
 
-## Desarrollo Gremio (4)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-desarrollo` | decide | opus | Líder de Desarrollo de GREMIO. DECIDE el plan de implementación de un producto a partir de los DR de arquitectura/datos/diseño firmados, y SELECCIONA + planifica qué Especialistas de Desarrollo (backend/frontend/mobile) lo construyen. No invoca agentes ni implementa él mismo. |
-| `gremio-desarrollo-backend` | implementa | sonnet | Especialista Backend de la división Desarrollo de GREMIO. EJECUTA la parte del Contrato (Ejecución por Especialista) que el Líder de Desarrollo le asignó, sobre un DR firmado: produce el código de servidor/dominio y la evidencia. No decide arquitectura. |
-| `gremio-desarrollo-frontend` | implementa | sonnet | Especialista Frontend de la división Desarrollo de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: implementa la UI/cliente según los DR de diseño y arquitectura. Lee SABIO de su dominio. No decide. |
-| `gremio-desarrollo-moviles` | implementa | sonnet | Especialista Móviles de la división Desarrollo de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: implementa la app móvil (nativa o híbrida) según los DR. Lee SABIO de su dominio. No decide. |
+## Datos (2)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-datos` | **Decide (contrato)** — motor, esquema, relaciones y modelado en un DR de datos. | opus |
+| `gremio-datos-relacionales` | **Plataforma (reserva)** — esquema relacional, integridad, índices y migraciones reproducibles bajo DR firmado en `/gremio-construir`. | sonnet |
 
-## Diseno Gremio (3)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-diseno` | decide | opus | Líder de Diseño y Experiencia de GREMIO (UX+UI unificado). DECIDE investigación, wireframes, prototipos, usabilidad y design system de un producto y lo registra en un DR de diseño. Su decisión la construye Desarrollo (frontend) vía referencia de DR. No implementa ni invoca agentes. |
-| `gremio-diseno-ui` | implementa | sonnet | Especialista UI de la división Diseño de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: produce la UI visual (componentes, tokens, jerarquía) con accesibilidad (WCAG). Lee SABIO de su dominio. No decide. |
-| `gremio-diseno-ux` | implementa | sonnet | Especialista UX de la división Diseño de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: produce investigación de usuario, flujos, wireframes y criterios de usabilidad. Lee SABIO de su dominio. No decide. |
+## Seguridad (6)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-seguridad` | **Decide (contrato)** — controles de seguridad + cumplimiento (normas `norma:` del perfil del proyecto) en un DR; vigila la política del proyecto (despliegue prohibido = CRITICAL). | opus |
+| `gremio-seguridad-codigo-seguro` | **Verifica (núcleo)** — 2º par adversarial sobre código: OWASP, inyección, secretos; mandato de REFUTAR, hallazgos con severidad. | sonnet |
+| `gremio-seguridad-ethical-hacker` | **Verifica (núcleo)** — pentest cuando el trabajo tocó authz/RLS/tenancy/sesiones: explota los controles (denegación probada con par positivo), no los confirma. | sonnet |
+| `gremio-seguridad-modelado-amenazas` | **Verifica (núcleo)** — modelo de amenazas (STRIDE/árboles de ataque), superficie de ataque y riesgos priorizados sobre el trabajo ya hecho. | sonnet |
+| `gremio-seguridad-arquitectura-segura` | **Verifica (núcleo)** — audita los controles por capa (defensa en profundidad, authN/Z, secretos, cifrado) contra el DR de seguridad. | sonnet |
+| `gremio-seguridad-datos` | **Verifica (núcleo)** — protección del dato (cifrado at-rest/in-transit, minimización, retención, clasificación) contra la política del proyecto. | sonnet |
 
-## Factory Management Gremio (1)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-factory-management` | orquesta | opus | Gremio Factory Management — el orquestador de la fábrica agéntica. Invócalo para arrancar/coordinar la construcción de un producto: redacta y mantiene el Plan, prioriza, y es el ÚNICO que define los lotes del fan-out (Líderes y, tras la firma, los Especialistas que cada Líder planificó en su DR) — la sesión principal los materializa (verdad operativa §5). No decide dominios ni implementa. |
+## Infraestructura (4)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-infraestructura` | **Decide (contrato)** — despliegue, CI/CD, entornos, empaquetado y operación en un DR de infra; firma informada (enumera los recursos externos que el DR crea). | opus |
+| `gremio-infraestructura-devops` | **Plataforma (reserva) + verifica** — construye CI/CD/IaC bajo DR firmado; en `/gremio-verificar` prueba la **reproducibilidad desde cero** de migraciones/seeds (reset + arranque limpio). | sonnet |
+| `gremio-infraestructura-clouds` | **Plataforma (reserva)** — infraestructura cloud/on-prem (redes, cómputo, almacenamiento) bajo DR firmado. | sonnet |
+| `gremio-infraestructura-ops-paas-baas-faas` | **Plataforma (reserva)** — opera plataformas gestionadas (despliegue, escalado, monitoreo en runtime) bajo DR firmado. | sonnet |
 
-## Infraestructura Gremio (4)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-infraestructura` | decide | opus | Líder de Infraestructura y Operaciones de GREMIO (DevOps/Cloud). DECIDE despliegue, CI/CD, entornos, empaquetado y operación de un producto, lo registra en un DR de infra, y SELECCIONA + planifica qué Especialistas de Infra lo ejecutan. No invoca agentes ni implementa él mismo. |
-| `gremio-infraestructura-clouds` | implementa | sonnet | Especialista Infra & Clouds de la división Infraestructura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: implementa la infraestructura cloud/on-prem (redes, cómputo, almacenamiento) según el DR de infra. Lee SABIO de su dominio. No decide. |
-| `gremio-infraestructura-devops` | implementa | sonnet | Especialista DevOps de la división Infraestructura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: implementa CI/CD, IaC, empaquetado y automatización del pipeline; deja un smoke test verde. Lee SABIO de su dominio. No decide. |
-| `gremio-infraestructura-ops-paas-baas-faas` | opera | sonnet | Especialista Ops PaaS & BaaS & FaaS de la división Infraestructura de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: opera plataformas gestionadas (PaaS/BaaS/FaaS): despliegue, escalado y monitoreo en runtime. Lee SABIO de su dominio. No decide. |
+## Calidad (3)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-calidad` | **Orquesta la estrategia de verificación** — en lotes grandes de `/gremio-verificar` DECIDE qué verificar, con qué profundidad y en qué orden; no prueba él mismo. | opus |
+| `gremio-calidad-tester` | **Verifica (núcleo)** — E2E y funcional: todo assert de ausencia con control positivo pareado + confirmación en la fuente de verdad (la fila en la BD, no el exit code). | sonnet |
+| `gremio-calidad-performance` | **Verifica (núcleo)** — baseline p50/p95/p99 contra el budget del contrato; un SLO sin medición es un hueco, no un pendiente. | sonnet |
 
-## Seguridad Gremio (6)
-| Agente | Rol | Model | Capacidad (description) |
-|---|---|---|---|
-| `gremio-lider-seguridad` | decide | opus | Líder de Seguridad y cumplimiento de GREMIO. DECIDE los controles de seguridad + cumplimiento (GDPR/HIPAA/Ley Chile) de un producto, los registra en un DR, y SELECCIONA + planifica qué Especialistas de Seguridad los ejecutan. Lee la Sala C (normas). Sus Especialistas son PROPIOS de GREMIO (arquitecto-seguridad, código-seguro, modelador-amenazas, pentester); no reutiliza agentes externos. No invoca agentes ni implementa él mismo. |
-| `gremio-seguridad-arquitectura-segura` | implementa | sonnet | Especialista Arquitectura Segura de la división Seguridad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: diseña los controles de seguridad por capa (defensa en profundidad, authN/Z, gestión de secretos, cifrado). Lee SABIO de su dominio. No decide. |
-| `gremio-seguridad-codigo-seguro` | verifica | sonnet | Especialista Código Seguro de la división Seguridad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: revisa el código en busca de vulnerabilidades (OWASP: inyección, validación, manejo de secretos) y reporta hallazgos con severidad. Lee SABIO de su dominio. No decide. |
-| `gremio-seguridad-datos` | implementa | sonnet | Especialista Seguridad en Datos de la división Seguridad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: diseña la protección de datos (cifrado at-rest/in-transit, minimización, retención, cumplimiento de protección de datos). Lee SABIO de su dominio. No decide. |
-| `gremio-seguridad-ethical-hacker` | verifica | sonnet | Especialista Ethical Hacker de la división Seguridad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: ejecuta pruebas de intrusión éticas que exploten los controles para validarlos y reporta hallazgos reproducibles con severidad. Lee SABIO de su dominio. No decide. |
-| `gremio-seguridad-modelado-amenazas` | verifica | sonnet | Especialista Modelado de Amenazas de la división Seguridad de GREMIO. EJECUTA la cláusula «Ejecución por Especialista» que su Líder le asignó sobre un DR firmado: produce el modelo de amenazas (STRIDE/árboles de ataque), la superficie de ataque y los riesgos priorizados. Lee SABIO de su dominio. No decide. |
+## Diseno (3)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-diseno` | **Crítico de diseño (orquesta la crítica)** — ya NO produce DR de diseño por defecto: la dirección visual es del humano; organiza la crítica contra el design system que el humano eligió. | opus |
+| `gremio-diseno-ui` | **Crítico de diseño** — audita la UI contra el design system del proyecto + WCAG AA (tokens, jerarquía, densidad, estados); critica, jamás decide dirección. | sonnet |
+| `gremio-diseno-ux` | **Crítico de diseño** — audita flujos, usabilidad y experiencia contra la intención del humano; critica, jamás decide dirección. | sonnet |
 
+## Cambio y Soporte (3)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-lider-cambio` | **Decide (cierre)** — estrategia de release/cambio/soporte cuando `/gremio-cerrar` la requiere. | opus |
+| `gremio-cambio-release` | **Cierre** — ejecuta la condición 4 de `/gremio-cerrar`: tag versionado + changelog + **rollback ENSAYADO** contra entorno de prueba. | sonnet |
+| `gremio-cambio-soporte` | **Cierre** — runbook de soporte post-producción (L1-L3, incidentes, escalamiento) si el producto queda operando. | sonnet |
+
+## Desarrollo (2)
+| Agente | Rol 2.0 | Model |
+|---|---|---|
+| `gremio-desarrollo-backend` | **Plataforma (reserva)** — plumbing de servidor que un usuario NO percibe (auth plumbing, adapters, scaffolding) bajo DR firmado; las features de producto son del humano guiado. | sonnet |
+| `gremio-desarrollo-frontend` | **Plataforma (reserva)** — scaffolding/infra de cliente sin superficie percibida (tooling, build, wiring) bajo DR firmado; las pantallas son del humano guiado. | sonnet |
+
+## _congelados (8) — y su porqué
+
+> Congelados ≠ borrados: sus `.md` viven en `~/.claude/agents/Gremio/_congelados/` fuera del ruteo
+> activo. Descongelar uno exige decisión firmada (y Regla de Tres: tres casos reales que lo pidan).
+
+| Agente | Por qué se congela en 2.0 |
+|---|---|
+| `gremio-lider-desarrollo` | **El líder de desarrollo es el humano** (doctrina 2.0): el plan de implementación del producto sigue su atención, no un DR de fábrica. |
+| `gremio-desarrollo-moviles` | Superficie 100 % percibida (carril producto = guiado) y sin caso móvil vigente. |
+| `gremio-datos-no-relacionales` | Sin caso de uso vigente; se descongela por Regla de Tres si un DR de datos lo exige. |
+| `gremio-datos-vectoriales` | Sin caso de uso vigente (IA/RAG no está en el carril plataforma de ningún producto activo). |
+| `gremio-arquitectura-monolitos` | Los 4 especialistas de arquitectura aterrizaban el detalle constructivo de la decisión — en 2.0 esa construcción es del humano guiado; la decisión (el DR del Líder) basta. |
+| `gremio-arquitectura-microservicios` | Ídem: el aterrizaje constructivo del estilo es del humano guiado. |
+| `gremio-arquitectura-paas-baas-faas` | Ídem: el encaje serverless/gestionado se decide en el DR; el detalle es guiado. |
+| `gremio-arquitectura-hexagonal-mvc` | Ídem: los patrones internos se deciden en el DR; su implementación es guiada. |

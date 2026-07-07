@@ -2,27 +2,28 @@
 # ─────────── Huella GREMIO · Decision Record (DR) ───────────
 # Plantilla canónica. Copia este archivo a la Sala E del proyecto: 04-Recursos/05-Decisiones/<id>.md
 id: dr:<dominio>-<nnn>            # p. ej. dr:arquitectura-001 — único e INMUTABLE una vez aceptado
-tipo: <arquitectura | datos | seguridad | infra | desarrollo | diseno | calidad | cambio>
+tipo: <datos | seguridad | infraestructura | arquitectura>   # los 4 dominios con Líder de contrato en 2.0 (diseño NO tiene DR por defecto; el líder de desarrollo es el humano)
 estado: propuesto                 # propuesto → aceptado → superado  (nunca se borra; se supera)
 fecha: <AAAA-MM-DD>
 autor: gremio-lider-<dominio>     # el Líder PROPIETARIO de la decisión (función DECIDE)
-especialistas: []                 # Especialistas seleccionados por el Líder para ejecutar/analizar (p. ej. [gremio-desarrollo-backend, gremio-calidad-tester]). Los lanza gremio-factory-management; NO el Líder.
+especialistas: []                 # Especialistas que ejecutarían si el carril es plataforma (p. ej. [gremio-datos-relacionales]). Los lanza la sesión principal vía /gremio-construir; NO el Líder.
 firma_humana: ""                  # se llena SOLO al aceptar: "<nombre> · <AAAA-MM-DD>" — es la compuerta
+disparo: ""                       # OBLIGATORIO al firmar: qué trabajo consume este DR ("/gremio-construir <slice>" o "construcción guiada de I-###"). Un DR sin disparo cae al vacío — no se firma sin disparo.
 supersede: ""                     # id del DR que ÉSTE reemplaza (si nace de una evolución/migración)
 superado_por: ""                  # id del DR que reemplaza a éste (se llena cuando pasa a 'superado')
 refs: []                          # [dr:datos-002, dr:seguridad-001] — cruces por ID = el TABLERO
 fuentes_sabio: []                 # [investigacion:arquitectura-software-moc, norma:gdpr:art-32] — qué leyó del cerebro
-plan: ""                          # id/ruta del Plan (Factory Management) que enlaza este DR (el spec.md-equivalente)
+intencion: []                     # ítems I-### de intencion.md que este DR sirve ("intención verbal" si no hay tablero escrito)
 gremio: true                      # marca de huella GREMIO
 ---
 
 # DR `<id>` — <título corto y conclusivo de la decisión>
 
-> Propiedad de **`<autor>`** · Estado **`<estado>`** · Pertenece al tablero del proyecto (Plan `<plan>`).
+> Propiedad de **`<autor>`** · Estado **`<estado>`** · Pertenece al tablero del proyecto (sirve a `<intencion>`).
 > **Regla de oro:** un DR `aceptado`+firmado NO se edita. Si cambia, se crea un DR nuevo que lo **supera** (`supersede`/`superado_por`).
 
 ## Contexto
-<!-- El problema o la fuerza que OBLIGA a decidir. Qué pide el Plan/Backlog del Factory Management (historia P#, FR-###, SC-###).
+<!-- El problema o la fuerza que OBLIGA a decidir. Qué ítem(s) I-### de intencion.md lo piden (o la intención verbal registrada).
      Restricciones reales (equipo, plataforma, plazos, normas). Lo que SABIO ya dice al respecto (citado en fuentes_sabio).
      3–6 líneas; sin relleno. -->
 
@@ -50,7 +51,7 @@ gremio: true                      # marca de huella GREMIO
 - **Rutas/archivos:** <…>
 - **Stack/dependencias:** <…>
 - **Contratos/interfaces:** <API, esquema, evento… si aplica>
-- **Ejecución por Especialista:** <UNA línea por Especialista — quién hace qué; presente solo cuando participa más de uno. Debe cuadrar con el campo `especialistas:` del frontmatter. Es el plan que el Factory Management materializa (sin Task-en-Task).>
+- **Ejecución por Especialista:** <UNA línea por Especialista — quién hace qué; solo si el carril es plataforma. Debe cuadrar con el campo `especialistas:` del frontmatter. Es el plan que la sesión principal materializa vía /gremio-construir (sin Task-en-Task). Si el disparo es construcción guiada, esta cláusula queda vacía: construye el humano.>
 - **Primer test (rojo→verde):** <el primer test que debe pasar — la prueba del esqueleto andante (F3)>
 
 ### Pre-flight de ejecución (OBLIGATORIO si el Contrato depende de algo externo — MP-040.2/F24)
@@ -67,13 +68,13 @@ gremio: true                      # marca de huella GREMIO
 ## Verificación — la compuerta
 <!-- Evidencia empírica REAL, no afirmaciones. Se completa al cerrar. Sin la firma humana el DR NO pasa a 'aceptado'.
      FORMATO PARSEABLE (MP-063/M14) — cada checkbox lleva su evidencia en la MISMA línea, con este formato exacto
-     para que /gremio-converger en modo cierre lo lea mecánicamente:
+     para que /gremio-cerrar (condición 1: convergencia DR→evidencia) lo lea mecánicamente:
        - [x] <criterio> — EVIDENCIA: <comando o ruta> → <salida real resumida en 1 línea>
      ANTI-AUTO-APROBACIÓN (MP-061/M12): la evidencia de un Especialista la RE-CORRE otro agente (Calidad u otro
      par) antes de marcar el checkbox — nunca el mismo que la produjo. -->
 - [ ] El primer test corre en verde — EVIDENCIA: `<comando>` → `<salida real>` *(re-corrida por: <agente ≠ autor>)*
-- [ ] `/gremio-analizar` sin hallazgos **CRITICAL/HIGH** abiertos contra este DR — EVIDENCIA: `<ruta del informe>`
-- [ ] Cobertura: cada `FR-###`/`SC-###` del contrato tiene tarea y evidencia — EVIDENCIA: `<mapa>`
+- [ ] `/gremio-verificar` sin hallazgos **CRITICAL/HIGH** abiertos contra este DR — EVIDENCIA: `<ruta del veredicto>`
+- [ ] Cobertura: cada ítem `I-###` que este DR sirve tiene tarea y evidencia — EVIDENCIA: `<mapa>`
 - [ ] Sin violación de norma `norma:` aplicable (si `tipo` lo exige, p. ej. seguridad) — EVIDENCIA: `<check>`
 - [ ] (si destino cloud) DoD de despliegue cumplido: verde EN destino + smoke real + advisors 0 ERROR — EVIDENCIA: `<urls/salidas>`
 - [ ] (si es el DR de release) **Gate de hallazgos (MP-051/G-08): 0 CRITICAL/HIGH/MEDIUM abiertos** — EVIDENCIA: `<presupuesto de hallazgos>`

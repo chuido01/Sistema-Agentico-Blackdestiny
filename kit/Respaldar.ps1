@@ -3,8 +3,8 @@
   Respaldo estandar del Sistema Agentico Blackdestiny: snapshot AAAA-MM-DD_vN + MANIFEST.sha256 + MOTIVO.md.
 
 .DESCRIPTION
-  Automatiza la politica de respaldos estandar de la flota (destilada de la mejor practica del
-  proyecto 01-App-Evaluaciones-Cyber, estandarizada el 2026-07-03):
+  Automatiza la politica de respaldos estandar de la flota (destilada de la mejor practica de
+  un proyecto real de la casa, estandarizada el 2026-07-03):
 
     1. CUANDO: al promover un estable de 02-Desarrollo a 01-Produccion (snapshot de lo que se
        reemplaza y/o de lo promovido) y ANTES de retirar documentacion del arbol (poda Regla 3).

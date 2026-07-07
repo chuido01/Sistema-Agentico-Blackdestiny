@@ -7,8 +7,8 @@
 ## Qué contiene (`home-claude/`)
 - `CLAUDE.md` — preferencias transversales (plantilla: ajústala a tu idioma y tu forma de trabajar).
 - `settings.json` — permisos y **hooks** de sesión (sin secretos; las rutas usan el marcador `<TU_CARPETA_HOME>`).
-- `agents/` — 7 agentes nivel-usuario: `commit-writer`, `code-reviewer`, `doc-writer`, `research-curator`, `sabio-curator`, `sabio-reflector`, `security-engineer`.
-- `commands/` — slash commands: `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome` (+ alias deprecado `/sabio-reflector`).
+- `agents/` — 40 agentes nivel-usuario: 7 transversales (`commit-writer`, `code-reviewer`, `doc-writer`, `research-curator`, `sabio-curator`, `sabio-reflector`, `security-engineer`) + los 33 de GREMIO 2.0 en `Gremio/<División>/` (25 activos + 8 en `Gremio/_congelados/`; ver [`../gremio/ROSTER.md`](../gremio/ROSTER.md)).
+- `commands/` — slash commands: `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome` (+ alias deprecado `/sabio-reflector`), `/council`, y los 5 de GREMIO 2.0: `/gremio-intencion`, `/gremio-contrato`, `/gremio-construir`, `/gremio-verificar`, `/gremio-cerrar`.
 - `scripts/` — hooks: `hook-session-start.ps1` y `continuity-flush.json` (flush de continuidad que se inyecta al reanudar tras una compactación, vía `SessionStart` con matcher `compact`).
 
 ## Aplicar el entorno en una máquina nueva

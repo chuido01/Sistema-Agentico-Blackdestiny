@@ -39,11 +39,17 @@ function Copiar-ConRespaldo($origen, $destino) {
 Copiar-ConRespaldo (Join-Path $hc "CLAUDE.md") (Join-Path $Destino "CLAUDE.md")
 
 # 2) agents / commands / scripts (carpetas curadas = fuente de verdad)
+#    Recursivo preservando subcarpetas: los agentes GREMIO viven en agents\Gremio\<Division>\.
 foreach ($sub in @("agents", "commands", "scripts")) {
+  $raiz = Join-Path $hc $sub
   $d = Join-Path $Destino $sub
   if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force -Path $d | Out-Null }
-  Get-ChildItem -File (Join-Path $hc $sub) -ErrorAction SilentlyContinue | ForEach-Object {
-    Copiar-ConRespaldo $_.FullName (Join-Path $d $_.Name)
+  Get-ChildItem -File -Recurse $raiz -ErrorAction SilentlyContinue | ForEach-Object {
+    $rel = $_.FullName.Substring($raiz.Length).TrimStart('\')
+    $dest = Join-Path $d $rel
+    $destDir = Split-Path $dest -Parent
+    if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Force -Path $destDir | Out-Null }
+    Copiar-ConRespaldo $_.FullName $dest
   }
 }
 

@@ -1,3 +1,10 @@
+> ⚠️ **HISTÓRICO GREMIO 1.x (nota de la reconversión 2.0, 2026-07-06).** Estos simulacros prueban las
+> compuertas 1.x `/gremio-analizar` y `/gremio-converger`, hoy **retiradas** (quedan en el historial git
+> de este repo) — la suite WF-6 ya no aplica al protocolo vigente. Se conservan sin reescribir como
+> registro del método (sembrados permanentes de regresión). Los simulacros 2.0 (sembrados para
+> `/gremio-verificar` y `/gremio-cerrar`) están **pendientes de diseño**. Referencia:
+> Protocolo GREMIO v2.0 §11.
+
 # Simulacros del protocolo (MP-059/M10) — los 3 casos sembrados permanentes
 
 > **Qué es.** Una Sala E SINTÉTICA (`tablero-sembrado/`) con defectos plantados a propósito, uno por
