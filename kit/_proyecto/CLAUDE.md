@@ -32,7 +32,7 @@ con la Capa 1/Capa 2 de la *arquitectura*: aquéllas son el sistema; éstas, tip
 - `02-Catalogo/` — **Sala B · Catálogo operativo** (fichas estructuradas de activos; `activo:<slug>`).
 - `03-Referencia/` — **Sala C · Referencia externa** (estándares oficiales ingeridos; `norma:<marco>:<codigo>`).
 - `04-Aprendizaje/` — **Sala D · Aprendizaje operativo** (lo aprendido al construir o al ejecutar; `aprendizaje:<id>`).
-- `05-Decisiones/` — **Sala E · Gremio** (Decision Records de la fábrica GREMIO; `dr:<dominio>-<n>`). 🔒 **Local del proyecto: NO se federa** — al global solo puede viajar un aprendizaje (Sala D) destilado de una decisión, jamás el DR. *(La crea GREMIO al operar; hasta entonces el prefijo `dr:` queda reservado.)*
+- `05-Decisiones/` — **Sala E · Gremio** (el tablero de GREMIO 2.0: `intencion.md` + Decision Records `dr:<dominio>-<n>` + veredictos). 🔒 **Local del proyecto: NO se federa** — al global solo puede viajar un aprendizaje (Sala D) destilado de una decisión, jamás el DR. *(La crea GREMIO al operar; hasta entonces el prefijo `dr:` queda reservado.)*
 
 **Reglas:** un dato vive en UNA sola sala y las demás lo referencian **por ID** (nunca copiar);
 cada sala tiene su `LEEME - Esquema` con su formato — respétalo; un aprendizaje (Sala D) **jamás**
