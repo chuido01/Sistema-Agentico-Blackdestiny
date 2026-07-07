@@ -76,3 +76,4 @@ Referencia: <app o versión>
 ## Adendas (append-only)
 
 <!-- Ajustes de alcance posteriores al visto bueno: fecha + qué cambió + firma. Nunca se reescribe lo anterior. -->
+<!-- sabio-generacion: 2 -->

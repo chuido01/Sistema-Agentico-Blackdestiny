@@ -88,3 +88,4 @@ gremio: true                      # marca de huella GREMIO
      Si el cambio invalida la DECISIÓN misma (no un supuesto), no es adenda: es un DR nuevo que supera a éste. -->
 
 <!-- Al superar este DR en el futuro: cambia `estado` a `superado`, rellena `superado_por`, y NO toques nada más. La historia vive en la cadena de supersesión + git. -->
+<!-- sabio-generacion: 2 -->

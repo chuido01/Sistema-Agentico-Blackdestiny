@@ -1,4 +1,4 @@
-<!-- gremio:operacion-local -->
+<!-- gremio:operacion-local | gen 2 -->
 
 ## GREMIO — operación local
 
@@ -21,3 +21,4 @@
 **Lectura de conocimiento:** los agentes leen el plano global **read-only** vía el MCP **`sabio-shared`** (`sabio_get`/`sabio_search`). **Nunca** leen otros proyectos (aislamiento Capa 1). Si `sabio-shared` no está activo aquí, corren como prompts genéricos: acepta su *trust dialog* (`claude mcp list`).
 
 **Diseño y protocolo (no duplicar):** canónico en el repositorio del Kit (**Sistema-Agentico-Blackdestiny**, carpeta `gremio/`); este proyecto no lo duplica.
+<!-- /gremio:operacion-local -->

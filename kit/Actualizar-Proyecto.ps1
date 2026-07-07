@@ -79,6 +79,9 @@ function Get-SabioGen([string]$ruta) {
   $primera = Get-Content -LiteralPath $ruta -TotalCount 1 -ErrorAction SilentlyContinue
   if ($primera -match 'sabio-generacion:\s*local') { return 2147483647 }  # opt-out: nunca se converge
   if ($primera -match 'sabio-generacion:\s*(\d+)') { return [int]$Matches[1] }
+  # Sello al FINAL del archivo: plantillas con frontmatter YAML no admiten el sello en la linea 1.
+  $ultima = Get-Content -LiteralPath $ruta -ErrorAction SilentlyContinue | Where-Object { $_ -match '\S' } | Select-Object -Last 1
+  if ($ultima -match 'sabio-generacion:\s*(\d+)') { return [int]$Matches[1] }
   return 0
 }
 function Convert-Marcadores([string]$texto, [string]$proy, [string]$bov, [string]$fch) {
@@ -260,6 +263,37 @@ foreach ($proy in $objetivos) {
       }
       $hechos.Add("+ CLAUDE.md: puntero al comando /disenar")
     } else { $saltos++ }
+  }
+
+  # e3) CLAUDE.md: seccion GREMIO - operacion local (fragmento canonico de _federado).
+  # ADD-ONLY si falta. Si existe CON marcador de cierre (<!-- /gremio:operacion-local -->) y su gen
+  # esta atrasada, se RE-PROYECTA la region. Un bloque sin cierre es legado: se reporta, no se toca.
+  $fragGremio = Join-Path $plantillaFederado "_fragmentos\gremio-operacion-local.md"
+  $reGremio = '(?s)<!-- gremio:operacion-local.*?<!-- /gremio:operacion-local -->'
+  $reGremioGen = 'gremio:operacion-local \| gen (\d+)'
+  if ((Test-Path $claudeMd) -and (Test-Path $fragGremio)) {
+    $txtG = [System.IO.File]::ReadAllText($claudeMd, [System.Text.Encoding]::UTF8)
+    $frag = [System.IO.File]::ReadAllText($fragGremio, [System.Text.Encoding]::UTF8)
+    $genGremioCanon = 0
+    if ($frag -match $reGremioGen) { $genGremioCanon = [int]$Matches[1] }
+    if ($txtG -notmatch 'gremio:operacion-local') {
+      if ($Aplicar) { [System.IO.File]::AppendAllText($claudeMd, "`r`n" + $frag, $utf8) }
+      $hechos.Add("+ CLAUDE.md: seccion GREMIO - operacion local")
+    } elseif ($txtG -match $reGremio) {
+      $genGremioProy = 0
+      if ($txtG -match $reGremioGen) { $genGremioProy = [int]$Matches[1] }
+      if ($genGremioProy -lt $genGremioCanon) {
+        if ($Aplicar) {
+          $fragRegion = [regex]::Match($frag, $reGremio).Value
+          $evalG = [System.Text.RegularExpressions.MatchEvaluator]{ param($mm) $fragRegion }
+          $nuevoG = [regex]::Replace($txtG, $reGremio, $evalG)
+          [System.IO.File]::WriteAllText($claudeMd, $nuevoG, $utf8)
+        }
+        $hechos.Add("~ CLAUDE.md: seccion GREMIO re-proyectada  [gen $genGremioProy -> $genGremioCanon]")
+      } else { $saltos++ }
+    } else {
+      $hechos.Add("! CLAUDE.md: bloque gremio:operacion-local SIN marcador de cierre (legado) -> migracion inicial manual")
+    }
   }
 
   # f) Sala D unificada: ESQUEMA.md + tools/ + promociones/ son estandar (vienen en _federado, ya cubiertos
