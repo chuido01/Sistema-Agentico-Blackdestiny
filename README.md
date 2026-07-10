@@ -146,7 +146,7 @@ sistema-agentico-blackdestiny/
 │   ├── README.md                     #   qué hace cada pieza del entorno
 │   └── home-claude/                  #   el contenido que va a ~/.claude:
 │       ├── CLAUDE.md                 #     preferencias transversales (plantilla genérica)
-│       ├── settings.json             #     ajustes + hooks de sesión
+│       ├── settings.json             #     ajustes + hooks + candados de seguridad de software
 │       ├── commands/                 #     skills: sabio-aprender (modo --reflexivo) · sabio-promover · sabio-promover-buzon · sabio-converger · memory-lint · disenar · sabio-welcome (+ alias sabio-reflector) · council · gremio-intencion · gremio-contrato · gremio-construir · gremio-verificar · gremio-cerrar
 │       ├── agents/                   #     40 agentes: 7 transversales (sabio-curator · sabio-reflector · research-curator · code-reviewer · commit-writer · doc-writer · security-engineer) + 33 GREMIO (en Gremio/<División>/; 25 activos + 8 en Gremio/_congelados/)
 │       └── scripts/                  #     hooks: recordatorio al iniciar sesión · captura al compactar

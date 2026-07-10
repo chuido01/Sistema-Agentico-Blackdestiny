@@ -60,7 +60,9 @@ Claude Code (`~/.claude/` en macOS/Linux, `%USERPROFILE%\.claude\` en Windows):
   revisor de código, commit-writer, doc-writer, seguridad) + los 33 de GREMIO (25 activos en
   `Gremio/<División>/` + 8 congelados en `Gremio/_congelados/`; ver [`gremio/README.md`](gremio/README.md)).
 - `scripts/` → los hooks de sesión (recordatorio de reglas al iniciar, captura al compactar).
-- `CLAUDE.md` → preferencias transversales (plantilla genérica; el usuario la edita).
+- `CLAUDE.md` → preferencias transversales (plantilla genérica; el usuario la edita). Incluye la norma
+  **inmutable de Seguridad de software** (nada se instala/ejecuta sin validar legitimidad + confirmación
+  del humano); su refuerzo mecánico son los candados `ask` de `settings.json`.
 
 > **Respaldo obligatorio:** antes de pisar cualquier archivo existente en `~/.claude/`, cópialo a
 > `~/.claude/backups/sabio-<fecha>/`. En Windows existe el atajo `entorno-claude/Aplicar-Setup.ps1`.

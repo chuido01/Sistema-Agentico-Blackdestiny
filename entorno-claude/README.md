@@ -5,8 +5,8 @@
 > tener el mismo entorno de trabajo con IA.
 
 ## Qué contiene (`home-claude/`)
-- `CLAUDE.md` — preferencias transversales (plantilla: ajústala a tu idioma y tu forma de trabajar).
-- `settings.json` — permisos y **hooks** de sesión (sin secretos; las rutas usan el marcador `<TU_CARPETA_HOME>`).
+- `CLAUDE.md` — preferencias transversales (plantilla: ajústala a tu idioma y tu forma de trabajar). Incluye la norma **inmutable de Seguridad de software**: nada se instala ni se ejecuta (paquetes, binarios, scripts remotos, `npx`/`uvx`, extensiones, MCPs) sin validar legitimidad y sin confirmación explícita del humano.
+- `settings.json` — permisos y **hooks** de sesión (sin secretos; las rutas usan el marcador `<TU_CARPETA_HOME>`). La lista `ask` trae **candados de seguridad de software**: instaladores y descarga-y-ejecuta (`npm/pip/winget install`, `npx`, `curl`, `iwr | iex`…) piden confirmación antes de correr.
 - `agents/` — 40 agentes nivel-usuario: 7 transversales (`commit-writer`, `code-reviewer`, `doc-writer`, `research-curator`, `sabio-curator`, `sabio-reflector`, `security-engineer`) + los 33 de GREMIO 2.0 en `Gremio/<División>/` (25 activos + 8 en `Gremio/_congelados/`; ver [`../gremio/ROSTER.md`](../gremio/ROSTER.md)).
 - `commands/` — slash commands: `/sabio-aprender` (con su modo `--reflexivo`), `/sabio-promover`, `/sabio-promover-buzon`, `/sabio-converger`, `/memory-lint`, `/disenar`, `/sabio-welcome` (+ alias deprecado `/sabio-reflector`), `/council`, y los 5 de GREMIO 2.0: `/gremio-intencion`, `/gremio-contrato`, `/gremio-construir`, `/gremio-verificar`, `/gremio-cerrar`.
 - `scripts/` — hooks: `hook-session-start.ps1` y `continuity-flush.json` (flush de continuidad que se inyecta al reanudar tras una compactación, vía `SessionStart` con matcher `compact`).
