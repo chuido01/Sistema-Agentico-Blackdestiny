@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 4 -->
+<!-- sabio-generacion: 5 -->
 # Sala D — Aprendizaje operativo (esquema)
 
 > **Para qué existe esta sala:** capturar lo que el sistema **aprende al construirse o al ejecutarse**
@@ -6,7 +6,7 @@
 > registro **nace sin confianza** (`verificado: false`) y solo se vuelve conocimiento si pasa el **bucle
 > de promoción**. NO va en la bóveda (Sala A): mezclaría registros crudos con investigación curada.
 >
-> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción —GREMIO—. No confundir con Capa 1/2 = arquitectura del sistema.)*
+> *(Salas A–D = tipos de conocimiento; Sala E = decisiones de construcción. No confundir con Capa 1/2 = arquitectura del sistema.)*
 
 ## Dos productores (quién escribe)
 
@@ -41,6 +41,15 @@ nunca se fragmenta y la Sala D es homogénea en toda la flota.
 **activa** el productor-runtime + el umbral. **Sube el flag a agéntico** cuando el proyecto vaya a
 ejecutar agentes/skills/plugins en bucle.
 
+### Subir el flag con la Sala D ya poblada — corte de régimen
+
+Si al pasar a **agéntico** el proyecto **ya tiene registros** en formato núcleo (`base`), esa historia es
+**append-only**: no se migra. Declara **una línea** en el `CLAUDE.md` — `corte_regimen: AAAA-MM-DD` — y el
+validador tratará los registros **anteriores al corte** como historia base (los tolera con **aviso**,
+fuera de las métricas v2.0); **desde el corte**, todo registro nuevo cumple el esquema extendido. Sin
+corte declarado, el validador reconoce la historia base por su formato de id (`AAAAMMDD-slug`). El detalle
+lo especifica `ESQUEMA.md`.
+
 ## Estructura
 
 ```
@@ -73,7 +82,7 @@ promovido_a: ""               # ID destino si se gradúa
 Qué se intentó, qué pasó y por qué vale como aprendizaje. Hechos, no opiniones.
 ```
 
-> **Señal de uso `aplicado:` (la Regla de Tres con datos).** Al **re-usar con éxito** un
+> **Señal de uso `aplicado:` (destilado Hermes — la Regla de Tres con datos).** Al **re-usar con éxito** un
 > aprendizaje en trabajo real, incrementa `aplicado:` (con OK del humano). `aplicado: ≥ 3` = señal Regla de
 > Tres para promover. Si al aplicarlo **falla**: no retrocedas `estado:` — captura un **registro nuevo**
 > `tipo: error` con `relacionado: [<id que falló>]`; el triage decide si el original se descarta. *(Así el

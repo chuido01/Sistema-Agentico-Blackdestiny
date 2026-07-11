@@ -1,4 +1,4 @@
-<!-- sabio-generacion: 1 -->
+<!-- sabio-generacion: 2 -->
 # ESQUEMA — Registro de aprendizaje · perfil agéntico (Sala D)
 
 > Especificación del formato de un registro de la **Sala D** en el **perfil agéntico**. Markdown +
@@ -88,6 +88,29 @@ Cada ID en `relacionado:` debe **existir en su Sala dueña** según el índice d
 inválido** (el validador sale con código de error). Así se cumple «una fuente por capa, referenciada por
 ID, nunca copiada». Si una Sala destino aún no existe en el proyecto, la referencia se reporta como
 **aviso** (no error), para no bloquear proyectos en construcción.
+
+## Corte de régimen (subir de `base` a `agéntico` con la Sala D ya poblada)
+
+Cuando un proyecto **sube el flag** `base → agéntico` (ver `LEEME - Esquema Sala D.md`) y su
+`registros/` **ya contiene historia** capturada en el núcleo (formato `AAAAMMDD-slug`, confianza
+cualitativa), esa historia es **append-only**: no se migra ni se reescribe. Para que el validador no la
+marque como defecto v2.0, el proyecto declara **una línea** en su `CLAUDE.md`:
+
+```
+corte_regimen: AAAA-MM-DD        # fecha desde la que rige el esquema v2.0
+```
+
+Regla que aplica `tools/validar-aprendizaje.py`:
+
+- Un registro es **legacy-base** si su `fecha` es **anterior** al corte (o, si no hay corte declarado, si
+  su `id` es del formato base `aprendizaje:AAAAMMDD-slug`). Sobre él el validador emite **AVISO, no
+  ERROR**: no exige los campos extendidos ni confianza numérica, lo cuenta aparte (`legacy_base` en
+  `_index.json`) y **no** provoca `exit 1`.
+- **Desde el corte**, todo registro nuevo cumple v2.0 sin excepción — la integridad estricta se fuerza
+  solo sobre lo posterior al corte.
+
+Así la transición no deja el gate en rojo permanente sobre historia legítima, y la disciplina v2.0 sigue
+intacta para lo nuevo.
 
 ## `sintetico: true`
 

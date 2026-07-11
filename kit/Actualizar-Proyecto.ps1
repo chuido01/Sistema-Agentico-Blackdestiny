@@ -93,6 +93,8 @@ $artefactosFederado = @(
   @{ rel = "03-Referencia\LEEME - Esquema Sala C.md"; tipo = "mixto" },
   @{ rel = "04-Aprendizaje\LEEME - Esquema Sala D.md"; tipo = "puro" },
   @{ rel = "04-Aprendizaje\ESQUEMA.md"; tipo = "puro" },
+  # Validador Sala D: canonico puro (sin contenido local). Sello al FINAL (comentario Python). Gen 1 = corte_regimen.
+  @{ rel = "04-Aprendizaje\tools\validar-aprendizaje.py"; tipo = "puro" },
   @{ rel = "04-Aprendizaje\promociones\LEEME - Buzon de promocion.md"; tipo = "puro" }
 )
 

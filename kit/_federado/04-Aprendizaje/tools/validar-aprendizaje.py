@@ -8,6 +8,11 @@ Valida cada registro de registros/ contra ESQUEMA.md:
     indice de indices (activo:->B, investigacion:->A, norma:->C, aprendizaje:->D)
 Regenera _index.json (indice autoritativo del prefijo aprendizaje:).
 
+Corte de regimen (base->agentico con Sala D ya poblada): si el proyecto declara
+'corte_regimen: AAAA-MM-DD' en su CLAUDE.md, los registros anteriores (o con id del
+formato base AAAAMMDD-slug) son historia append-only tolerada -> AVISO, nunca ERROR, y
+quedan fuera de las metricas v2.0. La integridad v2.0 se exige solo sobre lo posterior al corte.
+
 Uso: python tools/validar-aprendizaje.py
 Salida: avisos/errores por archivo; exit 1 si hay errores. Cero dependencias.
 """
@@ -38,7 +43,10 @@ SALAS = {
 }
 
 KEY = re.compile(r"^([a-z][a-z0-9_]*):\s*(.*)$")
-ID_PAT = re.compile(r"^aprendizaje:apr-\d{8}-\d{3}$")
+ID_PAT_V2 = re.compile(r"^aprendizaje:apr-\d{8}-\d{3}$")       # regimen agentico (v2.0)
+ID_PAT_LEGACY = re.compile(r"^aprendizaje:\d{8}-[a-z0-9-]+$")  # regimen base/nucleo (AAAAMMDD-slug)
+FECHA_PAT = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+CORTE_RE = re.compile(r"corte_regimen:\s*(\d{4}-\d{2}-\d{2})")
 
 
 def parse_frontmatter(path):
@@ -99,6 +107,33 @@ def carpeta_boveda():
     return os.path.join(vault, subs[0], "wiki") if subs else None
 
 
+def corte_regimen():
+    """Fecha 'AAAA-MM-DD' del corte de regimen base->agentico, declarada por el proyecto en su
+    CLAUDE.md (raiz). Los registros anteriores al corte son historia base (tolerada).
+    None si no hay corte declarado."""
+    claude = os.path.join(os.path.dirname(RECURSOS), "CLAUDE.md")
+    if not os.path.isfile(claude):
+        return None
+    try:
+        m = CORTE_RE.search(open(claude, encoding="utf-8").read())
+    except Exception:
+        return None
+    return m.group(1) if m else None
+
+
+def es_legacy_base(rid, fecha, corte):
+    """True si el registro pertenece al regimen base (nucleo): historia append-only tolerada como
+    AVISO y excluida de las metricas v2.0.
+      - con corte declarado: legacy sii su fecha es anterior al corte (el corte manda); si le falta
+        una fecha usable, cae al formato de id.
+      - sin corte declarado: legacy sii su id es del formato base (AAAAMMDD-slug, sin 'apr-')."""
+    rid, fecha = str(rid or ""), str(fecha or "")
+    id_es_base = bool(ID_PAT_LEGACY.match(rid)) and not ID_PAT_V2.match(rid)
+    if corte:
+        return fecha < corte if FECHA_PAT.match(fecha) else id_es_base
+    return id_es_base
+
+
 def main():
     cache = {}  # prefijo -> set de ids (o None si la Sala no existe)
 
@@ -113,7 +148,9 @@ def main():
             cache[pref] = ids_en_carpeta(carpeta)
         return cache[pref]
 
-    errores, avisos, registros = [], [], []
+    corte = corte_regimen()
+
+    errores, avisos, registros, legacy = [], [], [], []
     archivos = sorted(f for f in os.listdir(REGISTROS) if f.endswith(".md")) if os.path.isdir(REGISTROS) else []
 
     ids_vistos = set()
@@ -128,14 +165,25 @@ def main():
             err("frontmatter ausente o sin cierre '---'")
             continue
         d = {k: parse_val(v) for k, v in raw.items()}
+        rid = d.get("id", "")
+
+        # --- corte de regimen: la historia base es append-only y se tolera (AVISO, no ERROR) ---
+        if es_legacy_base(rid, d.get("fecha"), corte):
+            if "aprendizaje:" + fn[:-3] != str(rid):
+                avisos.append(fn + ": [legacy-base] id no coincide con el nombre de archivo (no bloquea)")
+            avisos.append(fn + ": registro legacy-base (regimen nucleo), tolerado; fuera de metricas v2.0")
+            if rid in ids_vistos:
+                err("id duplicado")
+            ids_vistos.add(rid)
+            legacy.append({"id": rid, "creado": str(d.get("fecha")), "ruta": "registros/" + fn, "regimen": "base"})
+            continue
 
         for k in OBLIGATORIOS:
             if k not in d:
                 err("falta campo obligatorio '" + k + "'")
         if d.get("esquema") != "aprendizaje-operativo":
             err("esquema != aprendizaje-operativo")
-        rid = d.get("id", "")
-        if not ID_PAT.match(str(rid)):
+        if not ID_PAT_V2.match(str(rid)):
             err("id no cumple aprendizaje:apr-AAAAMMDD-NNN: " + str(rid))
         if "aprendizaje:" + fn[:-3] != str(rid):
             err("id != 'aprendizaje:' + nombre de archivo")
@@ -211,19 +259,27 @@ def main():
         "esquema": "aprendizaje-operativo",
         "version_esquema": "2.0",
         "umbral_confianza": UMBRAL_CONFIANZA,
-        "nota": "Indice autoritativo del prefijo aprendizaje:. Los sintetico:true validan el esquema y se excluyen de las metricas.",
+        "corte_regimen": corte,
+        "nota": "Indice autoritativo del prefijo aprendizaje:. Los sintetico:true validan el esquema y se excluyen de las metricas. Los legacy_base (regimen nucleo, anteriores al corte) se toleran y quedan fuera de las metricas v2.0.",
         "totales": {
             "registros": len(registros),
             "reales": len(reales),
             "sinteticos": len(registros) - len(reales),
+            "legacy_base": len(legacy),
             "por_estado_reales": {e: sum(1 for r in reales if r["estado"] == e) for e in sorted(ESTADOS)},
         },
         "registros": registros,
+        "legacy_base": legacy,
     }
     with open(os.path.join(BASE, "_index.json"), "w", encoding="utf-8") as f:
         json.dump(index, f, ensure_ascii=False, indent=2)
 
-    print("registros:", len(registros), "(reales:", len(reales), "| sinteticos:", len(registros) - len(reales), ")")
+    resumen = ("registros: " + str(len(registros)) + " (reales: " + str(len(reales)) +
+               " | sinteticos: " + str(len(registros) - len(reales)) +
+               " | legacy-base: " + str(len(legacy)) + ")")
+    if corte:
+        resumen += "  [corte_regimen: " + corte + "]"
+    print(resumen)
     for a in avisos:
         print("AVISO:", a)
     if errores:
@@ -236,3 +292,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# sabio-generacion: 1
