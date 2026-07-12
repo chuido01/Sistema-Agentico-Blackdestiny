@@ -1,4 +1,4 @@
-# Sistema Agéntico Blackdestiny
+# Sistema Agéntico Blackdestiny: SABIO + GREMIO + COUNCIL
 
 <img width="2752" height="1536" alt="Sistema_de_gestión_de_conocimiento" src="https://github.com/user-attachments/assets/bfcf2c56-33e7-451d-a8ac-27d56290a110" />
 
