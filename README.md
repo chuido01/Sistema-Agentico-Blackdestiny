@@ -1,6 +1,6 @@
 # Sistema Agéntico Blackdestiny
 
-<img width="2752" height="1536" alt="SABIO__Cerebro_para_memoria_IA" src="https://github.com/user-attachments/assets/3d0b5db7-973b-412f-a5f4-b42d67b10a23" />
+<img width="2752" height="1536" alt="Sistema_de_gestión_de_conocimiento" src="https://github.com/user-attachments/assets/bfcf2c56-33e7-451d-a8ac-27d56290a110" />
 
 
 > **Una plataforma para trabajar con IA de principio a fin — sin base de datos vectorial, sin RAG.**
